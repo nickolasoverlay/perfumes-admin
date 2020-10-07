@@ -1,38 +1,67 @@
-.App {
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Roboto";
+}
+
+body {
+  background-color: rgba(207, 207, 207, 0.479);
+}
+
+.aqua {
+  color: rgb(0, 129, 161) !important;
+}
+
+.red {
+  color: rgba(255, 0, 0, 0.616) !important;
+}
+
+.gray {
+  color: rgba(0, 0, 0, 0.548) !important;
+}
+
+.badge {
+  font-family: "Roboto";
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  background-color: rgb(0, 132, 255);
+  border-radius: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  box-shadow: 0px 1px 6px rgba(0, 110, 255, 0.336);
+  text-transform: uppercase;
+}
+
+.MuiButton-root {
+  border-radius: 8px !important;
+}
+
+.MuiMenu-paper {
+  border-radius: 8px !important;
+}
+
+.MuiDialog-container .MuiPaper-root {
+  border-radius: 12px;
+}
+
+.NoData {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-top: 150px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.Shell {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }

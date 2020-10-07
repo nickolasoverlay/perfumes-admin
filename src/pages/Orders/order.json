@@ -1,0 +1,84 @@
+[
+    {
+        "info": {
+            "id": 3,
+            "made_at": 1585927890,
+            "order_status": 1,
+            "total_price": 62000,
+            "user_id": 1,
+            "user_email": "",
+            "user_name": "",
+            "user_phone": ""
+        },
+        "items": [
+            {
+                "info": {
+                    "id": 2,
+                    "order_id": 3,
+                    "quantity": 5,
+                    "product_id": 7,
+                    "product_price": 12400
+                },
+                "product": {
+                    "id": 7,
+                    "category": 2,
+                    "name_ua": "No 5",
+                    "name_ru": "No 5",
+                    "short_ua": "The Hair Mist",
+                    "short_ru": "The Hair Mist",
+                    "description_ua": "A gentle, delicate hair mist of the eternal fragrance that leaves behind an elegant, mysterious trail.",
+                    "description_ru": "A gentle, delicate hair mist of the eternal fragrance that leaves behind an elegant, mysterious trail.",
+                    "instruction_ua": "Spray around your neck",
+                    "instruction_ru": "Spray around your neck",
+                    "components_ua": "May Rose and Jasmine",
+                    "components_ru": "May Rose and Jasmine",
+                    "price": 45000,
+                    "quantity_available": 0,
+                    "size": 120,
+                    "picture": "9f19164c-7397-11ea-adcc-201a06262094.jpg,9f191e97-7397-11ea-adcc-201a06262094.jpg,9f192364-7397-11ea-adcc-201a06262094.jpg,9f192958-7397-11ea-adcc-201a06262094.png"
+                }
+            }
+        ]
+    },
+    {
+        "info": {
+            "id": 4,
+            "made_at": 0,
+            "order_status": 1,
+            "total_price": 102000,
+            "user_id": 1,
+            "user_email": "",
+            "user_name": "",
+            "user_phone": ""
+        },
+        "items": [
+            {
+                "info": {
+                    "id": 3,
+                    "order_id": 4,
+                    "quantity": 12,
+                    "product_id": 4,
+                    "product_price": 8500
+                },
+                "product": {
+                    "id": 4,
+                    "category": 1,
+                    "name_ua": "Chanelle no 6",
+                    "name_ru": "Chanelle no 6",
+                    "short_ua": "Chanelle no 6 - true men's companion",
+                    "short_ru": "Chanelle no 6 - true men's companion",
+                    "description_ua": "Chanelle no 6 was invented to be used for ",
+                    "description_ru": "Chanelle no 6 was invented to be used for ",
+                    "instruction_ua": "Spray around your neck to improve your inner karma",
+                    "instruction_ru": "Spray around your neck to improve your inner karma",
+                    "components_ua": "Banana, apple and coffee",
+                    "components_ru": "Banana, apple and coffee",
+                    "price": 18400,
+                    "quantity_available": 0,
+                    "size": 120,
+                    "picture": "980836dc-7394-11ea-adcc-201a06262094.jpg"
+                }
+            }
+        ]
+    }
+]

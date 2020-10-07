@@ -1,0 +1,12 @@
+.HomeSliderPreview--item {
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  background-position: center !important;
+  border-radius: 4px;
+}
+
+.HomeSliderPreview--dots {
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+}

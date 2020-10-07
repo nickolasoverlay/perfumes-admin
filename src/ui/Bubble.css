@@ -1,0 +1,52 @@
+.Bubble {
+  background-color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 1px 12px rgba(158, 158, 158, 0.295);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 45%;
+  margin-bottom: 25px;
+}
+
+.Bubble--menu {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 9;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.Bubble--menu button {
+  padding: 7.5px;
+}
+
+.Bubble--editgroup {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Bubble--editgroup button {
+  margin-left: 10px;
+}
+
+.Bubble.wide {
+  width: 100%;
+}
+
+.Bubble .Toggle {
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1000px) {
+  .Bubble {
+    width: 100%;
+  }
+}

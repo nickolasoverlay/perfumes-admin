@@ -1,0 +1,81 @@
+.Orders {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.Order {
+  margin-bottom: 50px;
+  width: 100%;
+}
+
+.Order--info {
+  margin-bottom: 35px;
+}
+
+.Order--info--title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  height: 48px;
+}
+
+.Order--info--title .MuiIconButton-root {
+  border-radius: 50%;
+  padding: 7.5px;
+}
+
+.Order--info--data .MuiTypography-root {
+  margin-right: 5px;
+  font-size: 16px;
+  color: #4a4747;
+}
+
+.Order--info--data {
+  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.Order--items {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.Order--items .Bubble {
+  width: 45%;
+}
+
+.Order-item--slider--container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.Order-item--slider--container div {
+  background-position: center !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  height: 250px;
+  width: 250px;
+}
+
+.Orders--filterbar {
+  justify-content: flex-start;
+  height: 48px;
+}
+
+.Orders--filterbar .MuiButton-root {
+  height: 100%;
+  margin-right: 7.5px;
+}
+
+.Orders--filterbar .active {
+  background-color: rgba(128, 128, 128, 0.103);
+}
+
+.Order--filterbar .MuiBadge-anchorOriginTopRightRectangle {
+  margin-top: -5px;
+}

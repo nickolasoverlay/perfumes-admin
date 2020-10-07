@@ -1,0 +1,53 @@
+/* ACTION BAR STYLES */
+.ActionBar {
+  background-color: white;
+  height: 66px;
+  border-radius: 8px;
+  padding-left: 25px;
+  padding-right: 25px;
+  margin-bottom: 50px;
+  box-shadow: 0px 1px 3px rgba(158, 158, 158, 0.295);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ActionBar .ActionBar--title {
+  font-family: "Roboto";
+  font-size: 18px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  margin-top: -5px;
+}
+
+.ActionBar button {
+  border-radius: 8px;
+}
+
+/** CATEGORIES CORE STYLES **/
+.Categories .MuiTypography-root span {
+  color: rgba(0, 0, 0, 0.548);
+  margin-left: 5px;
+}
+
+.Categories--boxed {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.Categories--boxed h5 {
+  margin-bottom: 15px;
+}
+
+.Categories--boxed .Categories--group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Categories .Categories--block .MuiTypography-root span.l {
+  color: rgb(0, 129, 161);
+}

@@ -1,0 +1,20 @@
+.Admins {
+  display: flex;
+}
+
+.Admins .Permissions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.Admins .Toggle {
+  display: flex;
+  justify-content: center;
+}
+
+.Admins .Toggle button {
+  padding: 10px;
+}
