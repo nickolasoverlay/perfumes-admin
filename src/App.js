@@ -1,12 +1,11 @@
 import React, { useEffect } from "react"
-import { Switch, Route } from "react-router-dom"
+import { Switch, Route, Redirect } from "react-router-dom"
 import * as actions from "./store/actions"
 import axios from "axios"
 import { connect } from "react-redux"
 
 import "./App.css"
 
-import Home from "./pages/Home/Home"
 import Categories from "./pages/Categories/Categories"
 import CategoryGroups from "./pages/CategoryGroups/CategoryGroups"
 import Products from "./pages/Products/Products"
@@ -16,14 +15,14 @@ import HomeSlider from "./pages/HomeSlider"
 import Filters from "./pages/Filters/Filters"
 import Messages from "./pages/Messages"
 
-const App = props => {
+const App = (props) => {
   const { logIn } = props
 
   useEffect(() => {
     axios(`${process.env.REACT_APP_API}/admin/session/`, {
-      withCredentials: true
+      withCredentials: true,
     })
-      .then(res => {
+      .then((res) => {
         logIn(res.data)
       })
       .catch(() => {
@@ -33,7 +32,9 @@ const App = props => {
 
   return (
     <Switch>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/">
+        <Redirect to="/category_groups" />
+      </Route>
       <Route exact path="/category_groups" component={CategoryGroups} />
       <Route exact path="/categories" component={Categories} />
       <Route exact path="/products" component={Products} />
@@ -46,9 +47,9 @@ const App = props => {
   )
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    logIn: payload => dispatch({ type: actions.LOG_IN, payload: payload })
+    logIn: (payload) => dispatch({ type: actions.LOG_IN, payload: payload }),
   }
 }
 

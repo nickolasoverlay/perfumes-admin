@@ -13,7 +13,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  InputAdornment
+  InputAdornment,
 } from "@material-ui/core"
 
 import { MoreVert as MoreVertIcon } from "@material-ui/icons"
@@ -24,7 +24,7 @@ import Snackbar from "./../../ui/Snackbar"
 
 import "./CategoryGroups.css"
 
-const GroupBlock = props => {
+const GroupBlock = (props) => {
   const [nameUA, setNameUA] = useState(props.name_ua)
   const [nameRU, setNameRU] = useState(props.name_ru)
   const [url, setURL] = useState(props.url)
@@ -69,9 +69,9 @@ const GroupBlock = props => {
           updatedCategory,
           { withCredentials: true }
         )
-        .then(res => {
+        .then((res) => {
           setSnackbarSeverity("success")
-          setSnackbarMessage("Групу успішно оновлено")
+          setSnackbarMessage("Колекцію успішно оновлено")
           setSnackbarOpen(true)
 
           if (newNameUA !== "") {
@@ -84,9 +84,9 @@ const GroupBlock = props => {
             setURL(newURL)
           }
         })
-        .catch(err => {
+        .catch((err) => {
           setSnackbarSeverity("error")
-          setSnackbarMessage("Не вдалось оновити групу")
+          setSnackbarMessage("Не вдалось оновити колекцію")
           setSnackbarOpen(true)
 
           console.log("UPDATE_CATEGORY_GROUP_ERR: ", err)
@@ -96,21 +96,21 @@ const GroupBlock = props => {
     setIsEditing(false)
   }
 
-  const handleNameUA = e => {
+  const handleNameUA = (e) => {
     const v = e.target.value
     if (v.length <= 64) {
       setNewNameUA(v)
     }
   }
 
-  const handleNameRU = e => {
+  const handleNameRU = (e) => {
     const v = e.target.value
     if (v.length <= 64) {
       setNewNameRU(v)
     }
   }
 
-  const handleURL = e => {
+  const handleURL = (e) => {
     const v = e.target.value
     if (v.length <= 64) {
       setNewURL(v)
@@ -168,7 +168,7 @@ const GroupBlock = props => {
       ) : (
         <>
           <div className="Bubble--menu">
-            <IconButton onClick={e => setBlockAnchor(e.currentTarget)}>
+            <IconButton onClick={(e) => setBlockAnchor(e.currentTarget)}>
               <MoreVertIcon />
             </IconButton>
             <Menu
@@ -205,7 +205,7 @@ const GroupBlock = props => {
   )
 }
 
-const CategoryGroups = props => {
+const CategoryGroups = (props) => {
   const { isLoggedIn } = props
 
   const [groups, setGroups] = useState([])
@@ -224,8 +224,8 @@ const CategoryGroups = props => {
   useEffect(() => {
     if (isLoggedIn) {
       axios(`${process.env.REACT_APP_API}/admin/category_groups/`, {
-        withCredentials: true
-      }).then(res => {
+        withCredentials: true,
+      }).then((res) => {
         setGroups(res.data)
       })
     }
@@ -251,17 +251,17 @@ const CategoryGroups = props => {
         group,
         { withCredentials: true }
       )
-      .then(res => {
+      .then((res) => {
         setSnackbarSeverity("success")
-        setSnackbarMessage("Група успішно створена")
+        setSnackbarMessage("Колекція успішно створена")
         setSnackbarOpen(true)
 
         console.log("POST_CATEGORY_GROUP: ", res.data)
-        setGroups(c => c.concat(res.data))
+        setGroups((c) => c.concat(res.data))
       })
-      .catch(err => {
+      .catch((err) => {
         setSnackbarSeverity("success")
-        setSnackbarMessage("Не вдалося створити групу")
+        setSnackbarMessage("Не вдалося створити колекцію")
         setSnackbarOpen(true)
 
         console.log("POST_CATEGORY_GROUP_ERR: ", err)
@@ -269,7 +269,7 @@ const CategoryGroups = props => {
       .finally(closeDialog())
   }
 
-  const deleteGroup = id => {
+  const deleteGroup = (id) => {
     const data = new FormData()
 
     data.append("id", id)
@@ -280,27 +280,27 @@ const CategoryGroups = props => {
         data,
         { withCredentials: true }
       )
-      .then(res => {
+      .then((res) => {
         setSnackbarSeverity("success")
-        setSnackbarMessage("Група успішно видалена")
+        setSnackbarMessage("Колекція успішно видалена")
         setSnackbarOpen(true)
 
-        setGroups(groups.filter(group => group.id !== id))
+        setGroups(groups.filter((group) => group.id !== id))
       })
-      .catch(err => {
+      .catch((err) => {
         setSnackbarSeverity("error")
-        setSnackbarMessage("Не вдалося видалити групу")
+        setSnackbarMessage("Не вдалося видалити колекцію")
         setSnackbarOpen(true)
       })
   }
 
-  const handleNameUA = e => {
+  const handleNameUA = (e) => {
     setNameUA(e.target.value)
   }
-  const handleNameRU = e => {
+  const handleNameRU = (e) => {
     setNameRU(e.target.value)
   }
-  const handleURL = e => {
+  const handleURL = (e) => {
     setURL(e.target.value)
   }
 
@@ -308,7 +308,7 @@ const CategoryGroups = props => {
 
   const dialog = (
     <Dialog onClose={closeDialog} open={openDialog} fullWidth>
-      <DialogTitle>Нова група</DialogTitle>
+      <DialogTitle>Нова колекція</DialogTitle>
       <DialogContent>
         <TextField
           onChange={handleNameUA}
@@ -339,7 +339,7 @@ const CategoryGroups = props => {
               <InputAdornment>
                 https://test.yva.com.ua/collections/
               </InputAdornment>
-            )
+            ),
           }}
         />
       </DialogContent>
@@ -370,20 +370,20 @@ const CategoryGroups = props => {
         onClose={closeSnackbar}
       />
       <div className="ActionBar">
-        <div className="ActionBar--title">Групи категорій</div>
+        <div className="ActionBar--title">Колекції</div>
         <Button
           onClick={() => setOpenDialog(true)}
           color="primary"
           variant="contained"
           disableElevation
         >
-          Нова група
+          Нова колекція
         </Button>
       </div>
       <div className="CategoryGroups Shell">
         {groups.length === 0 && (
           <Typography variant="h5" className="NoData">
-            Не має жодної групи
+            Не має жодної колекції
           </Typography>
         )}
         {groups.map((group, index) => {
@@ -401,9 +401,9 @@ const CategoryGroups = props => {
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isLoggedIn: state.authReducer.isLoggedIn
+    isLoggedIn: state.authReducer.isLoggedIn,
   }
 }
 

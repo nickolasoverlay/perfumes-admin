@@ -7,16 +7,16 @@ import "./Left.css"
 
 import * as actions from "./../store/actions"
 
-const Left = props => {
+const Left = (props) => {
   const { logOut } = props
   const handleLogOut = () => {
     axios(`${process.env.REACT_APP_API}/admin/logout/`, {
-      withCredentials: true
+      withCredentials: true,
     })
-      .then(res => {
+      .then((res) => {
         logOut()
       })
-      .catch(err => {})
+      .catch((err) => {})
   }
 
   return (
@@ -25,11 +25,8 @@ const Left = props => {
         <div className="Left">
           <div className="Left--title">{props.authState.name}</div>
           <div className="Left--list">
-            <NavLink to="/" exact>
-              <Button fullWidth>Головна</Button>
-            </NavLink>
             <NavLink to="/category_groups" exact>
-              <Button fullWidth>Групи Категорій</Button>
+              <Button fullWidth>Колекції</Button>
             </NavLink>
             <NavLink to="/categories" exact>
               <Button fullWidth>Категорії</Button>
@@ -64,15 +61,15 @@ const Left = props => {
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    authState: state.authReducer
+    authState: state.authReducer,
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    logOut: () => dispatch({ type: actions.LOG_OUT })
+    logOut: () => dispatch({ type: actions.LOG_OUT }),
   }
 }
 
