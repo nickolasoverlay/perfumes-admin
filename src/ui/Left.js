@@ -37,9 +37,11 @@ const Left = (props) => {
             <NavLink to="/products" exact>
               <Button fullWidth>Товари</Button>
             </NavLink>
-            <NavLink to="/home_slider" exact>
-              <Button fullWidth>Слайдер пропозицій</Button>
-            </NavLink>
+            {
+              //<NavLink to="/home_slider" exact>
+              //<Button fullWidth>Слайдер пропозицій</Button>
+              //</NavLink>
+            }
             <NavLink to="/orders" exact>
               <Button fullWidth>Замовлення</Button>
             </NavLink>
