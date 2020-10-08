@@ -83,7 +83,7 @@ const ProductBlock = (props) => {
   const closeSnackbar = () => setSnackbarOpen(false)
 
   const compString = (n, m) => {
-    const is = n != m && m.length !== 0
+    const is = n !== m && m.length !== 0
 
     console.log(is)
 
@@ -91,7 +91,7 @@ const ProductBlock = (props) => {
   }
 
   const compNum = (n, m, name) => {
-    const is = n != m
+    const is = n !== m
     console.log(is, "[n,m]: ", name, n, m)
 
     return is
