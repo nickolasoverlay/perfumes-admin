@@ -141,11 +141,7 @@ const ProductBlock = (props) => {
       updatedProduct.append("additionalSize", newAdditionalSize)
 
       axios
-        .post(
-          `${process.env.REACT_APP_API}/admin/products/update/`,
-          updatedProduct,
-          { withCredentials: true }
-        )
+        .post("/admin/products/update/", updatedProduct)
         .then((res) => {
           setSnackbarMessage("Продукт успішно оновлено")
           setSnackbarSeverity("success")
@@ -253,9 +249,7 @@ const ProductBlock = (props) => {
     data.append("is_available", !isAvailable)
 
     axios
-      .post(`${process.env.REACT_APP_API}/admin/products/update/`, data, {
-        withCredentials: true,
-      })
+      .post("/admin/products/update/", data)
       .then((res) => {
         setSnackbarMessage("Статус доступності успішно змінено")
         setSnackbarSeverity("success")
@@ -276,9 +270,7 @@ const ProductBlock = (props) => {
     data.append("withAction", !withAction)
 
     axios
-      .post(`${process.env.REACT_APP_API}/admin/products/update/`, data, {
-        withCredentials: true,
-      })
+      .post("/admin/products/update/", data)
       .then((res) => {
         setSnackbarMessage("Акційний статус змінено")
         setSnackbarSeverity("success")

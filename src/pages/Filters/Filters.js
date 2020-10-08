@@ -60,11 +60,7 @@ const FilterBlock = (props) => {
       updatedCategory.append("nameRU", newNameRU)
 
       axios
-        .post(
-          `${process.env.REACT_APP_API}/admin/filters/update/`,
-          updatedCategory,
-          { withCredentials: true }
-        )
+        .post("/admin/filters/update/", updatedCategory)
         .then((res) => {
           setSnackbarSeverity("success")
           setSnackbarMessage("Фільтр успішно оновлено")
@@ -108,9 +104,7 @@ const FilterBlock = (props) => {
     data.append("id", props.filter.id)
 
     axios
-      .post(`${process.env.REACT_APP_API}/admin/filters/delete/`, data, {
-        withCredentials: true,
-      })
+      .post("/admin/filters/delete/", data)
       .then((res) => {
         setSnackbarSeverity("success")
         setSnackbarMessage("Фільтр успішно видалено")
@@ -235,19 +229,13 @@ const Filters = (props) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      axios(`${process.env.REACT_APP_API}/admin/category_groups/`, {
-        withCredentials: true,
-      }).then((res) => {
+      axios("/admin/category_groups/").then((res) => {
         setGroups(res.data)
       })
-      axios(`${process.env.REACT_APP_API}/admin/categories/`, {
-        withCredentials: true,
-      }).then((res) => {
+      axios("/admin/categories/").then((res) => {
         setCategories(res.data)
       })
-      axios(`${process.env.REACT_APP_API}/admin/filters/`, {
-        withCredentials: true,
-      }).then((res) => {
+      axios("/admin/filters/").then((res) => {
         setFilters(res.data)
       })
     }
@@ -281,9 +269,7 @@ const Filters = (props) => {
     data.append("nameRU", nameRU)
 
     axios
-      .post(`${process.env.REACT_APP_API}/admin/filters/create/`, data, {
-        withCredentials: true,
-      })
+      .post("/admin/filters/create/", data)
       .then((res) => {
         setFilters([...filters, res.data])
 

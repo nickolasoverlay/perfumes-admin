@@ -8,7 +8,7 @@ import { Button, IconButton, Typography, MenuItem } from "@material-ui/core"
 import { ExpandMore, ExpandLess, MoreVert } from "@material-ui/icons"
 import "./Admins.css"
 
-const AdminBlock = props => {
+const AdminBlock = (props) => {
   const { name, authState } = props
 
   const [isEditing, setIsEditing] = useState(false)
@@ -22,7 +22,7 @@ const AdminBlock = props => {
       ) : (
         <>
           <div className="Bubble--menu">
-            <IconButton onClick={e => setBlockAnchor(e.currentTarget)}>
+            <IconButton onClick={(e) => setBlockAnchor(e.currentTarget)}>
               <MoreVert />
             </IconButton>
             <Menu
@@ -65,20 +65,18 @@ const AdminBlock = props => {
   )
 }
 
-const Admins = props => {
+const Admins = (props) => {
   const { isLoggedIn } = props
   const [admins, setAdmins] = useState([])
 
   useEffect(() => {
     if (isLoggedIn) {
-      axios(`${process.env.REACT_APP_API}/admin/admins/`, {
-        withCredentials: true
-      })
-        .then(res => {
+      axios("/admin/admins/")
+        .then((res) => {
           console.log("ADMINS: ", res.data)
           setAdmins(res.data)
         })
-        .catch(err => {
+        .catch((err) => {
           console.log("ADMINS_ERR: ", err.config)
         })
     }
@@ -95,7 +93,7 @@ const Admins = props => {
         )}
       </div>
       <div className="Admins Shell">
-        {admins.map(admin => {
+        {admins.map((admin) => {
           return (
             <AdminBlock key={admin.id} {...admin} authState={props.authState} />
           )
@@ -105,10 +103,10 @@ const Admins = props => {
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     authState: state.authReducer,
-    isLoggedIn: state.authReducer.isLoggedIn
+    isLoggedIn: state.authReducer.isLoggedIn,
   }
 }
 

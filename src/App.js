@@ -18,10 +18,11 @@ import Messages from "./pages/Messages"
 const App = (props) => {
   const { logIn } = props
 
+  axios.defaults.baseURL = process.env.REACT_APP_API
+  axios.defaults.withCredentials = true
+
   useEffect(() => {
-    axios(`${process.env.REACT_APP_API}/admin/session/`, {
-      withCredentials: true,
-    })
+    axios("/admin/session/")
       .then((res) => {
         logIn(res.data)
       })

@@ -17,9 +17,7 @@ const Messages = ({ isLoggedIn }) => {
   const [snackBarMessage, setSnackBarMessage] = useState("")
 
   useEffect(() => {
-    axios(`${process.env.REACT_APP_API}/admin/messages/`, {
-      withCredentials: true,
-    }).then((res) => {
+    axios("/admin/messages/").then((res) => {
       setMessages([...res.data])
     })
   }, [isLoggedIn])
@@ -30,11 +28,7 @@ const Messages = ({ isLoggedIn }) => {
     data.append("answered", newStatus)
 
     axios
-      .post(
-        `${process.env.REACT_APP_API}/admin/messages/change_status/`,
-        data,
-        { withCredentials: true }
-      )
+      .post("/admin/messages/change_status/", data)
       .then((res) => {
         const m = [...messages]
         const index = m.findIndex((m) => m.id === id)

@@ -59,9 +59,7 @@ const OrderBlock = ({ info, items, index, onStatusUpdate }) => {
     data.append("status", newStatus)
 
     axios
-      .post(`${process.env.REACT_APP_API}/admin/orders/changestatus/`, data, {
-        withCredentials: true,
-      })
+      .post("/admin/orders/changestatus/", data)
       .then((res) => {
         console.log(
           "UPDATE_ORDER_STATUS OF ORDER",

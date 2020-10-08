@@ -74,11 +74,7 @@ const CategoryBlock = (props) => {
       updatedCategory.append("url", newURL)
 
       axios
-        .post(
-          `${process.env.REACT_APP_API}/admin/categories/update/`,
-          updatedCategory,
-          { withCredentials: true }
-        )
+        .post("/admin/categories/update/", updatedCategory)
         .then((res) => {
           setSnackbarSeverity("success")
           setSnackbarMessage("Категорія успішно оновлена")
@@ -272,16 +268,12 @@ const Categories = (props) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      axios(`${process.env.REACT_APP_API}/admin/category_groups/`, {
-        withCredentials: true,
-      }).then((res) => {
+      axios("/admin/category_groups/").then((res) => {
         console.log("AVAILABLE_CATEGORIES: ", res.data)
         setGroups(res.data)
       })
 
-      axios(`${process.env.REACT_APP_API}/admin/categories/`, {
-        withCredentials: true,
-      }).then((res) => {
+      axios("/admin/categories/").then((res) => {
         console.log("AVAILABLE_CATEGORIES: ", res.data)
         setCategories(res.data)
       })
@@ -307,9 +299,7 @@ const Categories = (props) => {
     category.append("url", url)
 
     axios
-      .post(`${process.env.REACT_APP_API}/admin/categories/create/`, category, {
-        withCredentials: true,
-      })
+      .post("/admin/categories/create/", category)
       .then((res) => {
         setSnackbarSeverity("success")
         setSnackbarMessage("Категорія успішно добавлена")
@@ -334,9 +324,7 @@ const Categories = (props) => {
     data.append("id", id)
 
     axios
-      .post(`${process.env.REACT_APP_API}/admin/categories/delete/`, data, {
-        withCredentials: true,
-      })
+      .post("/admin/categories/delete/", data)
       .then((res) => {
         setSnackbarSeverity("success")
         setSnackbarMessage("Категорія успішно видалена")

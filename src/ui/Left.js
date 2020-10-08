@@ -10,9 +10,7 @@ import * as actions from "./../store/actions"
 const Left = (props) => {
   const { logOut } = props
   const handleLogOut = () => {
-    axios(`${process.env.REACT_APP_API}/admin/logout/`, {
-      withCredentials: true,
-    })
+    axios("/admin/logout/")
       .then((res) => {
         logOut()
       })

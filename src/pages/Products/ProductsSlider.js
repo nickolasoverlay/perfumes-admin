@@ -10,7 +10,7 @@ const ProductsSlider = ({
   setDialogPhotos,
   dialogPhotosChange,
   product,
-  editMode
+  editMode,
 }) => {
   const [curPhoto, setCurPhoto] = useState(0)
 
@@ -24,27 +24,23 @@ const ProductsSlider = ({
       console.log(dialogPhotos[curPhoto])
 
       axios
-        .post(
-          `${process.env.REACT_APP_API}/admin/products/delete_picture/`,
-          data,
-          { withCredentials: true }
-        )
-        .then(res => {
+        .post("/admin/products/delete_picture/", data)
+        .then((res) => {
           setDialogPhotos(
-            dialogPhotos.filter(photo => photo !== dialogPhotos[curPhoto])
+            dialogPhotos.filter((photo) => photo !== dialogPhotos[curPhoto])
           )
         })
-        .catch(err => {})
+        .catch((err) => {})
     } else {
       setDialogPhotos(
-        dialogPhotos.filter(photo => photo.url !== dialogPhotos[curPhoto].url)
+        dialogPhotos.filter((photo) => photo.url !== dialogPhotos[curPhoto].url)
       )
     }
 
     setCurPhoto(0)
   }
 
-  const uploadNewPhotos = e => {
+  const uploadNewPhotos = (e) => {
     const data = new FormData()
 
     data.append("product", product)
@@ -60,16 +56,12 @@ const ProductsSlider = ({
     })
 
     axios
-      .post(
-        `${process.env.REACT_APP_API}/admin/products/add_picture_to_product/`,
-        data,
-        { withCredentials: true }
-      )
-      .then(res => {
+      .post(`/admin/products/add_picture_to_product/`, data)
+      .then((res) => {
         console.log(res.data)
         setDialogPhotos([...dialogPhotos, ...res.data])
       })
-      .catch(err => {})
+      .catch((err) => {})
   }
 
   const buidImageURL = () => {
@@ -80,7 +72,7 @@ const ProductsSlider = ({
     }
   }
 
-  const handleAddChange = e => {
+  const handleAddChange = (e) => {
     if (editMode) {
       uploadNewPhotos(e)
     } else {
@@ -100,7 +92,7 @@ const ProductsSlider = ({
             <input
               type="file"
               multiple
-              onChange={e => handleAddChange(e)}
+              onChange={(e) => handleAddChange(e)}
               id="p-file"
               accept="image/*"
               style={{ display: "none" }}
@@ -126,7 +118,7 @@ const ProductsSlider = ({
               style={{
                 height: "350px",
                 width: "400px",
-                background: `url('${buidImageURL()}')`
+                background: `url('${buidImageURL()}')`,
               }}
             />
           </div>

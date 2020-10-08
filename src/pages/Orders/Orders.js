@@ -39,9 +39,7 @@ const Orders = (props) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      axios(`${process.env.REACT_APP_API}/admin/orders/`, {
-        withCredentials: true,
-      })
+      axios("/admin/orders/")
         .then((res) => {
           console.log("AVAILABLE_ORDERS: ", res.data)
           setOrders(res.data)

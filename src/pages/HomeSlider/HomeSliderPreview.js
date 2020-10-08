@@ -12,7 +12,7 @@ import {
   IconButton,
   Typography,
   Button,
-  TextField
+  TextField,
 } from "@material-ui/core"
 
 import { MoreVertOutlined as MoreVert } from "@material-ui/icons"
@@ -50,10 +50,8 @@ const Slide = ({ slide, isActive, editOpen, closeEdit }) => {
     data.append("url", newURL)
 
     axios
-      .post(`${process.env.REACT_APP_API}/admin/home_slider/update/`, data, {
-        withCredentials: true
-      })
-      .then(res => {
+      .post("/admin/home_slider/update/", data)
+      .then((res) => {
         console.log("SLIDE_UPDATE_RESPONSE: ", res.data)
 
         setTextUA(newTextUA)
@@ -63,7 +61,7 @@ const Slide = ({ slide, isActive, editOpen, closeEdit }) => {
         setSnackBarSeverity("success")
         setSnackBarText("Зміни успішно збережені")
       })
-      .catch(err => {
+      .catch((err) => {
         setSnackBarSeverity("error")
         setSnackBarText("Не вдалося зберегти зміни")
       })
@@ -80,25 +78,25 @@ const Slide = ({ slide, isActive, editOpen, closeEdit }) => {
         <TextField
           defaultValue={textUA}
           label={`Текст (UA): ${newTextUA.length} / 64`}
-          onChange={e => setNewTextUA(e.target.value)}
+          onChange={(e) => setNewTextUA(e.target.value)}
           fullWidth
         />
         <TextField
           defaultValue={textRU}
           label={`Текст (RU): ${newTextRU.length} / 64`}
-          onChange={e => setNewTextRU(e.target.value)}
+          onChange={(e) => setNewTextRU(e.target.value)}
           fullWidth
         />
         <TextField
           defaultValue={url}
           label={`URL: ${newURL.length} / 64`}
-          onChange={e => setNewURL(e.target.value)}
+          onChange={(e) => setNewURL(e.target.value)}
           InputProps={{
             startAdornment: (
               <InputAdornment>
                 https://test.yva.com.ua/collections/
               </InputAdornment>
-            )
+            ),
           }}
           fullWidth
         />
@@ -136,14 +134,14 @@ const Slide = ({ slide, isActive, editOpen, closeEdit }) => {
           height: 400,
           display: isActive ? "block" : "none",
           width: "100%",
-          background: `url('${process.env.REACT_APP_API}/media/${slide.picture}')`
+          background: `url('${process.env.REACT_APP_API}/media/${slide.picture}')`,
         }}
       ></div>
     </div>
   )
 }
 
-const HomeSliderPreview = props => {
+const HomeSliderPreview = (props) => {
   const { onDelete, slides } = props
 
   const [curPhoto, setCurPhoto] = useState(0)
@@ -169,17 +167,15 @@ const HomeSliderPreview = props => {
     data.append("id", slides[curPhoto].id)
 
     axios
-      .post(`${process.env.REACT_APP_API}/admin/home_slider/delete/`, data, {
-        withCredentials: true
-      })
-      .then(res => {
+      .post("/admin/home_slider/delete/", data)
+      .then((res) => {
         console.log("[HOME_SLIDER_DELETE]: ", res.data)
         onDelete(slides[curPhoto].id)
 
         setSnackBarSeverity("success")
         setSnackBarText("Категорія успішно видалена")
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("[HOME_SLIDER_DELETE_ERROR]: ", err)
 
         setSnackBarSeverity("error")
@@ -227,9 +223,9 @@ const HomeSliderPreview = props => {
 
       {slides.length !== 0 && (
         <IconButton
-          onClick={e => setMenuAnchor(e.target)}
+          onClick={(e) => setMenuAnchor(e.target)}
           style={{
-            float: "right"
+            float: "right",
           }}
         >
           <MoreVert />

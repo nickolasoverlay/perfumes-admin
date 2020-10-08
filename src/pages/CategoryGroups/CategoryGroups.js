@@ -64,11 +64,7 @@ const GroupBlock = (props) => {
       updatedCategory.append("url", newURL)
 
       axios
-        .post(
-          `${process.env.REACT_APP_API}/admin/category_groups/update/`,
-          updatedCategory,
-          { withCredentials: true }
-        )
+        .post("/admin/category_groups/update/", updatedCategory)
         .then((res) => {
           setSnackbarSeverity("success")
           setSnackbarMessage("Колекцію успішно оновлено")
@@ -223,9 +219,7 @@ const CategoryGroups = (props) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      axios(`${process.env.REACT_APP_API}/admin/category_groups/`, {
-        withCredentials: true,
-      }).then((res) => {
+      axios("/admin/category_groups/").then((res) => {
         setGroups(res.data)
       })
     }
@@ -246,11 +240,7 @@ const CategoryGroups = (props) => {
     group.append("url", url)
 
     axios
-      .post(
-        `${process.env.REACT_APP_API}/admin/category_groups/create/`,
-        group,
-        { withCredentials: true }
-      )
+      .post("/admin/category_groups/create/", group)
       .then((res) => {
         setSnackbarSeverity("success")
         setSnackbarMessage("Колекція успішно створена")
@@ -275,11 +265,7 @@ const CategoryGroups = (props) => {
     data.append("id", id)
 
     axios
-      .post(
-        `${process.env.REACT_APP_API}/admin/category_groups/delete/`,
-        data,
-        { withCredentials: true }
-      )
+      .post("/admin/category_groups/delete/", data)
       .then((res) => {
         setSnackbarSeverity("success")
         setSnackbarMessage("Колекція успішно видалена")

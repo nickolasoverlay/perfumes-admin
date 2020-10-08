@@ -9,7 +9,7 @@ import {
   DialogContent,
   DialogActions,
   TextField,
-  InputAdornment
+  InputAdornment,
 } from "@material-ui/core"
 
 import Snackbar from "./../../ui/Snackbar"
@@ -30,7 +30,7 @@ const DialogSlider = ({ dialogPhotos }) => {
               style={{
                 height: "350px",
                 width: "400px",
-                background: `url('${dialogPhotos[curPhoto].url}')`
+                background: `url('${dialogPhotos[curPhoto].url}')`,
               }}
             />
           </div>
@@ -53,7 +53,7 @@ const DialogSlider = ({ dialogPhotos }) => {
   )
 }
 
-const HomeSlider = props => {
+const HomeSlider = (props) => {
   const { isLoggedIn } = props
 
   const [slides, setSlides] = useState([])
@@ -72,32 +72,31 @@ const HomeSlider = props => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      axios(`${process.env.REACT_APP_API}/home_slider/`).then(res => {
-        console.log(res.data)
+      axios("/home_slider/").then((res) => {
         setSlides(res.data)
       })
     }
   }, [isLoggedIn])
 
-  const handleTextUA = e => {
+  const handleTextUA = (e) => {
     if (e.target.value.length <= 64) {
       setTextUA(e.target.value)
     }
   }
 
-  const handleTextRU = e => {
+  const handleTextRU = (e) => {
     if (e.target.value.length <= 64) {
       setTextRU(e.target.value)
     }
   }
 
-  const handleURL = e => {
+  const handleURL = (e) => {
     if (e.target.value.length <= 64) {
       setURL(e.target.value)
     }
   }
 
-  const dialogPhotosChange = e => {
+  const dialogPhotosChange = (e) => {
     let files = []
 
     for (let i = 0; i < e.currentTarget.files.length; i++) {
@@ -107,7 +106,7 @@ const HomeSlider = props => {
       files.push({ url: url, file: f })
     }
 
-    setDialogPhotos(f => f.concat(...files))
+    setDialogPhotos((f) => f.concat(...files))
   }
 
   const isValid =
@@ -135,17 +134,14 @@ const HomeSlider = props => {
     data.append("picture", dialogPhotos[0].file)
 
     axios
-      .post(`${process.env.REACT_APP_API}/admin/home_slider/add/`, data, {
-        withCredentials: true
-      })
-      .then(res => {
-        console.log("[SUBMIT_RESPONSE]: ", res.data)
+      .post("/admin/home_slider/add/", data)
+      .then((res) => {
         setSlides([...slides, res.data])
 
         setSnackBarSeverity("success")
         setSnackBarText("Пропозиція успішно добавлена")
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("ERR: ", err)
 
         setSnackBarSeverity("error")
@@ -181,7 +177,7 @@ const HomeSlider = props => {
                   <InputAdornment>
                     https://test.yva.com.ua/collections/
                   </InputAdornment>
-                )
+                ),
               }}
               onChange={handleURL}
               fullWidth
@@ -192,7 +188,7 @@ const HomeSlider = props => {
           <>
             <input
               type="file"
-              onChange={e => dialogPhotosChange(e)}
+              onChange={(e) => dialogPhotosChange(e)}
               id="p-file"
               accept="image/*"
               style={{ display: "none" }}
@@ -240,8 +236,8 @@ const HomeSlider = props => {
     </Dialog>
   )
 
-  const onDelete = id => {
-    setSlides(s => s.filter(slide => slide.id !== id))
+  const onDelete = (id) => {
+    setSlides((s) => s.filter((slide) => slide.id !== id))
   }
 
   return (
@@ -274,9 +270,9 @@ const HomeSlider = props => {
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isLoggedIn: state.authReducer.isLoggedIn
+    isLoggedIn: state.authReducer.isLoggedIn,
   }
 }
 
