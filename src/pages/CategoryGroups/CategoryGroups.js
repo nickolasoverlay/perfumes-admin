@@ -383,7 +383,7 @@ const CategoryGroups = (props) => {
       <div className="CategoryGroups Shell">
         {groups.length === 0 && (
           <Typography variant="h5" className="NoData">
-            Не має жодної колекції
+            Не існує жодної колекції
           </Typography>
         )}
         {groups.map((group, index) => {

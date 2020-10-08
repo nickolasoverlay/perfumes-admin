@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from "react"
+import axios from "axios"
+import { connect } from "react-redux"
 
 import {
   Typography,
@@ -13,51 +13,51 @@ import {
   IconButton,
   Badge,
   MenuItem,
-} from "@material-ui/core";
+} from "@material-ui/core"
 
-import { MoreVert as MoreVertIcon } from "@material-ui/icons";
+import { MoreVert as MoreVertIcon } from "@material-ui/icons"
 
-import Menu from "./../../ui/Menu";
-import Wrapper from "./../../ui/Wrapper";
-import Snackbar from "./../../ui/Snackbar";
-import Bubble from "./../../ui/Bubble";
-import AutoComplete from "./../../ui/AutoComplete";
+import Menu from "./../../ui/Menu"
+import Wrapper from "./../../ui/Wrapper"
+import Snackbar from "./../../ui/Snackbar"
+import Bubble from "./../../ui/Bubble"
+import AutoComplete from "./../../ui/AutoComplete"
 
-import "./Filters.css";
+import "./Filters.css"
 
 const FilterBlock = (props) => {
-  const [nameUA, setNameUA] = useState(props.filter.name_ua);
-  const [nameRU, setNameRU] = useState(props.filter.name_ru);
+  const [nameUA, setNameUA] = useState(props.filter.name_ua)
+  const [nameRU, setNameRU] = useState(props.filter.name_ru)
 
-  const [newNameUA, setNewNameUA] = useState(props.filter.name_ua);
-  const [newNameRU, setNewNameRU] = useState(props.filter.name_ru);
+  const [newNameUA, setNewNameUA] = useState(props.filter.name_ua)
+  const [newNameRU, setNewNameRU] = useState(props.filter.name_ru)
 
-  const [blockAnchor, setBlockAnchor] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
+  const [blockAnchor, setBlockAnchor] = useState(null)
+  const [isEditing, setIsEditing] = useState(false)
 
   // Snackbar stuff
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const closeSnackbar = () => setSnackbarOpen(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState("")
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success")
+  const closeSnackbar = () => setSnackbarOpen(false)
 
   const stopEditing = () => {
-    setNewNameUA("");
-    setNewNameRU("");
+    setNewNameUA("")
+    setNewNameRU("")
 
-    setIsEditing(false);
-  };
+    setIsEditing(false)
+  }
 
   const applyEdit = () => {
     if (
       (newNameUA !== nameUA && newNameUA.length !== 0) ||
       (newNameRU !== nameRU && newNameRU.length !== 0)
     ) {
-      const updatedCategory = new FormData();
+      const updatedCategory = new FormData()
 
-      updatedCategory.append("id", props.filter.id);
-      updatedCategory.append("nameUA", newNameUA);
-      updatedCategory.append("nameRU", newNameRU);
+      updatedCategory.append("id", props.filter.id)
+      updatedCategory.append("nameUA", newNameUA)
+      updatedCategory.append("nameRU", newNameRU)
 
       axios
         .post(
@@ -66,71 +66,71 @@ const FilterBlock = (props) => {
           { withCredentials: true }
         )
         .then((res) => {
-          setSnackbarSeverity("success");
-          setSnackbarMessage("Фільтр успішно оновлено");
-          setSnackbarOpen(true);
+          setSnackbarSeverity("success")
+          setSnackbarMessage("Фільтр успішно оновлено")
+          setSnackbarOpen(true)
 
           if (newNameUA !== "") {
-            setNameUA(newNameUA);
+            setNameUA(newNameUA)
           }
           if (newNameRU !== "") {
-            setNameRU(newNameRU);
+            setNameRU(newNameRU)
           }
         })
         .catch((err) => {
-          setSnackbarSeverity("error");
-          setSnackbarMessage("Не вдалось оновити фільтр");
-          setSnackbarOpen(true);
+          setSnackbarSeverity("error")
+          setSnackbarMessage("Не вдалось оновити фільтр")
+          setSnackbarOpen(true)
 
-          console.log("UPDATE_CATEGORY_GROUP_ERR: ", err);
-        });
+          console.log("UPDATE_CATEGORY_GROUP_ERR: ", err)
+        })
     }
 
-    setIsEditing(false);
-  };
+    setIsEditing(false)
+  }
 
   const handleNameUA = (e) => {
-    const v = e.target.value;
+    const v = e.target.value
     if (v.length <= 64) {
-      setNewNameUA(v);
+      setNewNameUA(v)
     }
-  };
+  }
 
   const handleNameRU = (e) => {
-    const v = e.target.value;
+    const v = e.target.value
     if (v.length <= 64) {
-      setNewNameRU(v);
+      setNewNameRU(v)
     }
-  };
+  }
 
   const handleDelete = () => {
-    const data = new FormData();
-    data.append("id", props.filter.id);
+    const data = new FormData()
+    data.append("id", props.filter.id)
 
     axios
       .post(`${process.env.REACT_APP_API}/admin/filters/delete/`, data, {
         withCredentials: true,
       })
       .then((res) => {
-        setSnackbarSeverity("success");
-        setSnackbarMessage("Фільтр успішно видалено");
-        setSnackbarOpen(true);
+        setSnackbarSeverity("success")
+        setSnackbarMessage("Фільтр успішно видалено")
+        setSnackbarOpen(true)
 
         props.setFilters(
           props.filters.filter((filter) => filter.id !== props.filter.id)
-        );
+        )
       })
       .catch((err) => {
-        setSnackbarSeverity("error");
-        setSnackbarMessage("Не вдалося видалити фільтр");
-        setSnackbarOpen(true);
+        setSnackbarSeverity("error")
+        setSnackbarMessage("Не вдалося видалити фільтр")
+        setSnackbarOpen(true)
       })
       .finally(() => {
-        setNewNameUA(nameUA);
-        setNewNameRU(nameRU);
-        setBlockAnchor(null);
-      });
-  };
+        setNewNameUA(nameUA)
+        setNewNameRU(nameRU)
+        setBlockAnchor(null)
+      })
+  }
 
   return (
     <Bubble>
@@ -185,8 +185,8 @@ const FilterBlock = (props) => {
             >
               <MenuItem
                 onClick={() => {
-                  setIsEditing(true);
-                  setBlockAnchor(null);
+                  setIsEditing(true)
+                  setBlockAnchor(null)
                 }}
               >
                 Редагувати
@@ -208,132 +208,132 @@ const FilterBlock = (props) => {
         </>
       )}
     </Bubble>
-  );
-};
+  )
+}
 
 const Filters = (props) => {
-  const { isLoggedIn } = props;
+  const { isLoggedIn } = props
 
-  const [groups, setGroups] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [filters, setFilters] = useState([]);
+  const [groups, setGroups] = useState([])
+  const [categories, setCategories] = useState([])
+  const [filters, setFilters] = useState([])
 
-  const [categoryIndex, setCategoryIndex] = useState(0); // Index of category
-  const [categoryAnchor, setCategoryAnchor] = useState(null);
+  const [categoryIndex, setCategoryIndex] = useState(0) // Index of category
+  const [categoryAnchor, setCategoryAnchor] = useState(null)
 
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false)
 
-  const [nameUA, setNameUA] = useState("");
-  const [nameRU, setNameRU] = useState("");
-  const [category, setCategory] = useState(0);
+  const [nameUA, setNameUA] = useState("")
+  const [nameRU, setNameRU] = useState("")
+  const [category, setCategory] = useState(0)
 
   // Snackbar stuff
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const closeSnackbar = () => setSnackbarOpen(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState("")
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success")
+  const closeSnackbar = () => setSnackbarOpen(false)
 
   useEffect(() => {
     if (isLoggedIn) {
       axios(`${process.env.REACT_APP_API}/admin/category_groups/`, {
         withCredentials: true,
       }).then((res) => {
-        setGroups(res.data);
-      });
+        setGroups(res.data)
+      })
       axios(`${process.env.REACT_APP_API}/admin/categories/`, {
         withCredentials: true,
       }).then((res) => {
-        setCategories(res.data);
-      });
+        setCategories(res.data)
+      })
       axios(`${process.env.REACT_APP_API}/admin/filters/`, {
         withCredentials: true,
       }).then((res) => {
-        setFilters(res.data);
-      });
+        setFilters(res.data)
+      })
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn])
 
   const closeDialog = () => {
-    setNameUA("");
-    setNameRU("");
-    setOpenDialog(false);
-  };
+    setNameUA("")
+    setNameRU("")
+    setOpenDialog(false)
+  }
 
   const handleNameUA = (e) => {
     if (e.target.value.length <= 64) {
-      setNameUA(e.target.value);
+      setNameUA(e.target.value)
     }
-  };
+  }
 
   const handleNameRU = (e) => {
     if (e.target.value.length <= 64) {
-      setNameRU(e.target.value);
+      setNameRU(e.target.value)
     }
-  };
+  }
 
-  const isValid = nameUA !== "" && nameRU !== "" && category !== 0;
+  const isValid = nameUA !== "" && nameRU !== "" && category !== 0
 
   const handleSubmit = () => {
-    const data = new FormData();
+    const data = new FormData()
 
-    data.append("category", category);
-    data.append("nameUA", nameUA);
-    data.append("nameRU", nameRU);
+    data.append("category", category)
+    data.append("nameUA", nameUA)
+    data.append("nameRU", nameRU)
 
     axios
       .post(`${process.env.REACT_APP_API}/admin/filters/create/`, data, {
         withCredentials: true,
       })
       .then((res) => {
-        setFilters([...filters, res.data]);
+        setFilters([...filters, res.data])
 
-        setSnackbarSeverity("success");
-        setSnackbarMessage("Фільтр успішно добавлено");
+        setSnackbarSeverity("success")
+        setSnackbarMessage("Фільтр успішно добавлено")
       })
       .catch((err) => {
-        setSnackbarSeverity("error");
-        setSnackbarMessage("Не вдалося добавити фільтр");
+        setSnackbarSeverity("error")
+        setSnackbarMessage("Не вдалося добавити фільтр")
       })
       .finally(() => {
-        setSnackbarOpen(true);
-        closeDialog();
-      });
-  };
+        setSnackbarOpen(true)
+        closeDialog()
+      })
+  }
 
   const getCategoryLabel = (category) => {
     if (category) {
-      const group = groups.find((gr) => gr.id === category.group_id);
+      const group = groups.find((gr) => gr.id === category.group_id)
 
       if (group) {
-        return `[${group.name_ua}] ${category.name_ua} / [${group.name_ru}] ${category.name_ru}`;
+        return `[${group.name_ua}] ${category.name_ua} / [${group.name_ru}] ${category.name_ru}`
       }
 
-      return "";
+      return ""
     }
 
-    return "";
-  };
+    return ""
+  }
 
   const getCategoryLabelShort = (category) => {
     if (category) {
-      const group = groups.find((gr) => gr.id === category.group_id);
+      const group = groups.find((gr) => gr.id === category.group_id)
 
       if (group) {
-        return `[${group.name_ua}] ${category.name_ua}`;
+        return `[${group.name_ua}] ${category.name_ua}`
       }
 
-      return "";
+      return ""
     }
 
-    return "";
-  };
+    return ""
+  }
 
   const filtersInCategory = (categoryIndex) => {
     const q = filters.filter(
       (filter) => filter.category === categories[categoryIndex].id
-    ).length;
-    return q;
-  };
+    ).length
+    return q
+  }
 
   const addDialog = (
     <Dialog open={openDialog} onClose={closeDialog} fullWidth>
@@ -375,7 +375,7 @@ const Filters = (props) => {
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 
   return (
     <Wrapper>
@@ -413,8 +413,8 @@ const Filters = (props) => {
                     <MenuItem
                       key={category.id}
                       onClick={() => {
-                        setCategoryIndex(index);
-                        setCategoryAnchor(null);
+                        setCategoryIndex(index)
+                        setCategoryAnchor(null)
                       }}
                     >
                       {getCategoryLabelShort(category)}
@@ -423,7 +423,7 @@ const Filters = (props) => {
                         badgeContent={filtersInCategory(index)}
                       ></Badge>
                     </MenuItem>
-                  );
+                  )
                 })}
               </Menu>
             </>
@@ -442,10 +442,10 @@ const Filters = (props) => {
       <div className="Filters">
         {categories.length === 0 && (
           <Typography variant="h5" className="NoData">
-            Для добавлення фільтру потрібно добавити хоча б одну категорію
+            Потрібно створити хоча б одну категорію
           </Typography>
         )}
-        {filters && filters.length === 0 && (
+        {categories.length !== 0 && filters && filters.length === 0 && (
           <Typography variant="h5" className="NoData">
             Не має жодного фільтру
           </Typography>
@@ -458,7 +458,7 @@ const Filters = (props) => {
             (filter) => filter.category === categories[categoryIndex].id
           ).length === 0 && (
             <Typography variant="h5" className="NoData">
-              Для цієї категорії не було додано жодного фільтру
+              Категорія не має фільтрів
             </Typography>
           )}
         {categories &&
@@ -478,17 +478,17 @@ const Filters = (props) => {
                     categories.find((c) => c.id === filter.category)
                   )}
                 />
-              );
+              )
             })}
       </div>
     </Wrapper>
-  );
-};
+  )
+}
 
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.authReducer.isLoggedIn,
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps)(Filters);
+export default connect(mapStateToProps)(Filters)

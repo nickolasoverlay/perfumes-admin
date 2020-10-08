@@ -19,7 +19,7 @@
     "redux": "^4.0.5"
   },
   "scripts": {
-    "start": "REACT_APP_API=http://localhost:8080 react-scripts start",
+    "start": "PORT=3001 REACT_APP_API=http://localhost:8080 react-scripts start",
     "build": "react-scripts build",
     "deploy": "yarn build && firebase deploy",
     "test": "react-scripts test",

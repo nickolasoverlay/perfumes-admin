@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
 import {
   IconButton,
@@ -7,129 +7,138 @@ import {
   TextField,
   Typography,
   Button,
-} from "@material-ui/core";
+} from "@material-ui/core"
 
 import {
   ExpandMore,
   ExpandLess,
   MoreVertOutlined as MoreVert,
-} from "@material-ui/icons";
+} from "@material-ui/icons"
 
-import Bubble from "./../../ui/Bubble";
-import Snackbar from "./../../ui/Snackbar";
-import AutoComplete from "./../../ui/AutoComplete";
+import Bubble from "./../../ui/Bubble"
+import Snackbar from "./../../ui/Snackbar"
+import AutoComplete from "./../../ui/AutoComplete"
 
-import ProductSlider from "./ProductsSlider";
-import axios from "axios";
+import ProductSlider from "./ProductsSlider"
+import axios from "axios"
 
 const ProductBlock = (props) => {
   // Use those variables to override state locally
-  const [nameUA, setNameUA] = useState(props.name_ua);
-  const [nameRU, setNameRU] = useState(props.name_ru);
-  const [category, setCategory] = useState(props.category);
-  const [filter, setFilter] = useState(props.filter);
-  const [shortUA, setShortUA] = useState(props.short_ua);
-  const [shortRU, setShortRU] = useState(props.short_ru);
-  const [descriptionUA, setDescriptionUA] = useState(props.description_ua);
-  const [descriptionRU, setDescriptionRU] = useState(props.description_ru);
-  const [instructionUA, setInstructionUA] = useState(props.instruction_ua);
-  const [instructionRU, setInstructionRU] = useState(props.instruction_ru);
-  const [componentsUA, setComponentsUA] = useState(props.components_ua);
-  const [componentsRU, setComponentsRU] = useState(props.components_ru);
-  const [price, setPrice] = useState(props.price);
-  const [updatedPrice, setUpdatedPrice] = useState(props.new_price);
+  const [nameUA, setNameUA] = useState(props.name_ua)
+  const [nameRU, setNameRU] = useState(props.name_ru)
+  const [category, setCategory] = useState(props.category)
+  const [filter, setFilter] = useState(props.filter)
+  const [shortUA, setShortUA] = useState(props.short_ua)
+  const [shortRU, setShortRU] = useState(props.short_ru)
+  const [descriptionUA, setDescriptionUA] = useState(props.description_ua)
+  const [descriptionRU, setDescriptionRU] = useState(props.description_ru)
+  const [instructionUA, setInstructionUA] = useState(props.instruction_ua)
+  const [instructionRU, setInstructionRU] = useState(props.instruction_ru)
+  const [componentsUA, setComponentsUA] = useState(props.components_ua)
+  const [componentsRU, setComponentsRU] = useState(props.components_ru)
+  const [price, setPrice] = useState(props.price)
+  const [updatedPrice, setUpdatedPrice] = useState(props.new_price)
   // const [quantityAvailable, setQuantityAvailable] = useState(quantity_available)
-  const [size, setSize] = useState(props.size);
-  const [additionalSize, setAdditionalSize] = useState(props.additional_size);
-  const [isAvailable, setIsAvailable] = useState(props.is_available);
-  const [withAction, setWithAction] = useState(props.with_action);
+  const [size, setSize] = useState(props.size)
+  const [additionalSize, setAdditionalSize] = useState(props.additional_size)
+  const [isAvailable, setIsAvailable] = useState(props.is_available)
+  const [withAction, setWithAction] = useState(props.with_action)
   // split to ease handling
-  const [photos, setPhotos] = useState(props.picture.split(","));
+  const [photos, setPhotos] = useState(props.picture.split(","))
 
-  const [newNameUA, setNewNameUA] = useState(props.name_ua);
-  const [newNameRU, setNewNameRU] = useState(props.name_ru);
-  const [newCategory, setNewCategory] = useState(props.category);
-  const [newFilter, setNewFilter] = useState(props.filter);
-  const [newShortUA, setNewShortUA] = useState(props.short_ua);
-  const [newShortRU, setNewShortRU] = useState(props.short_ru);
-  const [newDescriptionUA, setNewDescriptionUA] = useState(
-    props.description_ua
-  );
-  const [newDescriptionRU, setNewDescriptionRU] = useState(
-    props.description_ru
-  );
-  const [newInstructionUA, setNewInstructionUA] = useState(
-    props.instruction_ua
-  );
-  const [newInstructionRU, setNewInstructionRU] = useState(
-    props.instruction_ru
-  );
-  const [newComponentsUA, setNewComponentsUA] = useState(props.components_ua);
-  const [newComponentsRU, setNewComponentsRU] = useState(props.components_ru);
-  const [newPrice, setNewPrice] = useState(0);
-  const [newUpdatedPrice, setNewUpdatedPrice] = useState(props.new_price);
+  const [newNameUA, setNewNameUA] = useState(props.name_ua)
+  const [newNameRU, setNewNameRU] = useState(props.name_ru)
+  const [newCategory, setNewCategory] = useState(props.category)
+  const [newFilter, setNewFilter] = useState(props.filter)
+  const [newShortUA, setNewShortUA] = useState(props.short_ua)
+  const [newShortRU, setNewShortRU] = useState(props.short_ru)
+  const [newDescriptionUA, setNewDescriptionUA] = useState(props.description_ua)
+  const [newDescriptionRU, setNewDescriptionRU] = useState(props.description_ru)
+  const [newInstructionUA, setNewInstructionUA] = useState(props.instruction_ua)
+  const [newInstructionRU, setNewInstructionRU] = useState(props.instruction_ru)
+  const [newComponentsUA, setNewComponentsUA] = useState(props.components_ua)
+  const [newComponentsRU, setNewComponentsRU] = useState(props.components_ru)
+  const [newPrice, setNewPrice] = useState(props.price)
+  const [newUpdatedPrice, setNewUpdatedPrice] = useState(props.new_price)
 
   // const [newQuantityAvailable, setNewQuantityAvailable] = useState("")
-  const [newSize, setNewSize] = useState(0);
+  const [newSize, setNewSize] = useState(props.size)
   const [newAdditionalSize, setNewAdditionalSize] = useState(
     props.additional_size
-  );
-  const [newIsAvailable, setNewIsAvailable] = useState(props.is_available);
+  )
 
   // Define card view
-  const VIEW_DEFAULT = 0;
-  const VIEW_EXPANDED = 1;
-  const VIEW_EDITING = 2;
-  const VIEW_IMAGES = 3;
+  const VIEW_DEFAULT = 0
+  const VIEW_EXPANDED = 1
+  const VIEW_EDITING = 2
+  const VIEW_IMAGES = 3
 
-  const [viewMode, setViewMode] = useState(0);
-  const [blockAnchor, setBlockAnchor] = useState(null);
+  const [viewMode, setViewMode] = useState(0)
+  const [blockAnchor, setBlockAnchor] = useState(null)
 
   // Snackbar stuff
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const closeSnackbar = () => setSnackbarOpen(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState("")
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success")
+  const closeSnackbar = () => setSnackbarOpen(false)
+
+  const compString = (n, m) => {
+    const is = n != m && m.length !== 0
+
+    console.log(is)
+
+    return is
+  }
+
+  const compNum = (n, m, name) => {
+    const is = n != m
+    console.log(is, "[n,m]: ", name, n, m)
+
+    return is
+  }
+
+  const hasFieldChanged = () => {
+    return (
+      compString(nameUA, newNameUA) ||
+      compString(nameRU, newNameRU) ||
+      compNum(category, newCategory, "category_id") ||
+      compNum(filter, newFilter, "filter_id") ||
+      compString(shortUA, newShortUA) ||
+      compString(shortRU, newShortRU) ||
+      compString(descriptionUA, newDescriptionUA) ||
+      compString(descriptionRU, newDescriptionRU) ||
+      compString(instructionUA, newInstructionUA) ||
+      compString(instructionRU, newInstructionRU) ||
+      compString(componentsUA, newComponentsUA) ||
+      compString(componentsRU, newComponentsRU) ||
+      compNum(price, newPrice, "price") ||
+      compNum(updatedPrice, newUpdatedPrice, "updated_price") ||
+      compNum(size, newSize, "size") ||
+      compNum(additionalSize, newAdditionalSize, "additional_size")
+    )
+  }
 
   const applyEdit = () => {
-    if (
-      (newNameUA !== nameUA && newNameUA.length !== 0) ||
-      (newNameRU !== nameRU && newNameRU.length !== 0) ||
-      newCategory !== category ||
-      newFilter !== filter ||
-      (newShortUA !== shortUA && newShortUA.length !== 0) ||
-      (newShortRU !== shortRU && newShortRU.length !== 0) ||
-      (newDescriptionUA !== descriptionUA && newDescriptionUA.length !== 0) ||
-      (newDescriptionRU !== descriptionRU && newDescriptionRU.length !== 0) ||
-      (newInstructionUA !== instructionUA && newInstructionUA.length !== 0) ||
-      (newInstructionRU !== instructionRU && newInstructionRU.length !== 0) ||
-      (newComponentsUA !== componentsUA && newComponentsUA.length !== 0) ||
-      (newComponentsRU !== componentsRU && newComponentsRU.length !== 0) ||
-      (newPrice !== price && newPrice !== 0) ||
-      (newAdditionalSize !== size && newAdditionalSize !== 0) ||
-      (newSize !== size && newSize !== 0)(
-        newUpdatedPrice !== updatedPrice && newUpdatedPrice !== 0
-      )
-    ) {
-      let updatedProduct = new FormData();
+    if (hasFieldChanged()) {
+      const updatedProduct = new FormData()
 
-      updatedProduct.append("id", props.id);
-      updatedProduct.append("category", newCategory);
-      updatedProduct.append("filter", newFilter);
-      updatedProduct.append("nameUA", newNameUA);
-      updatedProduct.append("nameRU", newNameRU);
-      updatedProduct.append("shortUA", newShortUA);
-      updatedProduct.append("shortRU", newShortRU);
-      updatedProduct.append("descriptionUA", newDescriptionUA);
-      updatedProduct.append("descriptionRU", newDescriptionRU);
-      updatedProduct.append("instructionUA", newInstructionUA);
-      updatedProduct.append("instructionRU", newInstructionRU);
-      updatedProduct.append("componentsUA", newComponentsUA);
-      updatedProduct.append("componentsRU", newComponentsRU);
-      updatedProduct.append("price", newPrice);
-      updatedProduct.append("new_price", newUpdatedPrice);
-      updatedProduct.append("size", newSize);
-      updatedProduct.append("additionalSize", newAdditionalSize);
+      updatedProduct.append("id", props.id)
+      updatedProduct.append("category", newCategory)
+      updatedProduct.append("filter", newFilter)
+      updatedProduct.append("nameUA", newNameUA)
+      updatedProduct.append("nameRU", newNameRU)
+      updatedProduct.append("shortUA", newShortUA)
+      updatedProduct.append("shortRU", newShortRU)
+      updatedProduct.append("descriptionUA", newDescriptionUA)
+      updatedProduct.append("descriptionRU", newDescriptionRU)
+      updatedProduct.append("instructionUA", newInstructionUA)
+      updatedProduct.append("instructionRU", newInstructionRU)
+      updatedProduct.append("componentsUA", newComponentsUA)
+      updatedProduct.append("componentsRU", newComponentsRU)
+      updatedProduct.append("price", newPrice)
+      updatedProduct.append("new_price", newUpdatedPrice)
+      updatedProduct.append("size", newSize)
+      updatedProduct.append("additionalSize", newAdditionalSize)
 
       axios
         .post(
@@ -138,150 +147,150 @@ const ProductBlock = (props) => {
           { withCredentials: true }
         )
         .then((res) => {
-          setSnackbarMessage("Продукт успішно оновлено");
-          setSnackbarSeverity("success");
-          setSnackbarOpen(true);
+          setSnackbarMessage("Продукт успішно оновлено")
+          setSnackbarSeverity("success")
+          setSnackbarOpen(true)
 
           if (newNameUA !== "") {
-            setNameUA(newNameUA);
+            setNameUA(newNameUA)
           }
           if (newNameRU !== "") {
-            setNameRU(newNameRU);
+            setNameRU(newNameRU)
           }
-          setCategory(newCategory);
-          setFilter(newFilter);
+          setCategory(newCategory)
+          setFilter(newFilter)
           if (newShortUA !== "") {
-            setShortUA(newShortUA);
+            setShortUA(newShortUA)
           }
           if (newShortRU !== "") {
-            setShortRU(newShortRU);
+            setShortRU(newShortRU)
           }
           if (newDescriptionUA !== "") {
-            setDescriptionUA(newDescriptionUA);
+            setDescriptionUA(newDescriptionUA)
           }
           if (newDescriptionRU !== "") {
-            setDescriptionRU(newDescriptionRU);
+            setDescriptionRU(newDescriptionRU)
           }
           if (newInstructionUA !== "") {
-            setInstructionUA(newInstructionUA);
+            setInstructionUA(newInstructionUA)
           }
           if (newInstructionRU !== "") {
-            setInstructionRU(newInstructionRU);
+            setInstructionRU(newInstructionRU)
           }
           if (newComponentsUA !== "") {
-            setComponentsUA(newComponentsUA);
+            setComponentsUA(newComponentsUA)
           }
           if (newComponentsRU !== "") {
-            setComponentsRU(newComponentsRU);
+            setComponentsRU(newComponentsRU)
           }
           if (newPrice !== 0) {
-            setPrice(newPrice);
+            setPrice(newPrice)
           }
           if (newSize !== 0) {
-            setSize(newSize);
+            setSize(newSize)
           }
           if (newAdditionalSize !== 0) {
-            setAdditionalSize(newAdditionalSize);
+            setAdditionalSize(newAdditionalSize)
           }
           if (newUpdatedPrice !== 0) {
-            setUpdatedPrice(newUpdatedPrice);
+            setUpdatedPrice(newUpdatedPrice)
           }
-          setViewMode(VIEW_DEFAULT);
+          setViewMode(VIEW_DEFAULT)
         })
         .catch((err) => {
-          setSnackbarMessage("Не вдалося оновити продукт");
-          setSnackbarSeverity("error");
-          setSnackbarOpen(true);
+          setSnackbarMessage("Не вдалося оновити продукт")
+          setSnackbarSeverity("error")
+          setSnackbarOpen(true)
 
-          console.log("UPDATE_CATEGORY_ERR: ", err);
+          console.log("UPDATE_CATEGORY_ERR: ", err)
         })
-        .finally(setViewMode(VIEW_DEFAULT));
+        .finally(setViewMode(VIEW_DEFAULT))
     }
-  };
+  }
 
   const categoryLabel = () => {
-    const c = props.categories.find((c) => c.id === category);
+    const c = props.categories.find((c) => c.id === category)
 
     if (c) {
-      return c.name_ua;
+      return c.name_ua
     }
 
-    return "КАТЕГОРІЯ НЕ ПРИСВОЄНА";
-  };
+    return "КАТЕГОРІЯ НЕ ПРИСВОЄНА"
+  }
 
   const filterLabel = () => {
-    const f = props.filters.find((f) => f.id === filter);
+    const f = props.filters.find((f) => f.id === filter)
 
     if (f) {
-      const c = props.categories.find((c) => c.id === f.category);
-      return `[${c.name_ua}] ${f.name_ua}`;
+      const c = props.categories.find((c) => c.id === f.category)
+      return `[${c.name_ua}] ${f.name_ua}`
     }
 
-    return "ФІЛЬТР НЕ ПРИСВОЄНИЙ";
-  };
+    return "ФІЛЬТР НЕ ПРИСВОЄНИЙ"
+  }
 
   const filterOptionLabel = (filter) => {
     if (filter) {
-      const c = props.categories.find((c) => c.id === filter.category);
-      return `[${c.name_ua}] ${filter.name_ua} / [${c.name_ru}] ${filter.name_ru}`;
+      const c = props.categories.find((c) => c.id === filter.category)
+      return `[${c.name_ua}] ${filter.name_ua} / [${c.name_ru}] ${filter.name_ru}`
     }
 
-    return "";
-  };
+    return ""
+  }
 
   const categoryOptionLabel = (category) => {
     if (category) {
-      return category.name_ua + "/" + category.name_ru;
+      return category.name_ua + "/" + category.name_ru
     }
 
-    return "";
-  };
+    return ""
+  }
 
   const changeAvailability = () => {
-    const data = new FormData();
+    const data = new FormData()
 
-    data.append("id", props.id);
-    data.append("is_available", !isAvailable);
+    data.append("id", props.id)
+    data.append("is_available", !isAvailable)
 
     axios
       .post(`${process.env.REACT_APP_API}/admin/products/update/`, data, {
         withCredentials: true,
       })
       .then((res) => {
-        setSnackbarMessage("Статус доступності успішно змінено");
-        setSnackbarSeverity("success");
-        setSnackbarOpen(true);
-        setIsAvailable(!isAvailable);
+        setSnackbarMessage("Статус доступності успішно змінено")
+        setSnackbarSeverity("success")
+        setSnackbarOpen(true)
+        setIsAvailable(!isAvailable)
       })
       .catch((err) => {
-        setSnackbarMessage("Не вдалось змінити статус доступності");
-        setSnackbarSeverity("error");
-        setSnackbarOpen(true);
-      });
-  };
+        setSnackbarMessage("Не вдалось змінити статус доступності")
+        setSnackbarSeverity("error")
+        setSnackbarOpen(true)
+      })
+  }
 
   const changeWithAction = () => {
-    const data = new FormData();
+    const data = new FormData()
 
-    data.append("id", props.id);
-    data.append("withAction", !withAction);
+    data.append("id", props.id)
+    data.append("withAction", !withAction)
 
     axios
       .post(`${process.env.REACT_APP_API}/admin/products/update/`, data, {
         withCredentials: true,
       })
       .then((res) => {
-        setSnackbarMessage("Акційний статус змінено");
-        setSnackbarSeverity("success");
-        setSnackbarOpen(true);
-        setWithAction(!withAction);
+        setSnackbarMessage("Акційний статус змінено")
+        setSnackbarSeverity("success")
+        setSnackbarOpen(true)
+        setWithAction(!withAction)
       })
       .catch((err) => {
-        setSnackbarMessage("Не вдалось змінити акційний статус");
-        setSnackbarSeverity("error");
-        setSnackbarOpen(true);
-      });
-  };
+        setSnackbarMessage("Не вдалось змінити акційний статус")
+        setSnackbarSeverity("error")
+        setSnackbarOpen(true)
+      })
+  }
 
   return (
     <Bubble className={viewMode === VIEW_IMAGES ? "Bubble wide" : "Bubble"}>
@@ -302,32 +311,32 @@ const ProductBlock = (props) => {
         >
           <MenuItem
             onClick={() => {
-              setViewMode(VIEW_DEFAULT);
-              setBlockAnchor(null);
+              setViewMode(VIEW_DEFAULT)
+              setBlockAnchor(null)
             }}
           >
             Згорнути
           </MenuItem>
           <MenuItem
             onClick={() => {
-              setViewMode(VIEW_EDITING);
-              setBlockAnchor(null);
+              setViewMode(VIEW_EDITING)
+              setBlockAnchor(null)
             }}
           >
             Редагувати
           </MenuItem>
           <MenuItem
             onClick={() => {
-              setViewMode(VIEW_IMAGES);
-              setBlockAnchor(null);
+              setViewMode(VIEW_IMAGES)
+              setBlockAnchor(null)
             }}
           >
             Переглянути зображення
           </MenuItem>
           <MenuItem
             onClick={() => {
-              changeAvailability();
-              setBlockAnchor(null);
+              changeAvailability()
+              setBlockAnchor(null)
             }}
           >
             {!isAvailable && "Помітити як доступний"}
@@ -335,8 +344,8 @@ const ProductBlock = (props) => {
           </MenuItem>
           <MenuItem
             onClick={() => {
-              changeWithAction();
-              setBlockAnchor(null);
+              changeWithAction()
+              setBlockAnchor(null)
             }}
           >
             {!withAction && "Помітити як акційний"}
@@ -518,6 +527,7 @@ const ProductBlock = (props) => {
               variant="contained"
               color="primary"
               onClick={applyEdit}
+              disabled={!hasFieldChanged()}
               disableElevation
             >
               Зберегти
@@ -610,7 +620,7 @@ const ProductBlock = (props) => {
         </>
       )}
     </Bubble>
-  );
-};
+  )
+}
 
-export default ProductBlock;
+export default ProductBlock
