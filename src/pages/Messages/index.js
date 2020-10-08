@@ -2,77 +2,11 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { connect } from "react-redux"
 
-import {
-  Button,
-  Badge,
-  Typography,
-  IconButton,
-  MenuItem
-} from "@material-ui/core"
-import MoreVertIcon from "@material-ui/icons/MoreVert"
+import { Button, Badge } from "@material-ui/core"
 
 import Wrapper from "./../../ui/Wrapper"
-import Bubble from "./../../ui/Bubble"
-import Menu from "../../ui/Menu"
 import Snackbar from "../../ui/Snackbar"
-
-const MessageBlock = ({ message, changeStatus }) => {
-  const [blockAnchor, setBlockAnchor] = useState(null)
-
-  return (
-    <Bubble>
-      <div className="Bubble--menu">
-        <IconButton onClick={e => setBlockAnchor(e.target)}>
-          <MoreVertIcon />
-        </IconButton>
-        <Menu
-          anchorEl={blockAnchor}
-          onClose={() => setBlockAnchor(null)}
-          open={Boolean(blockAnchor)}
-        >
-          <MenuItem
-            onClick={() => {
-              changeStatus(message.id, !message.answered)
-              setBlockAnchor(null)
-            }}
-          >
-            {message.answered && "Помітити як необроблене"}
-            {!message.answered && "Помітити як оброблене"}
-          </MenuItem>
-        </Menu>
-      </div>
-      <Typography variant="button">Текст:</Typography>
-      <Typography variant="button">
-        <span
-          className="gray"
-          style={{ display: "inline-block", marginLeft: "15px" }}
-        >
-          {message.text}
-        </span>
-      </Typography>
-      {message.name && (
-        <Typography variant="button">
-          Ім'я відправника: <span className="gray">{message.name}</span>
-        </Typography>
-      )}
-      {message.email && (
-        <Typography variant="button">
-          Електронна пошта: <span className="gray">{message.email}</span>
-        </Typography>
-      )}
-      {message.phone && (
-        <Typography variant="button">
-          Номер телефону: <span className="gray">{message.phone}</span>
-        </Typography>
-      )}
-      {message.user_id !== 0 && (
-        <Typography variant="button">
-          ID користувача: <span className="gray">{message.user_id}</span>
-        </Typography>
-      )}
-    </Bubble>
-  )
-}
+import MessageBlock from "./MessageBlock"
 
 const Messages = ({ isLoggedIn }) => {
   const [messages, setMessages] = useState([])
@@ -84,8 +18,8 @@ const Messages = ({ isLoggedIn }) => {
 
   useEffect(() => {
     axios(`${process.env.REACT_APP_API}/admin/messages/`, {
-      withCredentials: true
-    }).then(res => {
+      withCredentials: true,
+    }).then((res) => {
       setMessages([...res.data])
     })
   }, [isLoggedIn])
@@ -101,9 +35,9 @@ const Messages = ({ isLoggedIn }) => {
         data,
         { withCredentials: true }
       )
-      .then(res => {
+      .then((res) => {
         const m = [...messages]
-        const index = m.findIndex(m => m.id === id)
+        const index = m.findIndex((m) => m.id === id)
         m[index].answered = newStatus
 
         setMessages(m)
@@ -115,7 +49,7 @@ const Messages = ({ isLoggedIn }) => {
         }
         setSnackBarSeverity("success")
       })
-      .catch(err => {
+      .catch((err) => {
         if (newStatus) {
           setSnackBarMessage(
             `Не вдалось позначити повідомлення #${id} як оброблене`
@@ -148,7 +82,7 @@ const Messages = ({ isLoggedIn }) => {
         >
           <Badge
             color="primary"
-            badgeContent={messages.filter(m => m.answered === false).length}
+            badgeContent={messages.filter((m) => m.answered === false).length}
           >
             Очікують відповіді
           </Badge>
@@ -160,7 +94,7 @@ const Messages = ({ isLoggedIn }) => {
         >
           <Badge
             color="primary"
-            badgeContent={messages.filter(m => m.answered === true).length}
+            badgeContent={messages.filter((m) => m.answered === true).length}
           >
             Оброблені Повідомлення
           </Badge>
@@ -171,12 +105,12 @@ const Messages = ({ isLoggedIn }) => {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          flexWrap: "wrap"
+          flexWrap: "wrap",
         }}
       >
         {messages
-          .filter(m => m.answered === Boolean(section))
-          .map(m => (
+          .filter((m) => m.answered === Boolean(section))
+          .map((m) => (
             <MessageBlock message={m} key={m.id} changeStatus={changeStatus} />
           ))}
       </div>
@@ -184,9 +118,9 @@ const Messages = ({ isLoggedIn }) => {
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isLoggedIn: state.authReducer.isLoggedIn
+    isLoggedIn: state.authReducer.isLoggedIn,
   }
 }
 
