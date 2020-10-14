@@ -24,6 +24,40 @@ import Snackbar from "./../../ui/Snackbar"
 
 import "./CategoryGroups.css"
 
+const DialogSlider = ({ dialogPhotos }) => {
+  const [curPhoto, setCurPhoto] = useState(0)
+
+  return (
+    <>
+      {dialogPhotos.length !== 0 && (
+        <>
+          <div className="Products--photoslider--photos">
+            <div
+              style={{
+                height: "350px",
+                width: "400px",
+                background: `url('${dialogPhotos[curPhoto].url}')`,
+              }}
+            />
+          </div>
+          <div className="Products--photoslider--indicator">
+            {dialogPhotos.map((_, i) => {
+              return (
+                <div
+                  key={i.toString()}
+                  className={`Products--photoslider--dot${i === curPhoto ? " current" : ""
+                    }`}
+                  onClick={() => setCurPhoto(i)}
+                ></div>
+              )
+            })}
+          </div>
+        </>
+      )}
+    </>
+  )
+}
+
 const GroupBlock = (props) => {
   const [nameUA, setNameUA] = useState(props.name_ua)
   const [nameRU, setNameRU] = useState(props.name_ru)
@@ -162,41 +196,41 @@ const GroupBlock = (props) => {
           </div>
         </>
       ) : (
-        <>
-          <div className="Bubble--menu">
-            <IconButton onClick={(e) => setBlockAnchor(e.currentTarget)}>
-              <MoreVertIcon />
-            </IconButton>
-            <Menu
-              anchorEl={blockAnchor}
-              open={Boolean(blockAnchor)}
-              onClose={() => setBlockAnchor(null)}
-            >
-              <MenuItem
-                onClick={() => {
-                  setIsEditing(true)
-                  setBlockAnchor(null)
-                }}
+          <>
+            <div className="Bubble--menu">
+              <IconButton onClick={(e) => setBlockAnchor(e.currentTarget)}>
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                anchorEl={blockAnchor}
+                open={Boolean(blockAnchor)}
+                onClose={() => setBlockAnchor(null)}
               >
-                Редагувати
+                <MenuItem
+                  onClick={() => {
+                    setIsEditing(true)
+                    setBlockAnchor(null)
+                  }}
+                >
+                  Редагувати
               </MenuItem>
-              <MenuItem className="red" onClick={props.delete}>
-                Видалити
+                <MenuItem className="red" onClick={props.delete}>
+                  Видалити
               </MenuItem>
-            </Menu>
-          </div>
-          <Typography variant="button">
-            Назва (UA): <span>{nameUA}</span>
-          </Typography>
-          <Typography variant="button">
-            Назва (RU): <span>{nameRU}</span>
-          </Typography>
-          <Typography variant="button">
-            Посилання:{" "}
-            <span className="aqua">https://yva.com.ua/collection/{url}</span>
-          </Typography>
-        </>
-      )}
+              </Menu>
+            </div>
+            <Typography variant="button">
+              Назва (UA): <span>{nameUA}</span>
+            </Typography>
+            <Typography variant="button">
+              Назва (RU): <span>{nameRU}</span>
+            </Typography>
+            <Typography variant="button">
+              Посилання:{" "}
+              <span className="aqua">https://yva.com.ua/collection/{url}</span>
+            </Typography>
+          </>
+        )}
     </Bubble>
   )
 }
@@ -206,6 +240,8 @@ const CategoryGroups = (props) => {
 
   const [groups, setGroups] = useState([])
   const [openDialog, setOpenDialog] = useState(false)
+  const [dialogPhotos, setDialogPhotos] = useState([])
+  const [dialogSection, setDialogSection] = useState(0)
 
   const [nameUA, setNameUA] = useState("")
   const [nameRU, setNameRU] = useState("")
@@ -233,11 +269,12 @@ const CategoryGroups = (props) => {
   }
 
   const addGroup = () => {
-    let group = new FormData()
+    const group = new FormData()
 
     group.append("nameUA", nameUA)
     group.append("nameRU", nameRU)
     group.append("url", url)
+    group.append("wallpaper", dialogPhotos[0].file)
 
     axios
       .post("/admin/category_groups/create/", group)
@@ -290,58 +327,105 @@ const CategoryGroups = (props) => {
     setURL(e.target.value)
   }
 
+  const dialogPhotosChange = (e) => {
+    let files = []
+
+    for (let i = 0; i < e.currentTarget.files.length; i++) {
+      let f = e.currentTarget.files[i]
+      let url = URL.createObjectURL(f)
+
+      files.push({ url: url, file: f })
+    }
+
+    setDialogPhotos((f) => f.concat(...files))
+  }
+
   const isValid = nameUA !== "" && nameRU !== "" && url !== ""
 
   const dialog = (
     <Dialog onClose={closeDialog} open={openDialog} fullWidth>
       <DialogTitle>Нова колекція</DialogTitle>
       <DialogContent>
-        <TextField
-          onChange={handleNameUA}
-          label={`Назва (UA) : ${nameUA.length} / 64`}
-          margin="dense"
-          inputProps={{ maxLength: 64 }}
-          fullWidth
-          autoFocus
-          required
-        />
-        <TextField
-          onChange={handleNameRU}
-          label={`Назва (RU) : ${nameRU.length} / 64`}
-          margin="dense"
-          inputProps={{ maxLength: 64 }}
-          fullWidth
-          required
-        />
-        <TextField
-          onChange={handleURL}
-          label={`Посилання : ${url.length} / 64`}
-          margin="dense"
-          inputProps={{ maxLength: 64 }}
-          fullWidth
-          required
-          InputProps={{
-            startAdornment: (
-              <InputAdornment>
-                https://test.yva.com.ua/collections/
-              </InputAdornment>
-            ),
-          }}
-        />
+        {dialogSection === 0 && <>
+          <TextField
+            onChange={handleNameUA}
+            label={`Назва (UA) : ${nameUA.length} / 64`}
+            margin="dense"
+            inputProps={{ maxLength: 64 }}
+            fullWidth
+            autoFocus
+            required
+          />
+          <TextField
+            onChange={handleNameRU}
+            label={`Назва (RU) : ${nameRU.length} / 64`}
+            margin="dense"
+            inputProps={{ maxLength: 64 }}
+            fullWidth
+            required
+          />
+          <TextField
+            onChange={handleURL}
+            label={`Посилання : ${url.length} / 64`}
+            margin="dense"
+            inputProps={{ maxLength: 64 }}
+            fullWidth
+            required
+            InputProps={{
+              startAdornment: (
+                <InputAdornment>
+                  https://test.yva.com.ua/collections/
+                </InputAdornment>
+              ),
+            }}
+          />
+        </>}
+        {dialogSection === 1 && (
+          <>
+            <input
+              type="file"
+              onChange={(e) => dialogPhotosChange(e)}
+              id="p-file"
+              accept="image/*"
+              style={{ display: "none" }}
+            />
+            <div className="Products--photoslider">
+              <DialogSlider dialogPhotos={dialogPhotos} />
+              {dialogPhotos.length === 0 && (
+                <Button variant="contained" color="primary" disableElevation>
+                  <label htmlFor="p-file">Вибрати фото</label>
+                </Button>
+              )}
+            </div>
+          </>
+        )}
       </DialogContent>
       <DialogActions>
         <Button color="primary" onClick={closeDialog}>
           Відміна
         </Button>
-        <Button
-          color="primary"
-          onClick={addGroup}
-          variant="contained"
-          disableElevation
-          disabled={!isValid}
-        >
-          Добавити
-        </Button>
+        {dialogSection === 0 && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setDialogSection(1)}
+            disableElevation
+            disabled={!isValid}
+          >
+            Вибрати фотографію
+          </Button>
+        )}
+        {dialogSection === 1 && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={addGroup}
+            disableElevation
+            disabled={!isValid}
+          >
+            Добавити
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   )
