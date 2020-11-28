@@ -158,7 +158,7 @@ const Products = (props) => {
       <div className="Products Shell">
         {categories.length === 0 && (
           <Typography variant="h5" className="NoData">
-            Для добавлення товару необхідно добавити хоча б одну категорію
+            Створіть хоча б одну категорію
           </Typography>
         )}
         {categories &&

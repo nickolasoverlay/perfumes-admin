@@ -428,7 +428,7 @@ const Filters = (props) => {
       <div className="Filters">
         {categories.length === 0 && (
           <Typography variant="h5" className="NoData">
-            Потрібно створити хоча б одну категорію
+            Створіть хоча б одну категорію
           </Typography>
         )}
         {categories.length !== 0 && filters && filters.length === 0 && (
