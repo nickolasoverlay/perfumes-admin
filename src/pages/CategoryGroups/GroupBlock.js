@@ -222,7 +222,7 @@ const GroupBlock = (props) => {
             <Typography variant="button">
               Назва (RU): <span>{nameRU}</span>
             </Typography>
-            <Typography variant="button">
+            <Typography variant="button" className="Bubble--url">
               Посилання:{" "}
               <span className="aqua">{getURL()}</span>
             </Typography>

@@ -228,7 +228,7 @@ const CategoryBlock = (props) => {
             <Typography variant="button">
               Товарів в категорії: <span>{props.items_available}</span>
             </Typography>
-            <Typography variant="button">
+            <Typography variant="button" className="Bubble--url">
               Посилання:{" "}
               <span className="aqua">
                 https://yva.com.ua/collections/

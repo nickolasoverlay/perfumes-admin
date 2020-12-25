@@ -13,6 +13,12 @@
   margin-bottom: 25px;
 }
 
+.Bubble--url {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .Bubble--menu {
   position: absolute;
   top: 10px;
