@@ -8,12 +8,27 @@ import * as serviceWorker from "./serviceWorker"
 
 import App from "./App"
 
+import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles'
+import { blue } from '@material-ui/core/colors'
+
+const theme = createMuiTheme({
+  palette: {
+    type: "light",
+    primary: {
+      main: blue[600]
+    }
+  }
+});
+
+
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </ThemeProvider>,
   document.getElementById("root")
 )
 

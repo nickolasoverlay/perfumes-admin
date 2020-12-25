@@ -36,6 +36,7 @@ const Login = (props) => {
         label="Логін"
         margin="dense"
         error={error}
+        style={{ width: 350 }}
       />
       <TextField
         onChange={(e) => setPassword(e.currentTarget.value)}
@@ -43,13 +44,16 @@ const Login = (props) => {
         label="Пароль"
         type="password"
         margin="dense"
+        style={{ width: 350 }}
         error={error}
       />
 
       <Button
         onClick={logIn}
         variant="contained"
+        size="large"
         color="primary"
+        className="Login--button"
         disableElevation
       >
         Увійти

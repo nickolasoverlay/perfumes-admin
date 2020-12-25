@@ -52,6 +52,10 @@ body {
   border-radius: 12px;
 }
 
+.MuiOutlinedInput-root {
+  border-radius: 14px!important;
+}
+
 .NoData {
   margin-left: auto !important;
   margin-right: auto !important;
