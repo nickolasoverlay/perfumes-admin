@@ -137,7 +137,7 @@ const CategoryBlock = (props) => {
             variant="outlined"
             onChange={(e) => setNewNameUA(e.target.value)}
             defaultValue={nameUA}
-            label={`Нова назва (UA): ${newNameUA.length} / 64`}
+            label={`Назва (UA): ${newNameUA.length} / 64`}
             margin="dense"
             inputProps={{ maxLength: 64 }}
           />
@@ -145,7 +145,7 @@ const CategoryBlock = (props) => {
             variant="outlined"
             onChange={(e) => setNewNameRU(e.target.value)}
             defaultValue={nameRU}
-            label={`Нова назва (RU): ${newNameRU.length} / 64`}
+            label={`Назва (RU): ${newNameRU.length} / 64`}
             margin="dense"
             inputProps={{ maxLength: 64 }}
           />
@@ -153,7 +153,7 @@ const CategoryBlock = (props) => {
             variant="outlined"
             onChange={(e) => setNewShortUA(e.target.value)}
             defaultValue={shortUA}
-            label={`Новий підзаголовок (UA): ${newShortUA.length} / 128`}
+            label={`Підзаголовок (UA): ${newShortUA.length} / 128`}
             margin="dense"
             multiline
             inputProps={{ maxLength: 128 }}
@@ -162,7 +162,7 @@ const CategoryBlock = (props) => {
             variant="outlined"
             onChange={(e) => setNewShortRU(e.target.value)}
             defaultValue={shortRU}
-            label={`Новий підзаголовок (RU): ${newShortRU.length} / 128`}
+            label={`Підзаголовок (RU): ${newShortRU.length} / 128`}
             margin="dense"
             multiline
             inputProps={{ maxLength: 128 }}
@@ -171,7 +171,7 @@ const CategoryBlock = (props) => {
             variant="outlined"
             onChange={(e) => setNewURL(e.target.value)}
             defaultValue={url}
-            label={`Нове посилання : ${url.length} / 64`}
+            label={`Посилання : ${url.length} / 64`}
             margin="dense"
             inputProps={{ maxLength: 64 }}
             InputProps={{
@@ -193,50 +193,50 @@ const CategoryBlock = (props) => {
           </div>
         </>
       ) : (
-        <>
-          <div className="Bubble--menu">
-            <IconButton onClick={(e) => setBlockAnchor(e.currentTarget)}>
-              <MoreVertIcon />
-            </IconButton>
-            <Menu
-              anchorEl={blockAnchor}
-              open={Boolean(blockAnchor)}
-              onClose={() => setBlockAnchor(null)}
-            >
-              <MenuItem
-                onClick={() => {
-                  setIsEditing(true)
-                  setBlockAnchor(null)
-                }}
+          <>
+            <div className="Bubble--menu">
+              <IconButton onClick={(e) => setBlockAnchor(e.currentTarget)}>
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                anchorEl={blockAnchor}
+                open={Boolean(blockAnchor)}
+                onClose={() => setBlockAnchor(null)}
               >
-                Редагувати
+                <MenuItem
+                  onClick={() => {
+                    setIsEditing(true)
+                    setBlockAnchor(null)
+                  }}
+                >
+                  Редагувати
               </MenuItem>
-              <MenuItem className="red" onClick={props.delete}>
-                Видалити
+                <MenuItem className="red" onClick={props.delete}>
+                  Видалити
               </MenuItem>
-            </Menu>
-          </div>
-          <Typography variant="button">
-            Колекція: <span>{getGroupName()}</span>
-          </Typography>
-          <Typography variant="button">
-            Назва (UA): <span>{nameUA}</span>
-          </Typography>
-          <Typography variant="button">
-            Назва (RU): <span>{nameRU}</span>
-          </Typography>
-          <Typography variant="button">
-            Товарів в категорії: <span>{props.items_available}</span>
-          </Typography>
-          <Typography variant="button">
-            Посилання:{" "}
-            <span className="aqua">
-              https://yva.com.ua/collections/
+              </Menu>
+            </div>
+            <Typography variant="button">
+              Колекція: <span>{getGroupName()}</span>
+            </Typography>
+            <Typography variant="button">
+              Назва (UA): <span>{nameUA}</span>
+            </Typography>
+            <Typography variant="button">
+              Назва (RU): <span>{nameRU}</span>
+            </Typography>
+            <Typography variant="button">
+              Товарів в категорії: <span>{props.items_available}</span>
+            </Typography>
+            <Typography variant="button">
+              Посилання:{" "}
+              <span className="aqua">
+                https://yva.com.ua/collections/
               {getGroupURL()}
-            </span>
-          </Typography>
-        </>
-      )}
+              </span>
+            </Typography>
+          </>
+        )}
     </Bubble>
   )
 }
@@ -373,7 +373,7 @@ const Categories = (props) => {
 
   const dialog = (
     <Dialog onClose={closeDialog} open={openDialog} fullWidth>
-      <DialogTitle>Нова категорія</DialogTitle>
+      <DialogTitle>Категорія</DialogTitle>
       <DialogContent>
         <AutoComplete
           onChange={(group) => setGroup(group.id)}

@@ -143,7 +143,7 @@ const GroupBlock = (props) => {
             variant="outlined"
             onChange={handleNameUA}
             defaultValue={nameUA}
-            label={`Нова назва (UA): ${newNameUA.length} / 64`}
+            label={`Назва (UA): ${newNameUA.length} / 64`}
             margin="dense"
             inputProps={{ maxLength: 64 }}
           />
@@ -151,7 +151,7 @@ const GroupBlock = (props) => {
             variant="outlined"
             onChange={handleNameRU}
             defaultValue={nameRU}
-            label={`Нова назва (RU): ${newNameRU.length} / 64`}
+            label={`Назва (RU): ${newNameRU.length} / 64`}
             margin="dense"
             inputProps={{ maxLength: 64 }}
           />
@@ -167,7 +167,7 @@ const GroupBlock = (props) => {
             variant="outlined"
             onChange={handleURL}
             defaultValue={url}
-            label={`Нове посилання: ${newURL.length} / 64`}
+            label={`Посилання: ${newURL.length} / 64`}
             margin="dense"
             inputProps={{ maxLength: 64 }}
             InputProps={{
@@ -224,7 +224,7 @@ const GroupBlock = (props) => {
             </Typography>
             <Typography variant="button">
               Посилання:{" "}
-                <span className="aqua">{getURL()}</span>
+              <span className="aqua">{getURL()}</span>
             </Typography>
           </>
         )}

@@ -140,7 +140,7 @@ const FilterBlock = (props) => {
             variant="outlined"
             onChange={handleNameUA}
             defaultValue={nameUA}
-            label={`Нова назва (UA): ${newNameUA.length} / 64`}
+            label={`Назва (UA): ${newNameUA.length} / 64`}
             margin="dense"
             inputProps={{ maxLength: 64 }}
           />
@@ -148,7 +148,7 @@ const FilterBlock = (props) => {
             variant="outlined"
             onChange={handleNameRU}
             defaultValue={nameRU}
-            label={`Нова назва (RU): ${newNameRU.length} / 64`}
+            label={`Назва (RU): ${newNameRU.length} / 64`}
             margin="dense"
             inputProps={{ maxLength: 64 }}
           />
@@ -167,40 +167,40 @@ const FilterBlock = (props) => {
           </div>
         </>
       ) : (
-        <>
-          <div className="Bubble--menu">
-            <IconButton onClick={(e) => setBlockAnchor(e.currentTarget)}>
-              <MoreVertIcon />
-            </IconButton>
-            <Menu
-              anchorEl={blockAnchor}
-              open={Boolean(blockAnchor)}
-              onClose={() => setBlockAnchor(null)}
-            >
-              <MenuItem
-                onClick={() => {
-                  setIsEditing(true)
-                  setBlockAnchor(null)
-                }}
+          <>
+            <div className="Bubble--menu">
+              <IconButton onClick={(e) => setBlockAnchor(e.currentTarget)}>
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                anchorEl={blockAnchor}
+                open={Boolean(blockAnchor)}
+                onClose={() => setBlockAnchor(null)}
               >
-                Редагувати
+                <MenuItem
+                  onClick={() => {
+                    setIsEditing(true)
+                    setBlockAnchor(null)
+                  }}
+                >
+                  Редагувати
               </MenuItem>
-              <MenuItem className="red" onClick={handleDelete}>
-                Видалити
+                <MenuItem className="red" onClick={handleDelete}>
+                  Видалити
               </MenuItem>
-            </Menu>
-          </div>
-          <Typography variant="button">
-            Категорія: <span>{props.categoryLabel}</span>
-          </Typography>
-          <Typography variant="button">
-            Назва (UA): <span>{nameUA}</span>
-          </Typography>
-          <Typography variant="button">
-            Назва (RU): <span>{nameRU}</span>
-          </Typography>
-        </>
-      )}
+              </Menu>
+            </div>
+            <Typography variant="button">
+              Категорія: <span>{props.categoryLabel}</span>
+            </Typography>
+            <Typography variant="button">
+              Назва (UA): <span>{nameUA}</span>
+            </Typography>
+            <Typography variant="button">
+              Назва (RU): <span>{nameRU}</span>
+            </Typography>
+          </>
+        )}
     </Bubble>
   )
 }

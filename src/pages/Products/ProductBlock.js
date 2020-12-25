@@ -364,7 +364,7 @@ const ProductBlock = (props) => {
           <TextField
             variant="outlined"
             onChange={(e) => setNewNameUA(e.currentTarget.value)}
-            label={`Нова назва (UA): ${newNameUA.length} / 64`}
+            label={`Назва (UA): ${newNameUA.length} / 64`}
             defaultValue={nameUA}
             fullWidth
             margin="dense"
@@ -373,7 +373,7 @@ const ProductBlock = (props) => {
           <TextField
             variant="outlined"
             onChange={(e) => setNewNameRU(e.currentTarget.value)}
-            label={`Нова назва (RU): ${newNameRU.length} / 64`}
+            label={`Назва (RU): ${newNameRU.length} / 64`}
             defaultValue={nameRU}
             fullWidth
             margin="dense"
@@ -398,7 +398,7 @@ const ProductBlock = (props) => {
           <TextField
             variant="outlined"
             onChange={(e) => setNewShortUA(e.currentTarget.value)}
-            label={`Новий підзаголовок (UA): ${newShortUA.length} / 128`}
+            label={`Підзаголовок (UA): ${newShortUA.length} / 128`}
             defaultValue={shortUA}
             fullWidth
             margin="dense"
@@ -408,7 +408,7 @@ const ProductBlock = (props) => {
           <TextField
             variant="outlined"
             onChange={(e) => setNewShortRU(e.currentTarget.value)}
-            label={`Новий підзаголовок (RU): ${newShortRU.length} / 128`}
+            label={`Підзаголовок (RU): ${newShortRU.length} / 128`}
             defaultValue={shortRU}
             fullWidth
             margin="dense"
@@ -418,7 +418,7 @@ const ProductBlock = (props) => {
           <TextField
             variant="outlined"
             onChange={(e) => setNewDescriptionUA(e.currentTarget.value)}
-            label={`Новий опис (UA): ${newDescriptionUA.length} / 1024`}
+            label={`Опис (UA): ${newDescriptionUA.length} / 1024`}
             defaultValue={descriptionUA}
             fullWidth
             margin="dense"
@@ -428,7 +428,7 @@ const ProductBlock = (props) => {
           <TextField
             variant="outlined"
             onChange={(e) => setNewDescriptionRU(e.currentTarget.value)}
-            label={`Новий опис (RU): ${newDescriptionRU.length} / 1024`}
+            label={`Опис (RU): ${newDescriptionRU.length} / 1024`}
             defaultValue={descriptionRU}
             fullWidth
             margin="dense"
@@ -438,7 +438,7 @@ const ProductBlock = (props) => {
           <TextField
             variant="outlined"
             onChange={(e) => setNewInstructionUA(e.currentTarget.value)}
-            label={`Нова інтсрукція (UA): ${instructionUA.length} / 1024`}
+            label={`Інструкція (UA): ${instructionUA.length} / 1024`}
             defaultValue={instructionUA}
             fullWidth
             margin="dense"
@@ -448,7 +448,7 @@ const ProductBlock = (props) => {
           <TextField
             variant="outlined"
             onChange={(e) => setNewInstructionRU(e.currentTarget.value)}
-            label={`Нове інструкція (RU): ${instructionRU.length} / 1024`}
+            label={`Інструкція (RU): ${instructionRU.length} / 1024`}
             defaultValue={instructionRU}
             fullWidth
             margin="dense"
@@ -458,7 +458,7 @@ const ProductBlock = (props) => {
           <TextField
             variant="outlined"
             onChange={(e) => setNewComponentsUA(e.currentTarget.value)}
-            label={`Новий склад (UA): ${componentsUA.length} / 1024`}
+            label={`Склад (UA): ${componentsUA.length} / 1024`}
             defaultValue={componentsUA}
             fullWidth
             margin="dense"
@@ -468,7 +468,7 @@ const ProductBlock = (props) => {
           <TextField
             variant="outlined"
             onChange={(e) => setNewComponentsRU(e.currentTarget.value)}
-            label={`Новий склад (RU): ${componentsRU.length} / 1024`}
+            label={`Склад (RU): ${componentsRU.length} / 1024`}
             defaultValue={componentsRU}
             fullWidth
             margin="dense"
@@ -487,7 +487,7 @@ const ProductBlock = (props) => {
           <TextField
             variant="outlined"
             onChange={(e) => setNewUpdatedPrice(e.currentTarget.value)}
-            label="Нова ціна"
+            label="Акційна ціна"
             defaultValue={updatedPrice}
             fullWidth
             margin="dense"
@@ -595,7 +595,7 @@ const ProductBlock = (props) => {
             Ціна <span className="gray">{price}</span>
           </Typography>
           <Typography variant="button">
-            Нова ціна: <span className="gray">{updatedPrice}</span>
+            Акційна ціна: <span className="gray">{updatedPrice}</span>
           </Typography>
           <Typography variant="button">
             Розмір / об'єм <span className="gray">{size}</span>
