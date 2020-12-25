@@ -115,6 +115,14 @@ const CategoryBlock = (props) => {
     return g.url + "#" + props.url
   }
 
+  const getGroupPartialURL = () => {
+    const g = props.groups.find((gr) => gr.id === props.group_id)
+
+    if (!g) return ""
+
+    return "https:/yva.com.ua/" + g.url + "#"
+  }
+
   const getGroupName = () => {
     const g = props.groups.find((gr) => gr.id === props.group_id)
 
@@ -175,7 +183,7 @@ const CategoryBlock = (props) => {
             margin="dense"
             inputProps={{ maxLength: 64 }}
             InputProps={{
-              startAdornment: <InputAdornment>{getGroupURL()}</InputAdornment>,
+              startAdornment: <InputAdornment>{getGroupPartialURL()}</InputAdornment>,
             }}
           />
           <div className="Bubble--editgroup">

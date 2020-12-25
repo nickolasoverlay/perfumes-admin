@@ -56,6 +56,10 @@ body {
   border-radius: 14px!important;
 }
 
+.MuiInputBase-inputAdornedStart {
+  margin-top: -1px!important;
+}
+
 .NoData {
   margin-left: auto !important;
   margin-right: auto !important;
