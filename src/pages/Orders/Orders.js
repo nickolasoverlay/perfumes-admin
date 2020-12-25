@@ -64,9 +64,6 @@ const Orders = (props) => {
 
   return (
     <Wrapper>
-      <div className="ActionBar">
-        <div className="ActionBar--title">Замовлення</div>
-      </div>
       <div className="ActionBar Orders--filterbar">
         <Button
           variant="text"
@@ -153,25 +150,25 @@ const Orders = (props) => {
         {isMounted &&
           (orders.filter((order) => order.info.order_status === section)
             .length === 0 ? (
-            <Typography variant="h5" className="NoData">
-              {sectionEmptyString(section)}
-            </Typography>
-          ) : (
-            <>
-              {orders
-                .filter((order) => order.info.order_status === section)
-                .map((order, index) => {
-                  return (
-                    <OrderBlock
-                      {...order}
-                      index={index}
-                      onStatusUpdate={updateOrderStatus}
-                      key={order.info.id}
-                    />
-                  )
-                })}
-            </>
-          ))}
+              <Typography variant="h5" className="NoData">
+                {sectionEmptyString(section)}
+              </Typography>
+            ) : (
+              <>
+                {orders
+                  .filter((order) => order.info.order_status === section)
+                  .map((order, index) => {
+                    return (
+                      <OrderBlock
+                        {...order}
+                        index={index}
+                        onStatusUpdate={updateOrderStatus}
+                        key={order.info.id}
+                      />
+                    )
+                  })}
+              </>
+            ))}
       </div>
     </Wrapper>
   )
