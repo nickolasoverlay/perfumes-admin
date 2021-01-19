@@ -1,10 +1,9 @@
-import React, { useState } from "react"
-import ProductsSlider from "./ProductsSlider"
+import React, { useState } from "react";
+import ProductsSlider from "./ProductsSlider";
 
-import AutoComplete from "./../../ui/AutoComplete"
-import Menu from "./../../ui/Menu"
+import AutoComplete from "./../../ui/AutoComplete";
 
-import axios from "axios"
+import axios from "axios";
 
 import {
   Button,
@@ -13,9 +12,7 @@ import {
   DialogContent,
   DialogActions,
   TextField,
-  Badge,
-  MenuItem,
-} from "@material-ui/core"
+} from "@material-ui/core";
 
 const ProductDialog = (props) => {
   const {
@@ -25,7 +22,7 @@ const ProductDialog = (props) => {
     categories,
     onSuccess,
     onError,
-  } = props
+  } = props;
 
   const product = {
     category: 0,
@@ -44,18 +41,12 @@ const ProductDialog = (props) => {
     size: 0,
     isAvailable: false,
     quantityAvailable: 0,
-  }
+  };
 
-  const [finalProduct, setFinalProduct] = useState({})
+  const [finalProduct, setFinalProduct] = useState({});
 
-  const [dialogState, setDialogState] = useState(0)
-  const [dialogPhotos, setDialogPhotos] = useState([])
-
-  // Snackbar stuff
-  const [snackbarOpen, setSnackbarOpen] = useState(false)
-  const [snackbarMessage, setSnackbarMessage] = useState("")
-  const [snackbarSeverity, setSnackbarSeverity] = useState("success")
-  const closeSnackbar = () => setSnackbarOpen(false)
+  const [dialogState, setDialogState] = useState(0);
+  const [dialogPhotos, setDialogPhotos] = useState([]);
 
   /**
    *
@@ -65,51 +56,51 @@ const ProductDialog = (props) => {
    */
   const util = (field, event, value) => {
     if (event) {
-      product[field] = event.target.value
+      product[field] = event.target.value;
     } else {
-      product[field] = value
+      product[field] = value;
     }
-  }
+  };
 
   const dialogPhotosChange = (e) => {
-    const files = []
+    const files = [];
 
     for (let i = 0; i < e.currentTarget.files.length; i++) {
-      let f = e.currentTarget.files[i]
-      let url = URL.createObjectURL(f)
+      let f = e.currentTarget.files[i];
+      let url = URL.createObjectURL(f);
 
-      files.push({ url: url, file: f })
+      files.push({ url: url, file: f });
     }
 
-    setDialogPhotos((f) => f.concat(...files))
-  }
+    setDialogPhotos((f) => f.concat(...files));
+  };
 
   const addProduct = () => {
-    const p = new FormData()
+    const p = new FormData();
     Object.keys(finalProduct).forEach((k) => {
-      p.append(k, finalProduct[k])
-    })
+      p.append(k, finalProduct[k]);
+    });
 
-    p.append("photosQuantity", dialogPhotos.length)
+    p.append("photosQuantity", dialogPhotos.length);
     dialogPhotos.forEach((photo, index) => {
-      p.append("photo_" + index, photo.file)
-    })
+      p.append("photo_" + index, photo.file);
+    });
 
     axios
       .post("/admin/products/create/", p)
       .then((res) => {
-        onSuccess(res.data)
+        onSuccess(res.data);
       })
       .catch((err) => {
-        onError()
+        onError();
       })
-      .finally(closeDialog())
-  }
+      .finally(closeDialog());
+  };
 
   const switchState = () => {
-    setFinalProduct(product)
-    setDialogState(1)
-  }
+    setFinalProduct(product);
+    setDialogState(1);
+  };
 
   return (
     <Dialog onClose={closeDialog} open={openDialog} fullWidth>
@@ -289,7 +280,7 @@ const ProductDialog = (props) => {
         )}
       </DialogActions>
     </Dialog>
-  )
-}
+  );
+};
 
-export default ProductDialog
+export default ProductDialog;

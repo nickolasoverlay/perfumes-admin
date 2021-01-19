@@ -1,12 +1,18 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 
-import axios from "axios"
+import axios from "axios";
 
 import {
-  Dialog, DialogTitle, DialogContent, DialogActions, InputAdornment, TextField, Button,
-} from "@material-ui/core"
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  InputAdornment,
+  TextField,
+  Button,
+} from "@material-ui/core";
 
-import Autocomplete from "../../ui/AutoComplete"
+import Autocomplete from "../../ui/AutoComplete";
 
 export const typeList = [
   {
@@ -15,12 +21,12 @@ export const typeList = [
   },
   {
     type: 2,
-    name: "Показувати в аксесуарах"
-  }
-]
+    name: "Показувати в аксесуарах",
+  },
+];
 
 const DialogSlider = ({ dialogPhotos }) => {
-  const [curPhoto, setCurPhoto] = useState(0)
+  const [curPhoto, setCurPhoto] = useState(0);
 
   return (
     <>
@@ -40,133 +46,136 @@ const DialogSlider = ({ dialogPhotos }) => {
               return (
                 <div
                   key={i.toString()}
-                  className={`Products--photoslider--dot${i === curPhoto ? " current" : ""
-                    }`}
+                  className={`Products--photoslider--dot${
+                    i === curPhoto ? " current" : ""
+                  }`}
                   onClick={() => setCurPhoto(i)}
                 ></div>
-              )
+              );
             })}
           </div>
         </>
       )}
     </>
-  )
-}
+  );
+};
 
 const AddGroupDialog = ({ closeDialog, setGroups }) => {
-  const [nameUA, setNameUA] = useState("")
-  const [nameRU, setNameRU] = useState("")
-  const [type, setType] = useState(1)
-  const [url, setURL] = useState("")
+  const [nameUA, setNameUA] = useState("");
+  const [nameRU, setNameRU] = useState("");
+  const [type, setType] = useState(1);
+  const [url, setURL] = useState("");
 
-  const [dialogPhotos, setDialogPhotos] = useState([])
-  const [dialogSection, setDialogSection] = useState(0)
+  const [dialogPhotos, setDialogPhotos] = useState([]);
+  const [dialogSection, setDialogSection] = useState(0);
 
-  const [snackBarMessage, setSnackbarMessage] = useState("")
-  const [snackBarSeverity, setSnackbarSeverity] = useState("")
-  const [snackBarOpen, setSnackbarOpen] = useState(false)
+  // eslint-disable-next-line no-unused-vars
+  const [snackBarMessage, setSnackbarMessage] = useState("");
+  // eslint-disable-next-line no-unused-vars
+  const [snackBarSeverity, setSnackbarSeverity] = useState("");
+  // eslint-disable-next-line no-unused-vars
+  const [snackBarOpen, setSnackbarOpen] = useState(false);
 
-  const handleNameUA = e => setNameUA(e.target.value)
-  const handleNameRU = e => setNameRU(e.target.value)
-  const handleURL = e => setURL(e.target.value)
+  const handleNameUA = (e) => setNameUA(e.target.value);
+  const handleNameRU = (e) => setNameRU(e.target.value);
+  const handleURL = (e) => setURL(e.target.value);
 
-  const handleType = variant => setType(variant.type)
+  const handleType = (variant) => setType(variant.type);
 
   const inputAdornment = () => {
-    if (type == 1) return "https://test.yva.com.ua/collections/"
-    if (type == 2) return "https://test.yva.com.ua/accessories/"
-  }
+    if (type === 1) return "https://test.yva.com.ua/collections/";
+    if (type === 2) return "https://test.yva.com.ua/accessories/";
+  };
 
   const dialogPhotosChange = (e) => {
-    let files = []
+    let files = [];
 
     for (let i = 0; i < e.currentTarget.files.length; i++) {
-      let f = e.currentTarget.files[i]
-      let url = URL.createObjectURL(f)
+      let f = e.currentTarget.files[i];
+      let url = URL.createObjectURL(f);
 
-      files.push({ url: url, file: f })
+      files.push({ url: url, file: f });
     }
 
-    setDialogPhotos((f) => f.concat(...files))
-  }
+    setDialogPhotos((f) => f.concat(...files));
+  };
 
   const addGroup = () => {
-    const group = new FormData()
+    const group = new FormData();
 
-    group.append("nameUA", nameUA)
-    group.append("nameRU", nameRU)
-    group.append("url", url)
-    group.append("type", type)
-    group.append("wallpaper", dialogPhotos[0].file)
+    group.append("nameUA", nameUA);
+    group.append("nameRU", nameRU);
+    group.append("url", url);
+    group.append("type", type);
+    group.append("wallpaper", dialogPhotos[0].file);
 
     axios
       .post("/admin/category_groups/create/", group)
       .then((res) => {
-        setSnackbarSeverity("success")
-        setSnackbarMessage("Колекція успішно створена")
-        setSnackbarOpen(true)
+        setSnackbarSeverity("success");
+        setSnackbarMessage("Колекція успішно створена");
+        setSnackbarOpen(true);
 
-        console.log("POST_CATEGORY_GROUP: ", res.data)
-        setGroups((c) => c.concat(res.data))
+        console.log("POST_CATEGORY_GROUP: ", res.data);
+        setGroups((c) => c.concat(res.data));
       })
       .catch((err) => {
-        setSnackbarSeverity("success")
-        setSnackbarMessage("Не вдалося створити колекцію")
-        setSnackbarOpen(true)
+        setSnackbarSeverity("success");
+        setSnackbarMessage("Не вдалося створити колекцію");
+        setSnackbarOpen(true);
 
-        console.log("POST_CATEGORY_GROUP_ERR: ", err)
+        console.log("POST_CATEGORY_GROUP_ERR: ", err);
       })
-      .finally(closeDialog())
-  }
+      .finally(closeDialog());
+  };
 
-  const isValid = nameUA !== "" && nameRU !== "" && url !== ""
+  const isValid = nameUA !== "" && nameRU !== "" && url !== "";
 
   return (
     <Dialog onClose={closeDialog} open={true} fullWidth>
       <DialogTitle>Нова колекція</DialogTitle>
       <DialogContent>
-        {dialogSection === 0 && <>
-          <TextField
-            onChange={handleNameUA}
-            label={`Назва (UA) : ${nameUA.length} / 64`}
-            margin="dense"
-            inputProps={{ maxLength: 64 }}
-            fullWidth
-            autoFocus
-            required
-          />
-          <TextField
-            onChange={handleNameRU}
-            label={`Назва (RU) : ${nameRU.length} / 64`}
-            margin="dense"
-            inputProps={{ maxLength: 64 }}
-            fullWidth
-            required
-          />
-          <Autocomplete
-            onChange={handleType}
-            options={typeList}
-            getOptionLabel={type => type.name}
-            defaultValue={typeList[0]}
-            required
-          />
-          <TextField
-            onChange={handleURL}
-            label={`Посилання : ${url.length} / 64`}
-            margin="dense"
-            inputProps={{ maxLength: 64 }}
-            fullWidth
-            required
-            InputProps={{
-              startAdornment: (
-                <InputAdornment>
-                  {inputAdornment()}
-                </InputAdornment>
-              ),
-            }}
-          />
-        </>
-        }
+        {dialogSection === 0 && (
+          <>
+            <TextField
+              onChange={handleNameUA}
+              label={`Назва (UA) : ${nameUA.length} / 64`}
+              margin="dense"
+              inputProps={{ maxLength: 64 }}
+              fullWidth
+              autoFocus
+              required
+            />
+            <TextField
+              onChange={handleNameRU}
+              label={`Назва (RU) : ${nameRU.length} / 64`}
+              margin="dense"
+              inputProps={{ maxLength: 64 }}
+              fullWidth
+              required
+            />
+            <Autocomplete
+              onChange={handleType}
+              options={typeList}
+              getOptionLabel={(type) => type.name}
+              defaultValue={typeList[0]}
+              required
+            />
+            <TextField
+              onChange={handleURL}
+              label={`Посилання : ${url.length} / 64`}
+              margin="dense"
+              inputProps={{ maxLength: 64 }}
+              fullWidth
+              required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment>{inputAdornment()}</InputAdornment>
+                ),
+              }}
+            />
+          </>
+        )}
         {dialogSection === 1 && (
           <>
             <input
@@ -215,7 +224,7 @@ const AddGroupDialog = ({ closeDialog, setGroups }) => {
         )}
       </DialogActions>
     </Dialog>
-  )
-}
+  );
+};
 
-export default AddGroupDialog
+export default AddGroupDialog;

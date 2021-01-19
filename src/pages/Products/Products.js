@@ -1,66 +1,66 @@
-import React, { useState, useEffect, useMemo } from "react"
-import axios from "axios"
-import { connect } from "react-redux"
-import Wrapper from "./../../ui/Wrapper"
-import Menu from "./../../ui/Menu"
-import Snackbar from "./../../ui/Snackbar"
-import { Button, Typography, Badge, MenuItem } from "@material-ui/core"
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { connect } from "react-redux";
+import Wrapper from "./../../ui/Wrapper";
+import Menu from "./../../ui/Menu";
+import Snackbar from "./../../ui/Snackbar";
+import { Button, Typography, Badge, MenuItem } from "@material-ui/core";
 
-import ProductBlock from "./ProductBlock"
-import ProductDialog from "./ProductDialog"
+import ProductBlock from "./ProductBlock";
+import ProductDialog from "./ProductDialog";
 
-import "./Products.css"
+import "./Products.css";
 
 const Products = (props) => {
-  const { isLoggedIn } = props
+  const { isLoggedIn } = props;
 
-  const [products, setProducts] = useState([])
-  const [categories, setCategories] = useState([])
-  const [filters, setFilters] = useState([])
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [filters, setFilters] = useState([]);
 
-  const [categoryIndex, setCategoryIndex] = useState(0) // Index of category
-  const [categoryAnchor, setCategoryAnchor] = useState(null)
+  const [categoryIndex, setCategoryIndex] = useState(0); // Index of category
+  const [categoryAnchor, setCategoryAnchor] = useState(null);
 
   // Dialog state - different sections for photos and text info
-  const [openDialog, setOpenDialog] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     if (isLoggedIn) {
       axios("/admin/products/")
         .then((res) => {
-          setProducts(res.data.products)
-          setCategories(res.data.categories)
-          setFilters(res.data.filters)
+          setProducts(res.data.products);
+          setCategories(res.data.categories);
+          setFilters(res.data.filters);
         })
-        .catch((err) => {})
+        .catch((err) => {});
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   // Snackbar stuff
-  const [snackbarOpen, setSnackbarOpen] = useState(false)
-  const [snackbarMessage, setSnackbarMessage] = useState("")
-  const [snackbarSeverity, setSnackbarSeverity] = useState("success")
-  const closeSnackbar = () => setSnackbarOpen(false)
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const closeSnackbar = () => setSnackbarOpen(false);
 
   const deleteProduct = (id) => {
-    const data = new FormData()
-    data.append("id", id)
+    const data = new FormData();
+    data.append("id", id);
 
     axios
       .post("/admin/products/delete/", data)
       .then((res) => {
-        setSnackbarSeverity("success")
-        setSnackbarMessage("Товар успішно видалено")
-        setSnackbarOpen(true)
+        setSnackbarSeverity("success");
+        setSnackbarMessage("Товар успішно видалено");
+        setSnackbarOpen(true);
 
-        setProducts(products.filter((p) => p.id !== id))
+        setProducts(products.filter((p) => p.id !== id));
       })
       .catch((err) => {
-        setSnackbarSeverity("error")
-        setSnackbarMessage("Не вдалося видалити товар")
-        setSnackbarOpen(true)
-      })
-  }
+        setSnackbarSeverity("error");
+        setSnackbarMessage("Не вдалося видалити товар");
+        setSnackbarOpen(true);
+      });
+  };
 
   /**
    * Returns number of products in category at provided index
@@ -69,22 +69,22 @@ const Products = (props) => {
   const productsInCategory = (ctIndex) => {
     const q = products.filter(
       (product) => product.category === categories[ctIndex].id
-    ).length
-    return q
-  }
+    ).length;
+    return q;
+  };
 
   const onSuccess = (added) => {
-    setSnackbarSeverity("success")
-    setSnackbarMessage("Товар успішно створено")
-    setSnackbarOpen(true)
-    setProducts((p) => p.concat(added))
-  }
+    setSnackbarSeverity("success");
+    setSnackbarMessage("Товар успішно створено");
+    setSnackbarOpen(true);
+    setProducts((p) => p.concat(added));
+  };
 
   const onError = () => {
-    setSnackbarSeverity("error")
-    setSnackbarMessage("Не вдалося створити новий товар")
-    setSnackbarOpen(true)
-  }
+    setSnackbarSeverity("error");
+    setSnackbarMessage("Не вдалося створити новий товар");
+    setSnackbarOpen(true);
+  };
 
   return (
     <Wrapper>
@@ -129,8 +129,8 @@ const Products = (props) => {
                     <MenuItem
                       key={category.id}
                       onClick={() => {
-                        setCategoryIndex(index)
-                        setCategoryAnchor(null)
+                        setCategoryIndex(index);
+                        setCategoryAnchor(null);
                       }}
                     >
                       {category.name_ua}
@@ -139,7 +139,7 @@ const Products = (props) => {
                         badgeContent={productsInCategory(index)}
                       ></Badge>
                     </MenuItem>
-                  )
+                  );
                 })}
               </Menu>
             </>
@@ -185,17 +185,17 @@ const Products = (props) => {
                   categories={categories}
                   filters={filters}
                 />
-              )
+              );
             })}
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.authReducer.isLoggedIn,
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(Products)
+export default connect(mapStateToProps)(Products);
