@@ -3,7 +3,7 @@ const fetcher = async (
     init: RequestInit,
     ...args: any[]
   ) => {
-    const res = await fetch(input, init);
+    const res = await fetch(input, {...init, credentials: "include"});
     return res.json();
   };
 

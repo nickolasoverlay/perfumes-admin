@@ -5,7 +5,7 @@ const useFilters = () => {
     const { data, error } = useSWR(`/admin/filters/`, fetcher)
     
     return {
-        user: data,
+        filters: data,
         isLoading: !error && !data,
         isError: error
     }

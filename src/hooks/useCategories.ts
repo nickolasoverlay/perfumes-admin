@@ -5,7 +5,7 @@ const useCategories = () => {
     const { data, error } = useSWR(`/admin/categories/`, fetcher)
     
     return {
-        user: data,
+        categories: data,
         isLoading: !error && !data,
         isError: error
     }

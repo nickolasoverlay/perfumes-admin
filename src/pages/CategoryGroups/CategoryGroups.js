@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+
 import axios from "axios";
 import { connect } from "react-redux";
+
+import useGroups from "./../../hooks/useGroups";
 
 import { Typography, Button } from "@material-ui/core";
 
@@ -13,9 +16,8 @@ import Snackbar from "./../../ui/Snackbar";
 import "./CategoryGroups.css";
 
 const CategoryGroups = (props) => {
-  const { isLoggedIn } = props;
+  const { groups, pushGroup, isLoading, isError } = useGroups();
 
-  const [groups, setGroups] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
 
   // Snackbar stuff
@@ -24,13 +26,11 @@ const CategoryGroups = (props) => {
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const closeSnackbar = () => setSnackbarOpen(false);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      axios("/admin/category_groups/").then((res) => {
-        setGroups(res.data);
-      });
-    }
-  }, [isLoggedIn]);
+  if (isLoading || isError) {
+    return null;
+  }
+
+  console.log(groups);
 
   const deleteGroup = (id) => {
     const data = new FormData();
@@ -44,7 +44,7 @@ const CategoryGroups = (props) => {
         setSnackbarMessage("Колекція успішно видалена");
         setSnackbarOpen(true);
 
-        setGroups(groups.filter((group) => group.id !== id));
+        // setGroups(groups.filter((group) => group.id !== id));
       })
       .catch((err) => {
         setSnackbarSeverity("error");
@@ -55,12 +55,11 @@ const CategoryGroups = (props) => {
 
   return (
     <Wrapper>
-      {openDialog && (
-        <AddGroupDialog
-          closeDialog={() => setOpenDialog(false)}
-          setGroups={setGroups}
-        />
-      )}
+      <AddGroupDialog
+        onClose={() => setOpenDialog(false)}
+        isOpen={openDialog}
+        pushGroup={pushGroup}
+      />
       <Snackbar
         open={snackbarOpen}
         message={snackbarMessage}

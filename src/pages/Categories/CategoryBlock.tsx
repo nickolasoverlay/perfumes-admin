@@ -32,7 +32,9 @@ const CategoryBlock = (props: any) => {
     setIsEditing(false);
   };
 
-  const applyEdit = () => {};
+  const applyEdit = (data: any) => {
+    console.log(data);
+  };
 
   const getGroupURL = () => {
     const g = props.groups.find((gr: any) => gr.id === props.group_id);
@@ -110,7 +112,7 @@ const CategoryBlock = (props: any) => {
             <Button
               variant="contained"
               color="primary"
-              onClick={applyEdit}
+              onClick={handleSubmit(applyEdit)}
               disableElevation
             >
               Зберегти
@@ -165,3 +167,5 @@ const CategoryBlock = (props: any) => {
     </Bubble>
   );
 };
+
+export default CategoryBlock;

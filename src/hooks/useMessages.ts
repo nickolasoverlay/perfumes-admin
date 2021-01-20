@@ -5,7 +5,7 @@ const useMessages = () => {
     const { data, error } = useSWR(`/admin/messages/`, fetcher)
     
     return {
-        user: data,
+        messages: data,
         isLoading: !error && !data,
         isError: error
     }

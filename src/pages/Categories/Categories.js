@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+
 import axios from "axios";
+import { connect } from "react-redux";
+
 import {
   Button,
   Typography,
@@ -13,6 +15,7 @@ import Menu from "./../../ui/Menu";
 import Snackbar from "./../../ui/Snackbar";
 
 import CategoryBlock from "./CategoryBlock"
+import CategoryDialog from "./CategoryDialog"
 
 import "./Categories.css";
 
@@ -78,6 +81,8 @@ const Categories = (props) => {
     return q;
   };
 
+  const handleDialogClose = () => setOpenDialog(false)
+
   return (
     <Wrapper>
       <Snackbar
@@ -86,6 +91,9 @@ const Categories = (props) => {
         severity={snackbarSeverity}
         onClose={closeSnackbar}
       />
+
+      <CategoryDialog isOpen={openDialog} onClose={handleDialogClose} />
+
       <div className="ActionBar">
         <div className="ActionBar--title">Категорії</div>
         <div>

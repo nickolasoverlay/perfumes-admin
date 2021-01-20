@@ -1,14 +1,30 @@
-import useSWR from "swr"
-import fetcher from "./fetcher"
+import useSWR from "swr";
+import fetcher from "./fetcher";
 
 const useGroups = () => {
-    const { data, error } = useSWR(`/admin/category_groups/`, fetcher)
-    
-    return {
-        user: data,
-        isLoading: !error && !data,
-        isError: error
-    }
-}
+  const { data, mutate, error } = useSWR(
+    `${process.env.REACT_APP_API}/admin/category_groups/`,
+    fetcher
+  );
 
-export default useGroups
+  return {
+    groups: data,
+    isLoading: !error && !data,
+    isError: error,
+
+    pushGroup: async (group: any) => {
+      const res = await fetch(
+        `${process.env.REACT_APP_API}/admin/category_groups/create/`,
+        {
+          method: "POST",
+          body: JSON.stringify(group),
+          credentials: "include",
+        }
+      );
+
+      mutate([...data, res]);
+    },
+  };
+};
+
+export default useGroups;
