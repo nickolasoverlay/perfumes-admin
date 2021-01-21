@@ -13,7 +13,7 @@ import { useForm, Controller } from "react-hook-form";
 import DialogTextField from "./../../ui/DialogTextField";
 import Autocomplete from "../../ui/AutoComplete";
 
-type TypeOption = {
+export type TypeOption = {
     value: number;
     name: string;
 };
@@ -79,10 +79,8 @@ const AddGroupDialog = ({
                                     option: TypeOption,
                                     value: TypeOption
                                 ) => option.value === value.value}
-                                onChange={(e: any, o: TypeOption) => {
-                                    if (o) {
-                                        props.onChange(o.value);
-                                    }
+                                onChange={(o: TypeOption) => {
+                                    props.onChange(o.value);
                                 }}
                             />
                         );

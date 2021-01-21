@@ -1,75 +1,93 @@
 html,
 body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: "Roboto";
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Roboto";
 }
 
 body {
-  background-color: rgba(207, 207, 207, 0.479);
+    background-color: rgba(207, 207, 207, 0.479);
 }
 
 .aqua {
-  color: rgb(0, 129, 161) !important;
+    color: rgb(0, 129, 161) !important;
 }
 
 .red {
-  color: rgba(255, 0, 0, 0.616) !important;
+    color: rgba(255, 0, 0, 0.616) !important;
 }
 
 .gray {
-  color: rgba(0, 0, 0, 0.548) !important;
+    color: rgba(0, 0, 0, 0.548) !important;
 }
 
 .badge {
-  font-family: "Roboto";
-  font-size: 14px;
-  font-weight: 500;
-  color: white;
-  background-color: rgb(0, 132, 255);
-  border-radius: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-bottom: 5px;
-  margin-right: 5px;
-  cursor: pointer;
-  box-shadow: 0px 1px 6px rgba(0, 110, 255, 0.336);
-  text-transform: uppercase;
+    font-family: "Roboto";
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    background-color: rgb(0, 132, 255);
+    border-radius: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+    box-shadow: 0px 1px 6px rgba(0, 110, 255, 0.336);
+    text-transform: uppercase;
 }
 
 .MuiButton-root {
-  border-radius: 14px !important;
+    border-radius: 14px !important;
 }
 
 .MuiMenu-paper {
-  border-radius: 14px !important;
+    border-radius: 14px !important;
 }
 
 .MuiDialog-container .MuiPaper-root {
-  border-radius: 12px;
+    border-radius: 12px;
 }
 
 .MuiOutlinedInput-root {
-  border-radius: 14px!important;
+    border-radius: 14px !important;
 }
 
 .MuiInputBase-inputAdornedStart {
-  margin-top: -1px!important;
+    margin-top: -1px !important;
+}
+
+.MuiAutocomplete-root {
+    margin-top: 11px;
+}
+
+.edit_form_actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .NoData {
-  margin-left: auto !important;
-  margin-right: auto !important;
-  padding-top: 150px;
-  text-align: center;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-top: 150px;
+    text-align: center;
 }
 
 .Shell {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.triple_grid_column {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    column-gap: 20px;
+    row-gap: 20px;
 }
