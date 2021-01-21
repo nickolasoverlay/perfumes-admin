@@ -3,7 +3,7 @@ import fetcher from "./fetcher";
 
 const useGroup = (id: string) => {
     const { data, error } = useSWR(
-        `${process.env.REACT_APP_API}/admin/category_groups/${id}`,
+        `${process.env.REACT_APP_API}/admin/category_groups/${id}/`,
         fetcher
     );
 
