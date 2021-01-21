@@ -11,6 +11,7 @@
   position: relative;
   width: 45%;
   margin-bottom: 25px;
+  cursor: pointer;
 }
 
 .Bubble--url {

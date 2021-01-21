@@ -9,6 +9,8 @@ import "./App.css";
 
 import Categories from "./pages/Categories/Categories";
 import CategoryGroups from "./pages/CategoryGroups/CategoryGroups";
+import CategoryGroup from "./pages/CategoryGroups/CategoryGroup";
+
 import Products from "./pages/Products/Products";
 import Orders from "./pages/Orders/Orders";
 import Admins from "./pages/Admins/Admins";
@@ -91,6 +93,12 @@ const App = (props: PropsFromRedux) => {
             <Redirect to="/category_groups" />
           </Route>
           <Route exact path="/category_groups" component={CategoryGroups} />
+          <Route
+            exact
+            path="/category_groups/:category_group_id"
+            component={(props: any) => <CategoryGroup {...props} />}
+          />
+
           <Route exact path="/categories" component={Categories} />
           <Route exact path="/products" component={Products} />
           <Route exact path="/orders" component={Orders} />

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import axios from "axios";
 import { connect } from "react-redux";
-
 import useGroups from "./../../hooks/useGroups";
 
 import { Typography, Button } from "@material-ui/core";
@@ -29,8 +28,6 @@ const CategoryGroups = (props) => {
   if (isLoading || isError) {
     return null;
   }
-
-  console.log(groups);
 
   const deleteGroup = (id) => {
     const data = new FormData();
@@ -98,10 +95,4 @@ const CategoryGroups = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoggedIn: state.authReducer.isLoggedIn,
-  };
-};
-
-export default connect(mapStateToProps)(CategoryGroups);
+export default CategoryGroups;

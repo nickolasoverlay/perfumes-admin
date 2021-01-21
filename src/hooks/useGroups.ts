@@ -2,7 +2,7 @@ import useSWR from "swr";
 import fetcher from "./fetcher";
 
 const useGroups = () => {
-  const { data, mutate, error } = useSWR(
+  const { data, error } = useSWR(
     `${process.env.REACT_APP_API}/admin/category_groups/`,
     fetcher
   );
