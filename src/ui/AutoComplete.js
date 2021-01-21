@@ -1,9 +1,16 @@
-import React from "react"
-import Autocomplete from "@material-ui/lab/Autocomplete"
-import TextField from "@material-ui/core/TextField"
+import React from "react";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import TextField from "@material-ui/core/TextField";
 
-const AutoComplete = props => {
-  const { options, defaultValue, getOptionLabel, onChange, ...params } = props
+const AutoComplete = (props) => {
+  const {
+    options,
+    defaultValue,
+    getOptionLabel,
+    getOptionSelected,
+    onChange,
+    ...params
+  } = props;
 
   return (
     <div style={{ width: "100%" }}>
@@ -12,18 +19,19 @@ const AutoComplete = props => {
         defaultValue={defaultValue}
         onChange={(e, value) => {
           if (value) {
-            onChange(value)
+            onChange(value);
           }
         }}
         getOptionLabel={getOptionLabel}
+        getOptionSelected={getOptionSelected}
         autoHighlight
         filterSelectedOptions
-        renderInput={renderParams => (
+        renderInput={(renderParams) => (
           <TextField {...renderParams} {...params} margin="dense" fullWidth />
         )}
       />
     </div>
-  )
-}
+  );
+};
 
-export default AutoComplete
+export default AutoComplete;

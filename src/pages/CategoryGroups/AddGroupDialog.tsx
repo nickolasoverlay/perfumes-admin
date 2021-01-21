@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-import axios from "axios";
-
 import {
   Dialog,
   DialogTitle,
@@ -17,13 +15,18 @@ import { useForm, Controller } from "react-hook-form";
 import DialogTextField from "./../../ui/DialogTextField";
 import Autocomplete from "../../ui/AutoComplete";
 
-export const typeList = [
+type TypeOption = {
+  value: number;
+  name: string;
+};
+
+export const typeList: TypeOption[] = [
   {
-    type: 1,
+    value: 1,
     name: "Показувати в колекціях",
   },
   {
-    type: 2,
+    value: 2,
     name: "Показувати в аксесуарах",
   },
 ];
@@ -42,8 +45,6 @@ const AddGroupDialog = ({
   const { control, register, handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
-    console.log(data);
-
     pushGroup(data);
     onClose();
   };
@@ -65,6 +66,28 @@ const AddGroupDialog = ({
           defaultValue=""
           label="Назва (FR)"
           as={DialogTextField}
+        />
+        <Controller
+          name="type"
+          control={control}
+          defaultValue={typeList[0].value}
+          render={(props) => {
+            return (
+              <Autocomplete
+                options={typeList}
+                defaultValue={typeList[0]}
+                getOptionLabel={(o: TypeOption) => o.name}
+                getOptionSelected={(option: TypeOption, value: TypeOption) =>
+                  option.value === value.value
+                }
+                onChange={(e: any, o: TypeOption) => {
+                  if (o) {
+                    props.onChange(o.value);
+                  }
+                }}
+              />
+            );
+          }}
         />
         <Controller
           name="url"

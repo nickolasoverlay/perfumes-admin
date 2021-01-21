@@ -13,7 +13,7 @@ const useGroups = () => {
     isError: error,
 
     pushGroup: async (group: any) => {
-      const res = await fetch(
+      await fetch(
         `${process.env.REACT_APP_API}/admin/category_groups/create/`,
         {
           method: "POST",
@@ -21,8 +21,6 @@ const useGroups = () => {
           credentials: "include",
         }
       );
-
-      mutate([...data, res]);
     },
   };
 };
