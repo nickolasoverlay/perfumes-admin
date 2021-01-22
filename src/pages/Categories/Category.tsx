@@ -16,7 +16,6 @@ import DialogTextField from "../../ui/DialogTextField";
 
 import { Category } from "./types";
 import { Group } from "./../CategoryGroups/types";
-import { group } from "console";
 
 const CategoryPage = (props: any) => {
     const { control, handleSubmit } = useForm<Category>();

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import axios from "axios";
-import { connect } from "react-redux";
 import useGroups from "./../../hooks/useGroups";
 
 import { Typography, Button } from "@material-ui/core";

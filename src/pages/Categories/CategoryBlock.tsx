@@ -2,14 +2,7 @@ import React from "react";
 
 import { useHistory } from "react-router-dom";
 
-import {
-    TextField,
-    Typography,
-    IconButton,
-    Button,
-    Menu,
-    MenuItem,
-} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import Bubble from "../../ui/Bubble";
 
 import { Category } from "./types";
