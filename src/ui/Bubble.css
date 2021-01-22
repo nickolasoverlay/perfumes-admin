@@ -21,6 +21,11 @@
     text-overflow: ellipsis;
 }
 
+.Bubble .MuiTypography-root span {
+    color: rgba(0, 0, 0, 0.548);
+    margin-left: 5px;
+}
+
 .Bubble--url {
     white-space: nowrap;
     overflow: hidden;

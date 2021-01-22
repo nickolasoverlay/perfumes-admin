@@ -10,12 +10,12 @@ import { Category } from "./types";
 const CategoryBlock = (category: Category) => {
     const history = useHistory();
 
-    const handleClick = () => {
+    const onClick = () => {
         history.push("/categories/" + category.id);
     };
 
     return (
-        <Bubble onClick={handleClick}>
+        <Bubble onClick={onClick}>
             <Typography variant="button">
                 Назва (EN): <span>{category.name_en}</span>
             </Typography>

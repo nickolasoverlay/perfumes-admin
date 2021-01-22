@@ -1,9 +1,10 @@
 import React from "react";
 
 import { useHistory } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
+
 import useCategory from "../../hooks/useCategory";
 import useGroups from "../../hooks/useGroups";
-import { useForm, Controller } from "react-hook-form";
 
 import Wrapper from "./../../ui/Wrapper";
 import Spinner from "./../../ui/Spinner";

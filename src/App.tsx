@@ -17,7 +17,10 @@ import Products from "./pages/Products/Products";
 import Orders from "./pages/Orders/Orders";
 import Admins from "./pages/Admins/Admins";
 import HomeSlider from "./pages/HomeSlider";
+
 import Filters from "./pages/Filters/Filters";
+import Filter from "./pages/Filters/Filter";
+
 import Messages from "./pages/Messages";
 import Login from "./pages/Login/Login";
 
@@ -112,11 +115,17 @@ const App = (props: PropsFromRedux) => {
                         component={(props: any) => <Category {...props} />}
                     />
 
+                    <Route exact path="/filters" component={Filters} />
+                    <Route
+                        exact
+                        path="/filters/:filter_id"
+                        component={(props: any) => <Filter {...props} />}
+                    />
+
                     <Route exact path="/products" component={Products} />
                     <Route exact path="/orders" component={Orders} />
                     <Route exact path="/admins" component={Admins} />
                     <Route exact path="/home_slider" component={HomeSlider} />
-                    <Route exact path="/filters" component={Filters} />
                     <Route exact path="/messages" component={Messages} />
                 </Switch>
             );
