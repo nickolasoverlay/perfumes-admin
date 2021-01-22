@@ -79,6 +79,7 @@ const AddGroupDialog = ({
                                     option: TypeOption,
                                     value: TypeOption
                                 ) => option.value === value.value}
+                                label="Розташування на сайті"
                                 onChange={(o: TypeOption) => {
                                     props.onChange(o.value);
                                 }}

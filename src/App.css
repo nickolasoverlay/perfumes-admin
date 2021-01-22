@@ -7,7 +7,7 @@ body {
 }
 
 body {
-    background-color: white;
+    background-color: rgb(231, 231, 231);
 }
 
 .aqua {
@@ -61,7 +61,7 @@ body {
 }
 
 .MuiAutocomplete-root {
-    margin-top: 11px;
+    margin-top: -5px !important;
 }
 
 .edit_form_actions {

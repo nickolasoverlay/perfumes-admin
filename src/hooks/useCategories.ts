@@ -1,14 +1,32 @@
-import useSWR from "swr"
-import fetcher from "./fetcher"
+import useSWR from "swr";
+import fetcher from "./fetcher";
+
+import { Category } from "./../pages/Categories/types";
 
 const useCategories = () => {
-    const { data, error } = useSWR(`/admin/categories/`, fetcher)
-    
-    return {
-        categories: data,
-        isLoading: !error && !data,
-        isError: error
-    }
-}
+    const { data, mutate, error } = useSWR<Category[]>(
+        `${process.env.REACT_APP_API}/admin/categories/`,
+        fetcher
+    );
 
-export default useCategories
+    return {
+        categories: data as Category[],
+        isLoading: !error && !data,
+        isError: error,
+
+        pushCategory: async (category: Category) => {
+            const createdCategory = await fetch(
+                `${process.env.REACT_APP_API}/admin/categories/create/`,
+                {
+                    method: "POST",
+                    body: JSON.stringify(category),
+                    credentials: "include",
+                }
+            ).then((res) => res.json());
+
+            mutate([...(data as Category[]), createdCategory]);
+        },
+    };
+};
+
+export default useCategories;
