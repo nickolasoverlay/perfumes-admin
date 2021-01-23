@@ -6,7 +6,6 @@ import { useForm, Controller } from "react-hook-form";
 import useCategory from "../../hooks/useCategory";
 import useGroups from "../../hooks/useGroups";
 
-import Wrapper from "./../../ui/Wrapper";
 import Spinner from "./../../ui/Spinner";
 import Autocomplete from "./../../ui/AutoComplete";
 import DialogTextField from "../../ui/DialogTextField";
@@ -50,9 +49,9 @@ const CategoryPage = (props: any) => {
         groupsFuture.isError
     ) {
         return (
-            <Wrapper>
+            <div className="category">
                 <Spinner />
-            </Wrapper>
+            </div>
         );
     }
 
@@ -61,104 +60,102 @@ const CategoryPage = (props: any) => {
     );
 
     return (
-        <Wrapper>
-            <div className="category">
-                <DeleteCategoryDialog
-                    isOpen={deleteDialogOpen}
-                    close={handleCloseDeleteDialog}
-                    categoryId={category.id}
-                />
-                <div className="ActionBar">
-                    <div className="ActionBar--title">
-                        Категорії
-                        <NavigateNextIcon />
-                        {category.id}
-                        <NavigateNextIcon />
-                        Редагування
-                    </div>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        disableElevation
-                        onClick={handleOpenDeleteDialog}
-                    >
-                        Видалити
-                    </Button>
+        <div className="category">
+            <DeleteCategoryDialog
+                isOpen={deleteDialogOpen}
+                close={handleCloseDeleteDialog}
+                categoryId={category.id}
+            />
+            <div className="ActionBar">
+                <div className="ActionBar--title">
+                    Категорії
+                    <NavigateNextIcon />
+                    {category.id}
+                    <NavigateNextIcon />
+                    Редагування
                 </div>
-                <div className="category_edit_form triple_grid_column">
-                    <Controller
-                        name="name_en"
-                        control={control}
-                        defaultValue={category.name_en}
-                        label="Назва (EN)"
-                        as={DialogTextField}
-                    />
-                    <Controller
-                        name="name_fr"
-                        control={control}
-                        defaultValue={category.name_fr}
-                        label="Назва (FR)"
-                        as={DialogTextField}
-                    />
-                    <Controller
-                        name="short_en"
-                        control={control}
-                        defaultValue={category.short_en}
-                        label="Підзаголовок (EN)"
-                        as={DialogTextField}
-                    />
-                    <Controller
-                        name="short_fr"
-                        control={control}
-                        defaultValue={category.short_fr}
-                        label="Підзаголовок (FR)"
-                        as={DialogTextField}
-                    />
-                    <Controller
-                        name="url"
-                        control={control}
-                        defaultValue={category.url}
-                        label="Посилання"
-                        as={DialogTextField}
-                    />
-                    <Controller
-                        name="group_id"
-                        control={control}
-                        defaultValue={defaultGroup ? defaultGroup.id : 0}
-                        render={(props) => {
-                            return (
-                                <Autocomplete
-                                    options={groupsFuture.groups}
-                                    defaultValue={defaultGroup}
-                                    getOptionLabel={(o: Group) => o.name_en}
-                                    label="Колекція"
-                                    getOptionSelected={(
-                                        option: Group,
-                                        value: Group
-                                    ) => option.id === value.id}
-                                    onChange={(o: Group) => {
-                                        props.onChange(o.id);
-                                    }}
-                                />
-                            );
-                        }}
-                    />
-                </div>
-                <div className="edit_form_actions">
-                    <Button style={{ marginRight: 10 }} onClick={handleCancel}>
-                        Відміна
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        disableElevation
-                        onClick={handleSubmit(onSubmit)}
-                    >
-                        Зберегти
-                    </Button>
-                </div>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    disableElevation
+                    onClick={handleOpenDeleteDialog}
+                >
+                    Видалити
+                </Button>
             </div>
-        </Wrapper>
+            <div className="category_edit_form triple_grid_column">
+                <Controller
+                    name="name_en"
+                    control={control}
+                    defaultValue={category.name_en}
+                    label="Назва (EN)"
+                    as={DialogTextField}
+                />
+                <Controller
+                    name="name_fr"
+                    control={control}
+                    defaultValue={category.name_fr}
+                    label="Назва (FR)"
+                    as={DialogTextField}
+                />
+                <Controller
+                    name="short_en"
+                    control={control}
+                    defaultValue={category.short_en}
+                    label="Підзаголовок (EN)"
+                    as={DialogTextField}
+                />
+                <Controller
+                    name="short_fr"
+                    control={control}
+                    defaultValue={category.short_fr}
+                    label="Підзаголовок (FR)"
+                    as={DialogTextField}
+                />
+                <Controller
+                    name="url"
+                    control={control}
+                    defaultValue={category.url}
+                    label="Посилання"
+                    as={DialogTextField}
+                />
+                <Controller
+                    name="group_id"
+                    control={control}
+                    defaultValue={defaultGroup ? defaultGroup.id : 0}
+                    render={(props) => {
+                        return (
+                            <Autocomplete
+                                options={groupsFuture.groups}
+                                defaultValue={defaultGroup}
+                                getOptionLabel={(o: Group) => o.name_en}
+                                label="Колекція"
+                                getOptionSelected={(
+                                    option: Group,
+                                    value: Group
+                                ) => option.id === value.id}
+                                onChange={(o: Group) => {
+                                    props.onChange(o.id);
+                                }}
+                            />
+                        );
+                    }}
+                />
+            </div>
+            <div className="edit_form_actions">
+                <Button style={{ marginRight: 10 }} onClick={handleCancel}>
+                    Відміна
+                </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    disableElevation
+                    onClick={handleSubmit(onSubmit)}
+                >
+                    Зберегти
+                </Button>
+            </div>
+        </div>
     );
 };
 

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import useFilters from "./../../hooks/useFilters";
 
 import { Button } from "@material-ui/core";
-import Wrapper from "../../ui/Wrapper";
 
 import FilterBlock from "./FilterBlock";
 import AddFilterDialog from "./AddFilterDialog";
@@ -23,7 +22,7 @@ const Filters = () => {
     }
 
     return (
-        <Wrapper>
+        <div className="filters">
             <div className="ActionBar">
                 <div className="ActionBar--title">Фільтри</div>
                 <div>
@@ -46,7 +45,7 @@ const Filters = () => {
                     <FilterBlock key={filter.id} {...filter} />
                 ))}
             </div>
-        </Wrapper>
+        </div>
     );
 };
 

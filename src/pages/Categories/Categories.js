@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import useCategories from "./../../hooks/useCategories";
 
 import { Button, Typography } from "@material-ui/core";
-import Wrapper from "./../../ui/Wrapper";
 import Spinner from "./../../ui/Spinner";
 
 import CategoryBlock from "./CategoryBlock";
@@ -20,14 +19,14 @@ const Categories = (props) => {
 
     if (isLoading || isError) {
         return (
-            <Wrapper>
+            <div className="categories">
                 <Spinner />
-            </Wrapper>
+            </div>
         );
     }
 
     return (
-        <Wrapper>
+        <div className="categories">
             <AddCategoryDialog
                 isOpen={openDialog}
                 onClose={handleDialogClose}
@@ -57,7 +56,7 @@ const Categories = (props) => {
                     <CategoryBlock key={category.id} {...category} />
                 ))}
             </div>
-        </Wrapper>
+        </div>
     );
 };
 

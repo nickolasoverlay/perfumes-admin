@@ -8,7 +8,6 @@ import { Typography, Button } from "@material-ui/core";
 import GroupBlock from "./GroupBlock";
 import AddGroupDialog from "./AddGroupDialog";
 
-import Wrapper from "./../../ui/Wrapper";
 import Snackbar from "./../../ui/Snackbar";
 
 import "./CategoryGroups.css";
@@ -50,7 +49,7 @@ const CategoryGroups = (props) => {
     };
 
     return (
-        <Wrapper>
+        <div className="category_groups">
             <AddGroupDialog
                 onClose={() => setOpenDialog(false)}
                 isOpen={openDialog}
@@ -90,7 +89,7 @@ const CategoryGroups = (props) => {
                     );
                 })}
             </div>
-        </Wrapper>
+        </div>
     );
 };
 

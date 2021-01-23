@@ -7,6 +7,8 @@ import { connect, ConnectedProps } from "react-redux";
 
 import "./App.css";
 
+import Wrapper from "./ui/Wrapper";
+
 import Categories from "./pages/Categories/Categories";
 import Category from "./pages/Categories/Category";
 
@@ -94,39 +96,51 @@ const App = (props: PropsFromRedux) => {
         if (isLoggedIn) {
             return (
                 <Switch>
-                    <Route exact path="/">
-                        <Redirect to="/category_groups" />
-                    </Route>
-                    <Route
-                        exact
-                        path="/category_groups"
-                        component={CategoryGroups}
-                    />
-                    <Route
-                        exact
-                        path="/category_groups/:category_group_id"
-                        component={(props: any) => <CategoryGroup {...props} />}
-                    />
+                    <Wrapper>
+                        <Route exact path="/">
+                            <Redirect to="/category_groups" />
+                        </Route>
+                        <Route
+                            exact
+                            path="/category_groups"
+                            component={CategoryGroups}
+                        />
+                        <Route
+                            exact
+                            path="/category_groups/:category_group_id"
+                            component={(props: any) => (
+                                <CategoryGroup {...props} />
+                            )}
+                        />
 
-                    <Route exact path="/categories" component={Categories} />
-                    <Route
-                        exact
-                        path="/categories/:category_id"
-                        component={(props: any) => <Category {...props} />}
-                    />
+                        <Route
+                            exact
+                            path="/categories"
+                            component={Categories}
+                        />
+                        <Route
+                            exact
+                            path="/categories/:category_id"
+                            component={(props: any) => <Category {...props} />}
+                        />
 
-                    <Route exact path="/filters" component={Filters} />
-                    <Route
-                        exact
-                        path="/filters/:filter_id"
-                        component={(props: any) => <Filter {...props} />}
-                    />
+                        <Route exact path="/filters" component={Filters} />
+                        <Route
+                            exact
+                            path="/filters/:filter_id"
+                            component={(props: any) => <Filter {...props} />}
+                        />
 
-                    <Route exact path="/products" component={Products} />
-                    <Route exact path="/orders" component={Orders} />
-                    <Route exact path="/admins" component={Admins} />
-                    <Route exact path="/home_slider" component={HomeSlider} />
-                    <Route exact path="/messages" component={Messages} />
+                        <Route exact path="/products" component={Products} />
+                        <Route exact path="/orders" component={Orders} />
+                        <Route exact path="/admins" component={Admins} />
+                        <Route
+                            exact
+                            path="/home_slider"
+                            component={HomeSlider}
+                        />
+                        <Route exact path="/messages" component={Messages} />
+                    </Wrapper>
                 </Switch>
             );
         }

@@ -1,17 +1,16 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import Wrapper from './../../ui/Wrapper'
+import React from "react";
+import { connect } from "react-redux";
 
-import './Home.css'
+import "./Home.css";
 
 const Home = () => {
-  return <Wrapper>{null}</Wrapper>
-}
+    return <div>{null}</div>;
+};
 
-const mapStateToProps = state => {
-  return {
-    authState: state.authReducer
-  }
-}
+const mapStateToProps = (state) => {
+    return {
+        authState: state.authReducer,
+    };
+};
 
-export default connect(mapStateToProps)(Home)
+export default connect(mapStateToProps)(Home);

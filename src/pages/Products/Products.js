@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import Wrapper from "./../../ui/Wrapper";
 import Menu from "./../../ui/Menu";
 import Snackbar from "./../../ui/Snackbar";
 import { Button, Typography, Badge, MenuItem } from "@material-ui/core";
@@ -76,7 +75,7 @@ const Products = (props) => {
     const handleDialogClose = () => setOpenDialog(false);
 
     return (
-        <Wrapper>
+        <div className="products">
             <ProductDialog isOpen={openDialog} close={handleDialogClose} />
             <Snackbar
                 message={snackbarMessage}
@@ -163,7 +162,7 @@ const Products = (props) => {
                             );
                         })}
             </div>
-        </Wrapper>
+        </div>
     );
 };
 
