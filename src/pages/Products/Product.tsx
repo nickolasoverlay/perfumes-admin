@@ -31,20 +31,13 @@ const ProductEditPage = (props: any) => {
     const { product, updateProduct, isLoading, isError } = useProduct(
         props.match.params.product_id
     );
-    const categoriesFuture = useCategories();
-
     const history = useHistory();
 
     const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
     const handleOpenDeleteDialog = () => setOpenDeleteDialog(true);
     const handleCloseDeleteDialog = () => setOpenDeleteDialog(false);
 
-    if (
-        isLoading ||
-        isError ||
-        categoriesFuture.isLoading ||
-        categoriesFuture.isError
-    ) {
+    if (isLoading || isError) {
         return (
             <div className="product">
                 <Spinner />
@@ -63,10 +56,6 @@ const ProductEditPage = (props: any) => {
         });
         history.push("/products");
     };
-
-    const productCategory = categoriesFuture.categories.find(
-        (f) => f.id === product.category
-    );
 
     return (
         <div className="product">
@@ -107,28 +96,13 @@ const ProductEditPage = (props: any) => {
                     defaultValue={product.name_fr}
                     as={DialogTextField}
                 />
-                <Controller
-                    name="category"
+
+                <CategoryChanger
                     control={control}
-                    defaultValue={productCategory?.id}
-                    render={(props) => {
-                        return (
-                            <Autocomplete
-                                options={categoriesFuture.categories}
-                                defaultValue={productCategory}
-                                getOptionLabel={(o: Category) => o.name_en}
-                                label="Категорія"
-                                getOptionSelected={(
-                                    option: Category,
-                                    value: Category
-                                ) => option.id === value.id}
-                                onChange={(o: Category) => {
-                                    props.onChange(o.id);
-                                }}
-                            />
-                        );
-                    }}
+                    productId={product.id}
+                    productCategoryId={product.category}
                 />
+
                 <FilterWatcherFromCategory
                     control={control}
                     productCategory={product.category}
@@ -415,6 +389,50 @@ const ProductEditPage = (props: any) => {
                 </Button>
             </div>
         </div>
+    );
+};
+
+type CategoryWatcherProps = {
+    control: Control<Product>;
+    productId: number;
+    productCategoryId: number;
+};
+
+const CategoryChanger: React.FC<CategoryWatcherProps> = (props) => {
+    const { control, productCategoryId } = props;
+
+    const categoriesFuture = useCategories();
+
+    if (categoriesFuture.isLoading || categoriesFuture.isError) {
+        return null;
+    }
+    const productCategory = categoriesFuture.categories.find(
+        (f) => f.id === productCategoryId
+    );
+
+    return (
+        <Controller
+            name="category"
+            control={control}
+            defaultValue={productCategory?.id}
+            render={(props) => {
+                return (
+                    <Autocomplete
+                        options={categoriesFuture.categories}
+                        defaultValue={productCategory}
+                        getOptionLabel={(o: Category) => o.name_en}
+                        label="Категорія"
+                        getOptionSelected={(
+                            option: Category,
+                            value: Category
+                        ) => option.id === value.id}
+                        onChange={(o: Category) => {
+                            props.onChange(o.id);
+                        }}
+                    />
+                );
+            }}
+        />
     );
 };
 
