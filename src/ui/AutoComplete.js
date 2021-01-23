@@ -13,8 +13,6 @@ const AutoComplete = (props) => {
         ...params
     } = props;
 
-    console.log("value", value);
-
     if (value) {
         return (
             <div style={{ width: "100%" }}>
@@ -29,11 +27,11 @@ const AutoComplete = (props) => {
                     getOptionLabel={getOptionLabel}
                     getOptionSelected={getOptionSelected}
                     autoHighlight
-                    filterSelectedOptions
                     renderInput={(renderParams) => {
                         return (
                             <TextField
                                 {...renderParams}
+                                {...params}
                                 margin="dense"
                                 fullWidth
                             />
