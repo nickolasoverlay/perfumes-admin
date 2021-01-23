@@ -29,26 +29,23 @@ export const typeList: TypeOption[] = [
     },
 ];
 
-interface AddGroupDialogProps {
-    onClose(): void;
+type AddGroupDialogProps = {
+    close(): void;
     pushGroup(group: any): void;
     isOpen: boolean;
-}
+};
 
-const AddGroupDialog = ({
-    pushGroup,
-    onClose,
-    isOpen,
-}: AddGroupDialogProps) => {
+const AddGroupDialog: React.FC<AddGroupDialogProps> = (props) => {
+    const { pushGroup, close, isOpen } = props;
     const { control, handleSubmit } = useForm();
 
     const onSubmit = (data: any) => {
         pushGroup(data);
-        onClose();
+        close();
     };
 
     return (
-        <Dialog onClose={onClose} open={isOpen} fullWidth>
+        <Dialog onClose={close} open={isOpen} fullWidth>
             <DialogTitle>Добавлення групи</DialogTitle>
             <DialogContent>
                 <Controller
@@ -96,7 +93,9 @@ const AddGroupDialog = ({
                 />
             </DialogContent>
             <DialogActions>
-                <Button color="primary">Відміна</Button>
+                <Button color="primary" onClick={close}>
+                    Відміна
+                </Button>
                 <Button
                     color="primary"
                     variant="contained"

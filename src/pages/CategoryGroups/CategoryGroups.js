@@ -48,10 +48,12 @@ const CategoryGroups = (props) => {
             });
     };
 
+    const handleCloseDialog = () => setOpenDialog(false);
+
     return (
         <div className="category_groups">
             <AddGroupDialog
-                onClose={() => setOpenDialog(false)}
+                close={handleCloseDialog}
                 isOpen={openDialog}
                 pushGroup={pushGroup}
             />
