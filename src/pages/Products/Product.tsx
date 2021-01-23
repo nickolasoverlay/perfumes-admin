@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
-import { useForm, useWatch, Controller } from "react-hook-form";
+import { useForm, useWatch, Control, Controller } from "react-hook-form";
 
 import useProduct from "./../../hooks/useProduct";
 import useCategories from "./../../hooks/useCategories";
 import useFilters from "./../../hooks/useFilters";
 
-import { Button, FormControlLabel, Switch } from "@material-ui/core";
+import {
+    Button,
+    FormControlLabel,
+    Switch,
+    Typography,
+} from "@material-ui/core";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 
 import DialogTextField from "./../../ui/DialogTextField";
@@ -22,17 +27,11 @@ import { Filter } from "./../Filters/types";
 
 const ProductEditPage = (props: any) => {
     const { control, handleSubmit } = useForm<Product>();
-    const watchCategory = useWatch({
-        control,
-        name: "category",
-        defaultValue: 1,
-    });
 
     const { product, updateProduct, isLoading, isError } = useProduct(
         props.match.params.product_id
     );
     const categoriesFuture = useCategories();
-    const filtersFuture = useFilters();
 
     const history = useHistory();
 
@@ -44,9 +43,7 @@ const ProductEditPage = (props: any) => {
         isLoading ||
         isError ||
         categoriesFuture.isLoading ||
-        categoriesFuture.isError ||
-        filtersFuture.isLoading ||
-        filtersFuture.isError
+        categoriesFuture.isError
     ) {
         return (
             <div className="product">
@@ -67,20 +64,9 @@ const ProductEditPage = (props: any) => {
         history.push("/products");
     };
 
-    const suitableFilters = filtersFuture.filters.filter(
-        (f: Filter) => f.category === watchCategory
+    const productCategory = categoriesFuture.categories.find(
+        (f) => f.id === product.category
     );
-    const getCurrentFilter = (): Filter => {
-        const currentFilter = suitableFilters.find(
-            (f: Filter) => f.id === product.filter
-        );
-
-        if (!currentFilter) {
-            return suitableFilters[0];
-        }
-
-        return currentFilter;
-    };
 
     return (
         <div className="product">
@@ -124,12 +110,12 @@ const ProductEditPage = (props: any) => {
                 <Controller
                     name="category"
                     control={control}
-                    defaultValue={categoriesFuture.categories[0].id}
+                    defaultValue={productCategory?.id}
                     render={(props) => {
                         return (
                             <Autocomplete
                                 options={categoriesFuture.categories}
-                                value={categoriesFuture.categories[0]}
+                                defaultValue={productCategory}
                                 getOptionLabel={(o: Category) => o.name_en}
                                 label="Категорія"
                                 getOptionSelected={(
@@ -143,30 +129,11 @@ const ProductEditPage = (props: any) => {
                         );
                     }}
                 />
-
-                {suitableFilters.length > 0 && (
-                    <Controller
-                        name="filter"
-                        control={control}
-                        defaultValue={getCurrentFilter().id}
-                        render={(props) => {
-                            return (
-                                <Autocomplete
-                                    options={suitableFilters}
-                                    getOptionLabel={(o: Filter) => o.name_en}
-                                    label="Фільтр"
-                                    getOptionSelected={(
-                                        option: Filter,
-                                        value: Filter
-                                    ) => option.id === value.id}
-                                    onChange={(o: Filter) => {
-                                        props.onChange(o.id);
-                                    }}
-                                />
-                            );
-                        }}
-                    />
-                )}
+                <FilterWatcherFromCategory
+                    control={control}
+                    productCategory={product.category}
+                    productFilter={product.filter}
+                />
                 <Controller
                     control={control}
                     name="short_en"
@@ -448,6 +415,62 @@ const ProductEditPage = (props: any) => {
                 </Button>
             </div>
         </div>
+    );
+};
+
+type FilterWatcherProps = {
+    control: Control<Product>;
+    productCategory: number;
+    productFilter: number;
+};
+
+const FilterWatcherFromCategory: React.FC<FilterWatcherProps> = (props) => {
+    const { control, productCategory, productFilter } = props;
+
+    const watchCategory = useWatch({
+        control: control,
+        name: "category",
+        defaultValue: productCategory,
+    });
+
+    const filtersFuture = useFilters();
+    if (filtersFuture.isLoading) {
+        return null;
+    }
+
+    const filters = filtersFuture.filters.filter((f) => f.id === watchCategory);
+
+    return (
+        <Controller
+            name="filter"
+            control={control}
+            defaultValue={productFilter}
+            render={(props) => {
+                const filter = filters.find((f) => f.id === props.value);
+                if (!filter) {
+                    return (
+                        <Typography variant="button">
+                            Для цієї категорії недоступен жоден фільтр
+                        </Typography>
+                    );
+                }
+
+                return (
+                    <Autocomplete
+                        options={filters}
+                        value={filter}
+                        getOptionLabel={(o: Filter) => o.name_en}
+                        label="Фільтр"
+                        getOptionSelected={(option: Filter, value: Filter) =>
+                            option.id === value.id
+                        }
+                        onChange={(o: Filter) => {
+                            props.onChange(o.id);
+                        }}
+                    />
+                );
+            }}
+        />
     );
 };
 
