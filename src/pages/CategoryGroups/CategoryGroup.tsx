@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import useGroup from "./../../hooks/useGroup";
@@ -8,10 +8,10 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 
 import DialogTextField from "../../ui/DialogTextField";
 import Autocomplete from "../../ui/AutoComplete";
-
 import Spinner from "./../../ui/Spinner";
 import Wrapper from "./../../ui/Wrapper";
 
+import DeleteGroupDialog from "./DeleteGroupDialog";
 import { Group, TypeOption, typeList } from "./types";
 
 const CategoryGroup = (props: any) => {
@@ -20,6 +20,10 @@ const CategoryGroup = (props: any) => {
     );
     const { control, handleSubmit } = useForm<Group>();
     const history = useHistory();
+
+    const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
+    const handleOpenDeleteDialog = () => setOpenDeleteDialog(true);
+    const handleCloseDeleteDialog = () => setOpenDeleteDialog(false);
 
     if (isLoading || isError) {
         return (
@@ -44,6 +48,11 @@ const CategoryGroup = (props: any) => {
     return (
         <Wrapper>
             <div className="category_group">
+                <DeleteGroupDialog
+                    isOpen={openDeleteDialog}
+                    groupId={group.id}
+                    close={handleCloseDeleteDialog}
+                />
                 <div className="ActionBar">
                     <div className="ActionBar--title">
                         Колекції
@@ -52,6 +61,14 @@ const CategoryGroup = (props: any) => {
                         <NavigateNextIcon />
                         Редагування
                     </div>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        disableElevation
+                        onClick={handleOpenDeleteDialog}
+                    >
+                        Видалити
+                    </Button>
                 </div>
                 <div className="category_group_form triple_grid_column">
                     <Controller
@@ -78,6 +95,7 @@ const CategoryGroup = (props: any) => {
                                     options={typeList}
                                     defaultValue={typeList[group.type - 1]}
                                     getOptionLabel={(o: TypeOption) => o.name}
+                                    label="Розташування на сайті"
                                     getOptionSelected={(
                                         option: TypeOption,
                                         value: TypeOption

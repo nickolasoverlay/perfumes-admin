@@ -26,6 +26,20 @@ const useFilters = () => {
 
             mutate([...(data as Filter[]), createdFilter]);
         },
+
+        deleteFilter: async (filterId: number) => {
+            await fetch(`${process.env.REACT_APP_API}/admin/filters/delete/`, {
+                method: "POST",
+                body: JSON.stringify({ id: filterId }),
+                credentials: "include",
+            });
+
+            mutate([
+                ...(data as Filter[]).filter(
+                    (filter) => filter.id !== filterId
+                ),
+            ]);
+        },
     };
 };
 

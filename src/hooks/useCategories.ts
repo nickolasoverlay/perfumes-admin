@@ -26,6 +26,23 @@ const useCategories = () => {
 
             mutate([...(data as Category[]), createdCategory]);
         },
+
+        deleteCategory: async (categoryId: number) => {
+            await fetch(
+                `${process.env.REACT_APP_API}/admin/categories/delete/`,
+                {
+                    method: "POST",
+                    body: JSON.stringify({ id: categoryId }),
+                    credentials: "include",
+                }
+            );
+
+            mutate([
+                ...(data as Category[]).filter(
+                    (category) => category.id !== categoryId
+                ),
+            ]);
+        },
     };
 };
 

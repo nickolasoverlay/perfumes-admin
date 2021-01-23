@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
@@ -9,14 +9,15 @@ import useGroups from "../../hooks/useGroups";
 import Wrapper from "./../../ui/Wrapper";
 import Spinner from "./../../ui/Spinner";
 import Autocomplete from "./../../ui/AutoComplete";
+import DialogTextField from "../../ui/DialogTextField";
 
 import { Button } from "@material-ui/core";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 
-import DialogTextField from "../../ui/DialogTextField";
-
 import { Category } from "./types";
 import { Group } from "./../CategoryGroups/types";
+
+import DeleteCategoryDialog from "./DeleteCategoryDialog";
 
 const CategoryPage = (props: any) => {
     const { control, handleSubmit } = useForm<Category>();
@@ -25,6 +26,10 @@ const CategoryPage = (props: any) => {
     const { category, updateCategory, isLoading, isError } = useCategory(
         props.match.params.category_id
     );
+
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+    const handleOpenDeleteDialog = () => setDeleteDialogOpen(true);
+    const handleCloseDeleteDialog = () => setDeleteDialogOpen(false);
 
     const handleCancel = () => {
         history.push("/categories");
@@ -58,6 +63,11 @@ const CategoryPage = (props: any) => {
     return (
         <Wrapper>
             <div className="category">
+                <DeleteCategoryDialog
+                    isOpen={deleteDialogOpen}
+                    close={handleCloseDeleteDialog}
+                    categoryId={category.id}
+                />
                 <div className="ActionBar">
                     <div className="ActionBar--title">
                         Категорії
@@ -66,6 +76,14 @@ const CategoryPage = (props: any) => {
                         <NavigateNextIcon />
                         Редагування
                     </div>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        disableElevation
+                        onClick={handleOpenDeleteDialog}
+                    >
+                        Видалити
+                    </Button>
                 </div>
                 <div className="category_edit_form triple_grid_column">
                     <Controller
@@ -106,7 +124,7 @@ const CategoryPage = (props: any) => {
                     <Controller
                         name="group_id"
                         control={control}
-                        defaultValue={defaultGroup.id}
+                        defaultValue={defaultGroup ? defaultGroup.id : 0}
                         render={(props) => {
                             return (
                                 <Autocomplete

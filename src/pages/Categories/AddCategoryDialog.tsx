@@ -109,7 +109,7 @@ const AddCategoryDialog = ({ onClose, isOpen }: CategoryDialogProps) => {
                 <Controller
                     name="group_id"
                     control={control}
-                    defaultValue={groups[0].id}
+                    defaultValue={groups[0] ? groups[0].id : 0}
                     render={(props) => {
                         return (
                             <Autocomplete

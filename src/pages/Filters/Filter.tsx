@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
@@ -9,14 +9,15 @@ import useCategories from "../../hooks/useCategories";
 import Wrapper from "./../../ui/Wrapper";
 import Spinner from "./../../ui/Spinner";
 import Autocomplete from "./../../ui/AutoComplete";
+import DialogTextField from "../../ui/DialogTextField";
 
 import { Button } from "@material-ui/core";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 
-import DialogTextField from "../../ui/DialogTextField";
-
 import { Filter } from "./types";
 import { Category } from "./../Categories/types";
+
+import DeleteFilterDialog from "./DeleteFilterDialog";
 
 const FilterEditPage = (props: any) => {
     const { control, handleSubmit } = useForm<Filter>();
@@ -25,6 +26,10 @@ const FilterEditPage = (props: any) => {
     const { filter, updateFilter, isLoading, isError } = useFilter(
         props.match.params.filter_id
     );
+
+    const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
+    const handleOpenDeleteDialog = () => setOpenDeleteDialog(true);
+    const handleCloseDeleteDialog = () => setOpenDeleteDialog(false);
 
     const handleCancel = () => {
         history.push("/filters");
@@ -50,17 +55,19 @@ const FilterEditPage = (props: any) => {
             </Wrapper>
         );
     }
+
     const defaultCategory = categoriesFuture.categories.find(
         (c: Category) => c.id === filter.category
     );
 
-    if (!defaultCategory) {
-        return null;
-    }
-
     return (
         <Wrapper>
             <div className="filter">
+                <DeleteFilterDialog
+                    isOpen={openDeleteDialog}
+                    close={handleCloseDeleteDialog}
+                    filterId={filter.id}
+                />
                 <div className="ActionBar">
                     <div className="ActionBar--title">
                         Фільтри
@@ -69,6 +76,14 @@ const FilterEditPage = (props: any) => {
                         <NavigateNextIcon />
                         Редагування
                     </div>
+                    <Button
+                        color="secondary"
+                        variant="contained"
+                        disableElevation
+                        onClick={handleOpenDeleteDialog}
+                    >
+                        Видалити
+                    </Button>
                 </div>
                 <div className="filter_edit_form triple_grid_column">
                     <Controller
@@ -88,7 +103,7 @@ const FilterEditPage = (props: any) => {
                     <Controller
                         name="category"
                         control={control}
-                        defaultValue={defaultCategory.id}
+                        defaultValue={defaultCategory ? defaultCategory.id : 0}
                         render={(props) => {
                             return (
                                 <Autocomplete
