@@ -16,6 +16,8 @@ import CategoryGroups from "./pages/CategoryGroups/CategoryGroups";
 import CategoryGroup from "./pages/CategoryGroups/CategoryGroup";
 
 import Products from "./pages/Products/Products";
+import Product from "./pages/Products/Product";
+
 import Orders from "./pages/Orders/Orders";
 import Admins from "./pages/Admins/Admins";
 import HomeSlider from "./pages/HomeSlider";
@@ -132,6 +134,12 @@ const App = (props: PropsFromRedux) => {
                         />
 
                         <Route exact path="/products" component={Products} />
+                        <Route
+                            exact
+                            path="/products/:product_id"
+                            component={(props: any) => <Product {...props} />}
+                        />
+
                         <Route exact path="/orders" component={Orders} />
                         <Route exact path="/admins" component={Admins} />
                         <Route

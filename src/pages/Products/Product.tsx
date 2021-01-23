@@ -1,35 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { useHistory } from "react-router-dom";
 import { useForm, useWatch, Controller } from "react-hook-form";
 
+import useProduct from "./../../hooks/useProduct";
 import useCategories from "./../../hooks/useCategories";
 import useFilters from "./../../hooks/useFilters";
-import useProducts from "./../../hooks/useProducts";
 
-import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    Button,
-    Typography,
-    FormControlLabel,
-    Switch,
-} from "@material-ui/core";
+import { Button, FormControlLabel, Switch } from "@material-ui/core";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 
 import DialogTextField from "./../../ui/DialogTextField";
 import Spinner from "./../../ui/Spinner";
 import Autocomplete from "./../../ui/AutoComplete";
 
+import DeleteProductDialog from "./DeleteProductDialog";
+
 import { Product, ProductSizeType, productSizeTypes } from "./types";
-import { Category } from "../Categories/types";
-import { Filter } from "../Filters/types";
+import { Category } from "./../Categories/types";
+import { Filter } from "./../Filters/types";
 
-type AddProductDialogProps = {
-    close(): void;
-    isOpen: boolean;
-};
-
-const AddProductDialog = ({ close, isOpen }: AddProductDialogProps) => {
+const ProductEditPage = (props: any) => {
     const { control, handleSubmit } = useForm<Product>();
     const watchCategory = useWatch({
         control,
@@ -37,110 +28,97 @@ const AddProductDialog = ({ close, isOpen }: AddProductDialogProps) => {
         defaultValue: 1,
     });
 
+    const { product, updateProduct, isLoading, isError } = useProduct(
+        props.match.params.product_id
+    );
     const categoriesFuture = useCategories();
     const filtersFuture = useFilters();
-    const { pushProduct } = useProducts();
+
+    const history = useHistory();
+
+    const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
+    const handleOpenDeleteDialog = () => setOpenDeleteDialog(true);
+    const handleCloseDeleteDialog = () => setOpenDeleteDialog(false);
 
     if (
+        isLoading ||
+        isError ||
         categoriesFuture.isLoading ||
         categoriesFuture.isError ||
         filtersFuture.isLoading ||
         filtersFuture.isError
     ) {
         return (
-            <Dialog open={isOpen} onClose={close} fullWidth scroll="paper">
-                <DialogTitle>Добавлення продукту</DialogTitle>
-                <DialogContent>
-                    <Spinner />
-                </DialogContent>
-                <DialogActions>
-                    <Button color="primary">Відміна</Button>
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        disableElevation
-                        disabled
-                    />
-                </DialogActions>
-            </Dialog>
+            <div className="product">
+                <Spinner />
+            </div>
         );
     }
 
-    const onSubmit = (product: Product) => {
-        pushProduct(product);
-        close();
+    const handleCancel = () => {
+        history.push("/products");
     };
 
-    if (categoriesFuture.isLoading) {
-        return (
-            <Dialog open={isOpen} onClose={close} fullWidth scroll="paper">
-                <DialogTitle>Добавлення продукту</DialogTitle>
-                <DialogContent>
-                    <Spinner />
-                </DialogContent>
-                <DialogActions>
-                    <Button color="primary" onClick={close}>
-                        Відміна
-                    </Button>
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        disableElevation
-                        disabled
-                    >
-                        Добавити
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        );
-    }
-
-    if (categoriesFuture.isError) {
-        return (
-            <Dialog open={isOpen} onClose={close} fullWidth scroll="paper">
-                <DialogTitle>Добавлення продукту</DialogTitle>
-                <DialogContent>
-                    <Typography variant="button">
-                        Не вдалося завантажити категорії
-                    </Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button color="primary" onClick={close}>
-                        Відміна
-                    </Button>
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        disableElevation
-                        disabled
-                    >
-                        Добавити
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        );
-    }
+    const onSubmit = (updatedProduct: Product) => {
+        updateProduct({
+            ...updatedProduct,
+            id: product.id,
+        });
+        history.push("/products");
+    };
 
     const suitableFilters = filtersFuture.filters.filter(
         (f: Filter) => f.category === watchCategory
     );
+    const getCurrentFilter = (): Filter => {
+        const currentFilter = suitableFilters.find(
+            (f: Filter) => f.id === product.filter
+        );
+
+        if (!currentFilter) {
+            return suitableFilters[0];
+        }
+
+        return currentFilter;
+    };
 
     return (
-        <Dialog open={isOpen} onClose={close} fullWidth scroll="paper">
-            <DialogTitle>Добавлення товару</DialogTitle>
-            <DialogContent>
+        <div className="product">
+            <DeleteProductDialog
+                isOpen={openDeleteDialog}
+                productId={product.id}
+                close={handleCloseDeleteDialog}
+            />
+            <div className="ActionBar">
+                <div className="ActionBar--title">
+                    Продукти
+                    <NavigateNextIcon />
+                    {product.id}
+                    <NavigateNextIcon />
+                    Редагування
+                </div>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    disableElevation
+                    onClick={handleOpenDeleteDialog}
+                >
+                    Видалити
+                </Button>
+            </div>
+            <div className="product_form triple_grid_column">
                 <Controller
                     control={control}
                     name="name_en"
                     label="Назва (EN)"
-                    defaultValue=""
+                    defaultValue={product.name_en}
                     as={DialogTextField}
                 />
                 <Controller
                     control={control}
                     name="name_fr"
                     label="Назва (FR)"
-                    defaultValue=""
+                    defaultValue={product.name_fr}
                     as={DialogTextField}
                 />
                 <Controller
@@ -151,7 +129,7 @@ const AddProductDialog = ({ close, isOpen }: AddProductDialogProps) => {
                         return (
                             <Autocomplete
                                 options={categoriesFuture.categories}
-                                defaultValue={categoriesFuture.categories[0]}
+                                value={categoriesFuture.categories[0]}
                                 getOptionLabel={(o: Category) => o.name_en}
                                 label="Категорія"
                                 getOptionSelected={(
@@ -170,7 +148,7 @@ const AddProductDialog = ({ close, isOpen }: AddProductDialogProps) => {
                     <Controller
                         name="filter"
                         control={control}
-                        defaultValue={0}
+                        defaultValue={getCurrentFilter().id}
                         render={(props) => {
                             return (
                                 <Autocomplete
@@ -193,154 +171,156 @@ const AddProductDialog = ({ close, isOpen }: AddProductDialogProps) => {
                     control={control}
                     name="short_en"
                     label="Підзаголовок (EN)"
-                    defaultValue=""
+                    defaultValue={product.short_en}
                     as={DialogTextField}
                 />
                 <Controller
                     control={control}
                     name="short_fr"
                     label="Підзаголовок (FR)"
-                    defaultValue=""
+                    defaultValue={product.short_fr}
                     as={DialogTextField}
                 />
                 <Controller
                     control={control}
                     name="description_en"
                     label="Опис (EN)"
-                    defaultValue=""
+                    defaultValue={product.short_en}
                     as={DialogTextField}
                 />
                 <Controller
                     control={control}
                     name="description_fr"
                     label="Опис (FR)"
-                    defaultValue=""
+                    defaultValue={product.short_fr}
                     as={DialogTextField}
                 />
                 <Controller
                     control={control}
                     name="instruction_en"
                     label="Інструкція (EN)"
-                    defaultValue=""
+                    defaultValue={product.instruction_en}
                     as={DialogTextField}
                 />
                 <Controller
                     control={control}
                     name="instruction_fr"
                     label="Інструкція (FR)"
-                    defaultValue=""
+                    defaultValue={product.instruction_fr}
                     as={DialogTextField}
                 />
                 <Controller
                     control={control}
                     name="components_en"
                     label="Cклад (EN)"
-                    defaultValue=""
+                    defaultValue={product.components_en}
                     as={DialogTextField}
                 />
                 <Controller
                     control={control}
                     name="components_fr"
                     label="Склад (FR)"
-                    defaultValue=""
+                    defaultValue={product.components_fr}
                     as={DialogTextField}
                 />
                 <Controller
                     control={control}
                     name="firm_en"
                     label="Виробник (EN)"
-                    defaultValue=""
+                    defaultValue={product.firm_en}
                     as={DialogTextField}
                 />
                 <Controller
                     control={control}
                     name="firm_fr"
                     label="Виробник (FR)"
-                    defaultValue=""
+                    defaultValue={product.firm_fr}
                     as={DialogTextField}
                 />
-                <Controller
-                    control={control}
-                    name="is_available"
-                    defaultValue={true}
-                    render={(props) => {
-                        return (
-                            <FormControlLabel
-                                control={
-                                    <Switch
-                                        checked={props.value}
-                                        color="primary"
-                                        onChange={(e) =>
-                                            props.onChange(e.target.checked)
-                                        }
-                                        name="isAvailable"
-                                    />
-                                }
-                                label={
-                                    props.value
-                                        ? "Товар доступний"
-                                        : "Товар не доступний"
-                                }
-                            />
-                        );
-                    }}
-                />
-                <Controller
-                    control={control}
-                    name="is_new"
-                    defaultValue={false}
-                    render={(props) => {
-                        return (
-                            <FormControlLabel
-                                control={
-                                    <Switch
-                                        checked={props.value}
-                                        color="primary"
-                                        onChange={(e) =>
-                                            props.onChange(e.target.checked)
-                                        }
-                                        name="isNew"
-                                    />
-                                }
-                                label={
-                                    props.value
-                                        ? "Помічати як новинку"
-                                        : "Не помічати як новинку"
-                                }
-                            />
-                        );
-                    }}
-                />
-                <Controller
-                    control={control}
-                    name="with_discount"
-                    defaultValue={false}
-                    render={(props) => {
-                        return (
-                            <FormControlLabel
-                                control={
-                                    <Switch
-                                        checked={props.value}
-                                        color="primary"
-                                        onChange={(e) =>
-                                            props.onChange(e.target.checked)
-                                        }
-                                        name="withDiscount"
-                                    />
-                                }
-                                label={
-                                    props.value
-                                        ? "Товар акційний"
-                                        : "Товар не акційний"
-                                }
-                            />
-                        );
-                    }}
-                />
+                <div>
+                    <Controller
+                        control={control}
+                        name="is_available"
+                        defaultValue={product.is_available}
+                        render={(props) => {
+                            return (
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            checked={props.value}
+                                            color="primary"
+                                            onChange={(e) =>
+                                                props.onChange(e.target.checked)
+                                            }
+                                            name="isAvailable"
+                                        />
+                                    }
+                                    label={
+                                        props.value
+                                            ? "Товар доступний"
+                                            : "Товар не доступний"
+                                    }
+                                />
+                            );
+                        }}
+                    />
+                    <Controller
+                        control={control}
+                        name="is_new"
+                        defaultValue={product.is_new}
+                        render={(props) => {
+                            return (
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            checked={props.value}
+                                            color="primary"
+                                            onChange={(e) =>
+                                                props.onChange(e.target.checked)
+                                            }
+                                            name="isNew"
+                                        />
+                                    }
+                                    label={
+                                        props.value
+                                            ? "Помічати як новинку"
+                                            : "Не помічати як новинку"
+                                    }
+                                />
+                            );
+                        }}
+                    />
+                    <Controller
+                        control={control}
+                        name="with_discount"
+                        defaultValue={product.with_discount}
+                        render={(props) => {
+                            return (
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            checked={props.value}
+                                            color="primary"
+                                            onChange={(e) =>
+                                                props.onChange(e.target.checked)
+                                            }
+                                            name="withDiscount"
+                                        />
+                                    }
+                                    label={
+                                        props.value
+                                            ? "Товар акційний"
+                                            : "Товар не акційний"
+                                    }
+                                />
+                            );
+                        }}
+                    />
+                </div>
                 <Controller
                     control={control}
                     name="price"
-                    defaultValue={0}
+                    defaultValue={product.price}
                     type="number"
                     render={(props) => {
                         return (
@@ -363,7 +343,7 @@ const AddProductDialog = ({ close, isOpen }: AddProductDialogProps) => {
                 <Controller
                     control={control}
                     name="discount_price"
-                    defaultValue={0}
+                    defaultValue={product.discount_price}
                     type="number"
                     render={(props) => {
                         return (
@@ -410,7 +390,7 @@ const AddProductDialog = ({ close, isOpen }: AddProductDialogProps) => {
                 <Controller
                     control={control}
                     name="size"
-                    defaultValue={0}
+                    defaultValue={product.size}
                     type="number"
                     render={(props) => {
                         return (
@@ -433,7 +413,7 @@ const AddProductDialog = ({ close, isOpen }: AddProductDialogProps) => {
                 <Controller
                     control={control}
                     name="additional_size"
-                    defaultValue={0}
+                    defaultValue={product.additional_size}
                     type="number"
                     render={(props) => {
                         return (
@@ -453,22 +433,22 @@ const AddProductDialog = ({ close, isOpen }: AddProductDialogProps) => {
                         );
                     }}
                 />
-            </DialogContent>
-            <DialogActions>
-                <Button color="primary" onClick={close}>
+            </div>
+            <div className="edit_form_actions">
+                <Button style={{ marginRight: 10 }} onClick={handleCancel}>
                     Відміна
                 </Button>
                 <Button
-                    color="primary"
                     variant="contained"
+                    color="primary"
                     disableElevation
                     onClick={handleSubmit(onSubmit)}
                 >
-                    Добавити
+                    Зберегти
                 </Button>
-            </DialogActions>
-        </Dialog>
+            </div>
+        </div>
     );
 };
 
-export default AddProductDialog;
+export default ProductEditPage;

@@ -6,11 +6,43 @@ const AutoComplete = (props) => {
     const {
         options,
         defaultValue,
+        value,
         getOptionLabel,
         getOptionSelected,
         onChange,
         ...params
     } = props;
+
+    console.log("value", value);
+
+    if (value) {
+        return (
+            <div style={{ width: "100%" }}>
+                <Autocomplete
+                    options={options}
+                    value={value}
+                    onChange={(e, v) => {
+                        if (v) {
+                            onChange(v);
+                        }
+                    }}
+                    getOptionLabel={getOptionLabel}
+                    getOptionSelected={getOptionSelected}
+                    autoHighlight
+                    filterSelectedOptions
+                    renderInput={(renderParams) => {
+                        return (
+                            <TextField
+                                {...renderParams}
+                                margin="dense"
+                                fullWidth
+                            />
+                        );
+                    }}
+                />
+            </div>
+        );
+    }
 
     return (
         <div style={{ width: "100%" }}>

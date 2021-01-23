@@ -81,7 +81,7 @@ const CategoryGroup = (props: any) => {
                     control={control}
                     defaultValue={group.name_fr}
                     label="Назва (FR)"
-                    as={<DialogTextField />}
+                    as={DialogTextField}
                 />
                 <Controller
                     name="type"
@@ -110,7 +110,7 @@ const CategoryGroup = (props: any) => {
                     control={control}
                     defaultValue={group.url}
                     label="Посилання"
-                    as={<DialogTextField />}
+                    as={DialogTextField}
                 />
             </div>
             <div className="edit_form_actions">
