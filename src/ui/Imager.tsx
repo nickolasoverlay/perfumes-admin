@@ -10,17 +10,14 @@ type ImagerProps = {
     onEditCommit(images: string): void;
 };
 
-type ImagerAction = "add" | "delete";
-
 const Imager: React.FC<ImagerProps> = (props) => {
-    const { entity, presentImages = "", entityId, onEditCommit } = props;
+    const { entity, presentImages = "", entityId } = props;
 
     const inputRef = useRef<HTMLInputElement>(null);
-    const [photoIndex, setPhotoIndex] = useState(0);
+    const [imageIndex, setImageIndex] = useState(0);
     const [images, setImages] = useState(
         presentImages.split(",").filter((s) => s !== "")
     );
-    const [action, setAction] = useState<ImagerAction>("add");
 
     const handleAddChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) {
@@ -35,7 +32,7 @@ const Imager: React.FC<ImagerProps> = (props) => {
         }
 
         const addProcessed = await fetch(
-            `${process.env.REACT_APP_API}/admin/imager/?id=${entityId}&entity=${entity}&action=${action}`,
+            `${process.env.REACT_APP_API}/admin/imager/?id=${entityId}&entity=${entity}&action=add`,
             {
                 method: "POST",
                 body: data,
@@ -51,19 +48,34 @@ const Imager: React.FC<ImagerProps> = (props) => {
         );
     };
 
+    const handleRemove = async () => {
+        const deleteProcessed = await fetch(
+            `${process.env.REACT_APP_API}/admin/imager/?id=${entityId}&entity=${entity}&action=remove&remove=${images[imageIndex]}`,
+            {
+                method: "POST",
+                credentials: "include",
+            }
+        ).then((res) => res.json());
+
+        setImages(
+            deleteProcessed.pictures.split(",").filter((s: string) => s !== "")
+        );
+        setImageIndex(0);
+    };
+
     const handleLeftControl = () => {
-        if (photoIndex === 0) {
-            setPhotoIndex(images.length - 1);
+        if (imageIndex === 0) {
+            setImageIndex(images.length - 1);
         } else {
-            setPhotoIndex((i) => i - 1);
+            setImageIndex((i) => i - 1);
         }
     };
 
     const handleRightControl = () => {
-        if (photoIndex === images.length - 1) {
-            setPhotoIndex(0);
+        if (imageIndex === images.length - 1) {
+            setImageIndex(0);
         } else {
-            setPhotoIndex((i) => i + 1);
+            setImageIndex((i) => i + 1);
         }
     };
 
@@ -82,6 +94,13 @@ const Imager: React.FC<ImagerProps> = (props) => {
             <div className="Imager--actions">
                 <Typography variant="button">Зображення</Typography>
                 <div>
+                    {images.length > 0 && (
+                        <Tooltip title="Видалити це фото">
+                            <IconButton onClick={handleRemove}>
+                                <Close />
+                            </IconButton>
+                        </Tooltip>
+                    )}
                     <Tooltip title="Добавити фото">
                         <IconButton>
                             <label
@@ -95,7 +114,7 @@ const Imager: React.FC<ImagerProps> = (props) => {
                 </div>
             </div>
             <div className="Imager--photos">
-                {entity === "product" && (
+                {images.length > 0 && (
                     <div className="Imager--control Imager--left">
                         <IconButton onClick={handleLeftControl}>
                             <NavigateBefore />
@@ -106,11 +125,11 @@ const Imager: React.FC<ImagerProps> = (props) => {
                     className="Imager--photo"
                     src={
                         `${process.env.REACT_APP_API}/media/` +
-                        images[photoIndex]
+                        images[imageIndex]
                     }
                     alt=""
                 />
-                {entity === "product" && (
+                {images.length > 0 && (
                     <div className="Imager--control Imager--right">
                         <IconButton onClick={handleRightControl}>
                             <NavigateNext />
@@ -123,9 +142,9 @@ const Imager: React.FC<ImagerProps> = (props) => {
                     images.map((image, index) => (
                         <div
                             key={index}
-                            onClick={() => setPhotoIndex(index)}
+                            onClick={() => setImageIndex(index)}
                             className={
-                                index === photoIndex
+                                index === imageIndex
                                     ? "Imager--dot active"
                                     : "Imager--dot"
                             }
