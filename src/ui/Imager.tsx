@@ -1,11 +1,17 @@
 import React, { useState, useRef } from "react";
 import { IconButton, Typography, Tooltip } from "@material-ui/core";
-import { Close, Add, NavigateBefore, NavigateNext } from "@material-ui/icons";
+import {
+    Close,
+    Add,
+    CloudUploadOutlined,
+    NavigateBefore,
+    NavigateNext,
+} from "@material-ui/icons";
 import "./Imager.css";
 
 type ImagerProps = {
     presentImages?: string;
-    entity: "category_group" | "home_slide" | "product";
+    entity: "category_group" | "product";
     entityId: number | string;
     onEditCommit(images: string): void;
 };
@@ -94,27 +100,49 @@ const Imager: React.FC<ImagerProps> = (props) => {
             <div className="Imager--actions">
                 <Typography variant="button">Зображення</Typography>
                 <div>
-                    {images.length > 0 && (
+                    {entity === "product" && images.length > 0 && (
                         <Tooltip title="Видалити це фото">
                             <IconButton onClick={handleRemove}>
                                 <Close />
                             </IconButton>
                         </Tooltip>
                     )}
-                    <Tooltip title="Добавити фото">
-                        <IconButton>
-                            <label
-                                htmlFor="p-file"
-                                style={{ display: "flex", cursor: "pointer" }}
-                            >
-                                <Add />
-                            </label>
-                        </IconButton>
-                    </Tooltip>
+                    {(entity === "product" ||
+                        (entity === "category_group" &&
+                            images.length === 0)) && (
+                        <Tooltip title="Добавити фото">
+                            <IconButton>
+                                <label
+                                    htmlFor="p-file"
+                                    style={{
+                                        display: "flex",
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    <Add />
+                                </label>
+                            </IconButton>
+                        </Tooltip>
+                    )}
+                    {entity === "category_group" && images.length === 1 && (
+                        <Tooltip title="Замінити фото">
+                            <IconButton>
+                                <label
+                                    htmlFor="p-file"
+                                    style={{
+                                        display: "flex",
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    <CloudUploadOutlined />
+                                </label>
+                            </IconButton>
+                        </Tooltip>
+                    )}
                 </div>
             </div>
             <div className="Imager--photos">
-                {images.length > 0 && (
+                {images.length > 1 && (
                     <div className="Imager--control Imager--left">
                         <IconButton onClick={handleLeftControl}>
                             <NavigateBefore />
@@ -129,7 +157,7 @@ const Imager: React.FC<ImagerProps> = (props) => {
                     }
                     alt=""
                 />
-                {images.length > 0 && (
+                {images.length > 1 && (
                     <div className="Imager--control Imager--right">
                         <IconButton onClick={handleRightControl}>
                             <NavigateNext />

@@ -9,6 +9,7 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import DialogTextField from "../../ui/DialogTextField";
 import Autocomplete from "../../ui/AutoComplete";
 import Spinner from "./../../ui/Spinner";
+import Imager from "./../../ui/Imager";
 
 import DeleteGroupDialog from "./DeleteGroupDialog";
 import { Group, TypeOption, typeList } from "./types";
@@ -113,6 +114,12 @@ const CategoryGroup = (props: any) => {
                     as={DialogTextField}
                 />
             </div>
+            <Imager
+                entity="category_group"
+                entityId={group.id}
+                onEditCommit={(s) => console.log(s)}
+                presentImages={group.wallpaper}
+            />
             <div className="edit_form_actions">
                 <Button style={{ marginRight: 10 }} onClick={handleCancel}>
                     Відміна

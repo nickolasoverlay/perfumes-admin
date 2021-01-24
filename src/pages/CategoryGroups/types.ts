@@ -4,7 +4,7 @@ export type Group = {
     name_en: string;
     name_fr: string;
     url: string;
-    picture: string;
+    wallpaper: string;
     is_deleted: boolean;
 };
 
