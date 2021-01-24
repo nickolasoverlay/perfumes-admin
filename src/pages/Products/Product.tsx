@@ -18,6 +18,7 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import DialogTextField from "./../../ui/DialogTextField";
 import Spinner from "./../../ui/Spinner";
 import Autocomplete from "./../../ui/AutoComplete";
+import Imager from "./../../ui/Imager";
 
 import DeleteProductDialog from "./DeleteProductDialog";
 
@@ -375,6 +376,12 @@ const ProductEditPage = (props: any) => {
                     }}
                 />
             </div>
+            <Imager
+                entity="product"
+                entityId={product.id}
+                presentImages={product.pictures}
+                onEditCommit={(images) => console.log(images)}
+            />
             <div className="edit_form_actions">
                 <Button style={{ marginRight: 10 }} onClick={handleCancel}>
                     Відміна
