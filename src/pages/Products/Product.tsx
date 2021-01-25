@@ -29,9 +29,13 @@ import { Filter } from "./../Filters/types";
 const ProductEditPage = (props: any) => {
     const { control, handleSubmit } = useForm<Product>();
 
-    const { product, updateProduct, isLoading, isError } = useProduct(
-        props.match.params.product_id
-    );
+    const {
+        product,
+        updateProduct,
+        updateProductPictures,
+        isLoading,
+        isError,
+    } = useProduct(props.match.params.product_id);
     const history = useHistory();
 
     const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
@@ -54,6 +58,7 @@ const ProductEditPage = (props: any) => {
         updateProduct({
             ...updatedProduct,
             id: product.id,
+            pictures: product.pictures,
         });
         history.push("/products");
     };
@@ -380,7 +385,7 @@ const ProductEditPage = (props: any) => {
                 entity="product"
                 entityId={product.id}
                 presentImages={product.pictures}
-                onEditCommit={(images) => console.log(images)}
+                onEditCommit={updateProductPictures}
             />
             <div className="edit_form_actions">
                 <Button style={{ marginRight: 10 }} onClick={handleCancel}>

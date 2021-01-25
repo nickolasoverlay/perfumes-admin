@@ -24,7 +24,13 @@ const useGroup = (id: string) => {
                 }
             );
 
-            console.log({ ...data, ...group });
+            mutate({ ...data, ...group });
+        },
+
+        updateGroupWallpaper: (wallpaper: string) => {
+            const group: Group = data as Group;
+            group.wallpaper = wallpaper;
+
             mutate({ ...data, ...group });
         },
     };

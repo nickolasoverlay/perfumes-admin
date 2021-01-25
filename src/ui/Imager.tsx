@@ -17,7 +17,7 @@ type ImagerProps = {
 };
 
 const Imager: React.FC<ImagerProps> = (props) => {
-    const { entity, presentImages = "", entityId } = props;
+    const { entity, presentImages = "", onEditCommit, entityId } = props;
 
     const inputRef = useRef<HTMLInputElement>(null);
     const [imageIndex, setImageIndex] = useState(0);
@@ -49,9 +49,12 @@ const Imager: React.FC<ImagerProps> = (props) => {
         if (inputRef.current) {
             inputRef.current.value = "";
         }
+
         setImages(
             addProcessed.pictures.split(",").filter((s: string) => s !== "")
         );
+
+        onEditCommit(addProcessed);
     };
 
     const handleRemove = async () => {
@@ -66,6 +69,8 @@ const Imager: React.FC<ImagerProps> = (props) => {
         setImages(
             deleteProcessed.pictures.split(",").filter((s: string) => s !== "")
         );
+
+        onEditCommit(deleteProcessed);
         setImageIndex(0);
     };
 

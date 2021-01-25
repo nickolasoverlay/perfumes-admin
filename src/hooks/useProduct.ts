@@ -21,7 +21,13 @@ const useProduct = (id: string) => {
                 credentials: "include",
             });
 
-            console.log({ ...data, ...product });
+            mutate({ ...data, ...product });
+        },
+
+        updateProductPictures: (pictures: string) => {
+            const product: Product = data as Product;
+            product.pictures = pictures;
+
             mutate({ ...data, ...product });
         },
     };

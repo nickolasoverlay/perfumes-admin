@@ -15,9 +15,13 @@ import DeleteGroupDialog from "./DeleteGroupDialog";
 import { Group, TypeOption, typeList } from "./types";
 
 const CategoryGroup = (props: any) => {
-    const { group, updateGroup, isLoading, isError } = useGroup(
-        props.match.params.category_group_id
-    );
+    const {
+        group,
+        updateGroup,
+        updateGroupWallpaper,
+        isLoading,
+        isError,
+    } = useGroup(props.match.params.category_group_id);
     const { control, handleSubmit } = useForm<Group>();
     const history = useHistory();
 
@@ -41,6 +45,7 @@ const CategoryGroup = (props: any) => {
         updateGroup({
             ...updatedGroup,
             id: group.id,
+            wallpaper: group.wallpaper,
         });
         history.push("/category_groups");
     };
@@ -117,7 +122,7 @@ const CategoryGroup = (props: any) => {
             <Imager
                 entity="category_group"
                 entityId={group.id}
-                onEditCommit={(s) => console.log(s)}
+                onEditCommit={updateGroupWallpaper}
                 presentImages={group.wallpaper}
             />
             <div className="edit_form_actions">
