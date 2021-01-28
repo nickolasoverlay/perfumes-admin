@@ -19,7 +19,6 @@ import Products from "./pages/Products/Products";
 import Product from "./pages/Products/Product";
 
 import Orders from "./pages/Orders/Orders";
-import Admins from "./pages/Admins/Admins";
 import HomeSlider from "./pages/HomeSlider";
 
 import Filters from "./pages/Filters/Filters";

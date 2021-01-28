@@ -9,7 +9,7 @@ import PostBlock from "./PostBlock";
 
 const Blog = () => {
     const [openAddDialog, setOpenAddDialog] = useState(false);
-    const { posts, pushPost, deletePost, isLoading, isError } = usePosts();
+    const { posts, isLoading, isError } = usePosts();
 
     if (isLoading || isError) {
         return (

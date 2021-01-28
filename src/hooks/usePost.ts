@@ -14,7 +14,7 @@ const usePost = (id: string) => {
         isLoading: !error && !data,
         isError: error,
 
-        updatedPost: async (product: Post) => {
+        updatePost: async (product: Post) => {
             await fetch(`${process.env.REACT_APP_API}/admin/posts/update/`, {
                 method: "POST",
                 body: JSON.stringify(product),
@@ -22,6 +22,13 @@ const usePost = (id: string) => {
             });
 
             mutate({ ...data, ...product });
+        },
+
+        updatePostWallpaper: (wallpaper: string) => {
+            const post: Post = data as Post;
+            post.wallpaper = wallpaper;
+
+            mutate({ ...data, ...post });
         },
     };
 };

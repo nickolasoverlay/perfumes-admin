@@ -11,13 +11,28 @@ import "./Imager.css";
 
 type ImagerProps = {
     presentImages?: string;
-    entity: "category_group" | "product";
+    title?: string;
+    entity: "category_group" | "product" | "post_wallpaper";
     entityId: number | string;
     onEditCommit(images: string): void;
 };
 
+const singleImageEntities = (entity: string): boolean => {
+    return entity === "category_group" || entity === "post_wallpaper";
+};
+
+const multiImageEntities = (entity: string): boolean => {
+    return entity === "product";
+};
+
 const Imager: React.FC<ImagerProps> = (props) => {
-    const { entity, presentImages = "", onEditCommit, entityId } = props;
+    const {
+        entity,
+        presentImages = "",
+        title = "Зображення",
+        onEditCommit,
+        entityId,
+    } = props;
 
     const inputRef = useRef<HTMLInputElement>(null);
     const [imageIndex, setImageIndex] = useState(0);
@@ -103,17 +118,17 @@ const Imager: React.FC<ImagerProps> = (props) => {
             />
 
             <div className="Imager--actions">
-                <Typography variant="button">Зображення</Typography>
+                <Typography variant="button">{title}</Typography>
                 <div>
-                    {entity === "product" && images.length > 0 && (
+                    {multiImageEntities(entity) && images.length > 0 && (
                         <Tooltip title="Видалити це фото">
                             <IconButton onClick={handleRemove}>
                                 <Close />
                             </IconButton>
                         </Tooltip>
                     )}
-                    {(entity === "product" ||
-                        (entity === "category_group" &&
+                    {(multiImageEntities(entity) ||
+                        (singleImageEntities(entity) &&
                             images.length === 0)) && (
                         <Tooltip title="Добавити фото">
                             <IconButton>
@@ -129,7 +144,7 @@ const Imager: React.FC<ImagerProps> = (props) => {
                             </IconButton>
                         </Tooltip>
                     )}
-                    {entity === "category_group" && images.length === 1 && (
+                    {singleImageEntities(entity) && images.length === 1 && (
                         <Tooltip title="Замінити фото">
                             <IconButton>
                                 <label
@@ -171,7 +186,7 @@ const Imager: React.FC<ImagerProps> = (props) => {
                 )}
             </div>
             <div className="Imager--dots">
-                {entity === "product" &&
+                {multiImageEntities(entity) &&
                     images.map((image, index) => (
                         <div
                             key={index}

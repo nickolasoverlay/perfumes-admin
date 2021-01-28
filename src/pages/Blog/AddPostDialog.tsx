@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useHistory } from "react-router-dom";
 
 import {
     Dialog,
@@ -24,7 +23,6 @@ const AddPostDialog: React.FC<CategoryDialogProps> = (props) => {
     const { close, isOpen } = props;
     const { control, handleSubmit } = useForm<AddPostDialogFormProps>();
     const { pushPost } = usePosts();
-    const history = useHistory();
 
     const onSubmit = (post: AddPostDialogFormProps) => {
         pushPost(post);
