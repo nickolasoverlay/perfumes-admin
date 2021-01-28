@@ -28,6 +28,9 @@ import Filter from "./pages/Filters/Filter";
 import Messages from "./pages/Messages";
 import Login from "./pages/Login/Login";
 
+import Blog from "./pages/Blog";
+import Post from "./pages/Blog/Post";
+
 interface Admin {
     id: number;
     name: string;
@@ -141,7 +144,12 @@ const App = (props: PropsFromRedux) => {
                         />
 
                         <Route exact path="/orders" component={Orders} />
-                        <Route exact path="/admins" component={Admins} />
+                        <Route exact path="/blog" component={Blog} />
+                        <Route
+                            exact
+                            path="/blog/:post_id"
+                            component={(props: any) => <Post {...props} />}
+                        />
                         <Route
                             exact
                             path="/home_slider"

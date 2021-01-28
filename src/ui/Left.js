@@ -44,15 +44,12 @@ const Left = (props) => {
                         <NavLink to="/orders" exact>
                             <Button fullWidth>Замовлення</Button>
                         </NavLink>
+                        <NavLink to="/blog" exact>
+                            <Button fullWidth>Блог</Button>
+                        </NavLink>
                         <NavLink to="/messages" exact>
                             <Button fullWidth>Повідомлення</Button>
                         </NavLink>
-                        {props.authState.canAddAdmins ||
-                        props.authState.canDeleteAdmins ? (
-                            <NavLink to="/admins">
-                                <Button fullWidth>Адміністратори</Button>
-                            </NavLink>
-                        ) : null}
                     </div>
                     <Button color="secondary" onClick={handleLogOut}>
                         Вийти
