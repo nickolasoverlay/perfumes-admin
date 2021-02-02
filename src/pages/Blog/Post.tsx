@@ -41,7 +41,6 @@ const PostEditPage = (props: any) => {
             wallpaper: post.wallpaper,
             created_at: post.created_at,
             likes: post.likes,
-            entries: post.entries,
         });
         history.push("/blog");
     };
@@ -113,6 +112,27 @@ const PostEditPage = (props: any) => {
                     label="Підзаголовок (FR)"
                     as={DialogTextField}
                 />
+            </div>
+            <div
+                className="post_edit_text"
+                style={{ marginTop: 20, marginBottom: 20 }}
+            >
+                <Controller
+                    name="text_en"
+                    control={control}
+                    defaultValue={post.text_en}
+                    label="Текст (EN)"
+                    as={<DialogTextField multiline />}
+                />
+                <Controller
+                    name="text_fr"
+                    control={control}
+                    defaultValue={post.text_fr}
+                    label="Текст (FR)"
+                    as={<DialogTextField multiline style={{ marginTop: 15 }} />}
+                />
+            </div>
+            <div className="post_edit_publish">
                 <Controller
                     control={control}
                     name="published"
