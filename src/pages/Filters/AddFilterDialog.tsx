@@ -60,7 +60,7 @@ const AddFilterDialog: React.FC<AddFilterDialogProps> = ({ isOpen, close }) => {
         );
     }
 
-    if (categoriesFuture.isError) {
+    if (categoriesFuture.isError || categoriesFuture.categories.length === 0) {
         return (
             <Dialog open={isOpen} onClose={close} fullWidth>
                 <DialogTitle>Добавлення нового фільтру</DialogTitle>

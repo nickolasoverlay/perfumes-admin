@@ -62,13 +62,13 @@ const AddCategoryDialog = ({ onClose, isOpen }: CategoryDialogProps) => {
         );
     }
 
-    if (isError) {
+    if (isError || groups.length === 0) {
         return (
             <Dialog onClose={onClose} open={isOpen} fullWidth>
                 <DialogTitle>Добавлення категорії</DialogTitle>
                 <DialogContent>
                     <Typography variant="button">
-                        Не вдалося завантажити категорії
+                        Не вдалося завантажити групи категорій
                     </Typography>
                 </DialogContent>
                 <DialogActions>
