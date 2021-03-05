@@ -132,14 +132,14 @@ const ProductEditPage = (props: any) => {
                     control={control}
                     name="description_en"
                     label="Опис (EN)"
-                    defaultValue={product.short_en}
+                    defaultValue={product.description_en}
                     as={DialogTextField}
                 />
                 <Controller
                     control={control}
                     name="description_fr"
                     label="Опис (FR)"
-                    defaultValue={product.short_fr}
+                    defaultValue={product.description_fr}
                     as={DialogTextField}
                 />
                 <Controller
