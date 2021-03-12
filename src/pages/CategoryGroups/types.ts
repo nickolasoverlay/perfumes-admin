@@ -3,6 +3,8 @@ export type Group = {
     type: number;
     name_en: string;
     name_fr: string;
+    description_en: string;
+    description_fr: string;
     url: string;
     wallpaper: string;
     is_deleted: boolean;

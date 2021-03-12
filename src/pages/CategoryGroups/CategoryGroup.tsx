@@ -90,6 +90,20 @@ const CategoryGroup = (props: any) => {
                     as={DialogTextField}
                 />
                 <Controller
+                    name="description_en"
+                    control={control}
+                    defaultValue={group.description_en}
+                    label="Опис (EN)"
+                    as={DialogTextField}
+                />
+                <Controller
+                    name="description_fr"
+                    control={control}
+                    defaultValue={group.description_fr}
+                    label="Опис (FR)"
+                    as={DialogTextField}
+                />
+                <Controller
                     name="type"
                     control={control}
                     defaultValue={typeList[group.type - 1].value}

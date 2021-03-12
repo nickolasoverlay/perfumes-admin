@@ -46,7 +46,7 @@ const AddGroupDialog: React.FC<AddGroupDialogProps> = (props) => {
 
     return (
         <Dialog onClose={close} open={isOpen} fullWidth>
-            <DialogTitle>Добавлення групи</DialogTitle>
+            <DialogTitle>Добавлення колекції</DialogTitle>
             <DialogContent>
                 <Controller
                     name="name_en"
@@ -60,6 +60,20 @@ const AddGroupDialog: React.FC<AddGroupDialogProps> = (props) => {
                     control={control}
                     defaultValue=""
                     label="Назва (FR)"
+                    as={DialogTextField}
+                />
+                <Controller
+                    name="description_en"
+                    control={control}
+                    defaultValue=""
+                    label="Опис (EN)"
+                    as={DialogTextField}
+                />
+                <Controller
+                    name="description_fr"
+                    control={control}
+                    defaultValue=""
+                    label="Опис (FR)"
                     as={DialogTextField}
                 />
                 <Controller
