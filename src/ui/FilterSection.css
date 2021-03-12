@@ -1,0 +1,22 @@
+.Filter--section {
+    background-color: white;
+    border-radius: 18px;
+    padding-left: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 25px;
+}
+
+.Filter--section.active {
+    height: unset;
+}
+
+.Filter--section.hidden {
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.Filter--section.hidden > * {
+    display: none;
+}
