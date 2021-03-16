@@ -93,19 +93,20 @@ const Categories = (props) => {
                         Колекції
                     </Typography>
                     <div className="Filter--variants--list">
-                        {groups.map((group) => (
-                            <FilterChip
-                                label={group.name_en}
-                                key={group.id}
-                                active={checkGroupFilter(group.id)}
-                                onActivate={() =>
-                                    handlePushGroupFilter(group.id)
-                                }
-                                onDeactivate={() =>
-                                    handleDeleteGroupFilter(group.id)
-                                }
-                            />
-                        ))}
+                        {groups &&
+                            groups.map((group) => (
+                                <FilterChip
+                                    label={group.name_en}
+                                    key={group.id}
+                                    active={checkGroupFilter(group.id)}
+                                    onActivate={() =>
+                                        handlePushGroupFilter(group.id)
+                                    }
+                                    onDeactivate={() =>
+                                        handleDeleteGroupFilter(group.id)
+                                    }
+                                />
+                            ))}
                     </div>
                 </div>
             </FilterSection>
